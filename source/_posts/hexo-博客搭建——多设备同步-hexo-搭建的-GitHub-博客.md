@@ -54,7 +54,7 @@ git clone -b 分支名 https://github.com/用户名/仓库名.git
 
 ```bash
 // 安装 hexo
-npm install hexo
+npm install -g hexo
 // 注意这里不需要 hexo 初始化：hexo init；否则之前的 hexo 配置参数会重置
 // 安装依赖库
 npm install
