@@ -4,8 +4,6 @@ date: 2018-02-12 11:37:27
 tags: Hexo
 ---
 
-# 使用 hexo 搭建部署 GitHub 博客
-
 #### 环境配置
 
 - Node.js
@@ -31,13 +29,11 @@ hexo -v
 
 ##### Hexo 初始化
 创建一个 **hexo（或 blog）** 文件夹，终端 cd 到该文件夹下，执行命令：
-
 ```bash
 hexo init
 ```
 
-开启hexo服务器
-
+开启 hexo 服务器
 ```bash
 hexo s
 ```
@@ -114,7 +110,7 @@ $ git clone https://github.com/litten/hexo-theme-yilia.git themes/yilia
 打开 **hexo** 文件夹下的 theme，发现 `yilia` 就在该目录下了。我们默认使用的是 `landscape`。
 修改 **hexo** 文件夹下的 `_config.yml` 文件。将 theme 的名称 `landscape` 修改为 `yilia`。
 
-终端 cd 到 hexo 目录下执行日常更新博客用的命名，即：
+终端 cd 到 hexo 目录下执行日常更新博客用的命令，即：
 ```bash
 $ hexo clean
 $ hexo g
