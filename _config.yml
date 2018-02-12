@@ -76,7 +76,30 @@ theme: yilia
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
+
+# deploy
 deploy:
   type: git
   repository: https://github.com/lishide/lishide.github.io.git
   branch: master
+
+# jsonContent
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: false
+    tags: true
+
