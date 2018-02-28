@@ -44,7 +44,7 @@ git push -u origin master
 git push origin master
 ```
 
-**重要！！！**如果新建远程仓库的时候勾选了*创建 README 文件*会报错：`failed to push some refs to  https://github.com/username/repo.git`，这是由于新创建的那个仓库里面的 README 文件不在本地仓库目录中，这时可以通过以下命令先将内容合并一下：
+**重要！！！**如果新建远程仓库的时候勾选了“*创建 README 文件*”会报错：`failed to push some refs to  https://github.com/username/repo.git`，这是由于新创建的那个仓库里面的 README 文件不在本地仓库目录中，这时可以通过以下命令先将内容合并一下：
 ``` bash
 git pull --rebase origin master
 ```
