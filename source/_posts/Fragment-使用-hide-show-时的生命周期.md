@@ -1,12 +1,11 @@
 ---
 title: Fragment 使用 hide/show 时的生命周期
 date: 2018-03-10 13:13:29
-tags:
-- Android
-- Fragment
+tags: [Android, Fragment]
 ---
 
 当你第一眼看到这个标题的时候，肯定很惊讶。没错，我也觉得标题可能不规范，不过真的解决我在使用 Fragment 时遇到的坑，这里分享出来，供大家参考，一起交流。
+<!--more-->
 
 先来描述一下我的 APP 中使用到 Fragment 的功能和遇到的问题，第一个 Fragment 里是一个视频播放控件，希望在切换到其他 Fragment 的时候，暂停视频；再次回到这个 Fragment 时恢复播放。由于我使用的是 hide 和 show 的方式进行的 Fragment 之间的切换，每个 Fragment 只被初始化一次。那么问题来了，我尝试按照网上说的 Fragment 的生命周期，在 onPause 或 onStop 方法中暂停，在 onResume 中恢复播放，可是发现压根没走这些方法，onPause 等方法不会调用，onResume 只在刚进入是调用了一次，也没法做到让视频暂停。
 

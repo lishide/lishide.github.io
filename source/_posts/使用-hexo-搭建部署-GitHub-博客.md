@@ -1,14 +1,15 @@
 ---
 title: 使用 hexo 搭建部署 GitHub 博客
 date: 2018-02-12 11:37:27
-tags: Hexo
+tags: hexo
 ---
-
 #### 环境配置
 
 - Node.js
 - Git
 - Hexo
+
+<!--more-->
 
 ##### 安装 Node.js
 进入[Node.js 官网](https://nodejs.org/en/)，下载对应版本，一路安装即可。

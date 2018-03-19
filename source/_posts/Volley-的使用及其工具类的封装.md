@@ -1,13 +1,14 @@
 ---
 title: Volley 的使用及其工具类的封装
 date: 2018-03-13 12:53:34
-tags:
-- Android
-- Volley
+tags: [Android, Volley]
 ---
+Volley 的使用及其工具类的封装
 【来自本人2016年简书文章，将其同步至个人博客】
 
 	August 26, 2016 1:10 PM Power By lishide
+<!--more-->
+
 ## 一. Volley 简介
 
 > Volley 的中文翻译为“齐射、并发”，是在 2013 年的 Google 大会上发布的一款 Android 平台网络通信库，具有网络请求的处理、小图片的异步加载和缓存等功能，能够帮助 Android App 更方便地执行网络操作，而且更快速高效。

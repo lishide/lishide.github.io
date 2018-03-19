@@ -1,12 +1,10 @@
 ---
 title: 高德地图开发：点击 Marker（或气泡）跳转到其它地图，以及开发中问题解决
 date: 2018-02-24 09:26:41
-tags:
-- Android
-- AMap
+tags: [Android, AMap]
 ---
-
 高德地图，在点击 Marker 上的气泡可以跳转到手机中的地图进行导航。
+<!--more-->
 
 1. 设置地图 InfoWindow 点击事件监听，并实现`AMap.OnInfoWindowClickListener`。
 

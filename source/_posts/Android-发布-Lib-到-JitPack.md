@@ -1,15 +1,14 @@
 ---
 title: Android 发布 Lib 到 JitPack
 date: 2018-03-01 08:57:16
-tags:
-- Android
-- JitPack
+tags: [Android, JitPack]
 ---
 ### 前言
 
 转载自 [赵彦军博客](http://www.cnblogs.com/zhaoyanjun/p/5942616.html)
 
 最近封装了几个 Android 的  Library，想把它们放到仓库，方便在以后的项目中直接以依赖的方式引用。参考了几个博客，今天这篇博文**总结**和**推荐**一个最简单方便的方式 —— JitPack。
+<!--more-->
 
 #### 1. 在 Android Studio 里面配置 Jitpack 插件
 

@@ -1,12 +1,10 @@
 ---
 title: NoHttpConnecter——基于 NoHttp 的封装
 date: 2018-03-13 13:34:37
-tags:
-- Android
-- NoHttp
-- Http
+tags: [Android, NoHttp, Http]
 ---
 基于 NoHttp 的封装，主要包括字符串、Bitmap、JsonArray 等的 GET 和 POST 请求、文件上传下载方法的简单封装，以及五种缓存模式的使用。
+<!--more-->
 
 首先对 NoHttp 网络框架做一个简介
 > Nohttp 是一个 Android Http 标准框架，底层可动态切换 OkHttp、URLConnection，与 RxJava 完美结合，支持缓存数据到数据库或 SD 卡（缓存数据自动加密），支持请求 Restful 风格的接口，比 Retrofit 更简单易用。

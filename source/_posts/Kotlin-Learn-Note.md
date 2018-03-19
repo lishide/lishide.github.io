@@ -3,10 +3,10 @@ title: Kotlin Learn Note
 date: 2018-02-28 09:14:00
 tags: Kotlin
 ---
-
+Kotlin Learn Note
+<!--more-->
 ## 基础
 ### 基本类型
-
 
 ### 控制流：if、when、for、while
 #### If 表达式
