@@ -15,7 +15,8 @@ Kotlin Learn Note
 // 传统用法
 var max = a
 if (a < b) max = b
-// With else
+
+// 带 else
 var max: Int
 if (a > b) {
 	max = a
@@ -78,7 +79,7 @@ when (x) {
 ```
 
 5.检测一个值是（`is`） 或者不是（`!is`） 一个特定类型的值
-注意： 由于[智能转换](http://)，你可以访问该类型的方法和属性而无需任何额外的检测。
+注意： 由于智能转换，你可以访问该类型的方法和属性而无需任何额外的检测。
 ```java
 fun hasPrefix(x: Any) = when(x) {
     is String -> x.startsWith("prefix")
@@ -97,16 +98,35 @@ when {
 
 #### For 循环
 语法
-```java
+``` java
 for (item in collection) print(item)
-//
+```
+
+区间上迭代
+``` java
+// 整型区间
+for (i in 1..4) print(i) // 输出“1234”
+// 倒序迭代数字，步长为2
+for (i in 6 downTo 0 step 2) {
+    println(i)
+}
+// 不包括其结束元素的区间
+for (i in 1 until 10) {   // i in [1, 10) 排除了 10
+     println(i)
+}
+```
+
+通过索引遍历一个数组或者一个 list
+``` java
+val array = arrayOf("a", "b", "c")
+
 for (i in array.indices) {
-	print(array[i])
+    println(array[i])
 }
 ```
 
 #### While 循环
-`while` 和 `do .. while` 照常使用
+`while` 和 `do .. while` 和其它语言没什么区别
 ```java
 while (x > 0) {
 	x--
