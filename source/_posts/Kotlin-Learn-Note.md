@@ -87,7 +87,7 @@ fun hasPrefix(x: Any) = when(x) {
 }
 ```
 
-6.`when` 也可以用来取代 `if - else if` 链。
+6.`when` 也可以用来取代 `if - else if` 链。如果不提供参数，所有的分支条件都是简单的布尔表达式，而当一个分支的条件为真时则执行该分支：
 ```java
 when {
     x.isOdd() -> print("x is odd")
