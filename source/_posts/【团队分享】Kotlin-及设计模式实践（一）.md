@@ -242,7 +242,7 @@ class HonorMobile : Mobile() {
 }
 ```
 
-##### 2.3.3 抽象 Builder 类，定义了三个抽象方法，用于设置产品属性及获取实例
+##### 2.3.3 抽象 Builder 类，定义了5个抽象方法，用于设置产品属性及获取实例
 ``` java
 abstract class Builder {
     // 设置品牌
