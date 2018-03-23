@@ -1,7 +1,7 @@
 ---
 title: ScrollRecyclerView——RecyclerView 横向 / 纵向滚动网格布局
 date: 2018-03-23 11:43:15
-tags:
+tags: [Android, RecyclerView, 自定义 View]
 ---
 【来自本人2017年简书文章，将其同步至个人博客】
 
