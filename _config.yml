@@ -10,6 +10,8 @@ author: 李世德
 language: zh-CN
 timezone:
 
+# Avatar
+avatar: http://p6wpxhpqt.bkt.clouddn.com/img-okal-eltocat.jpg
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
