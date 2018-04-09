@@ -14,7 +14,7 @@ tags: [Android, 自定义 View, CoverFlow]
 
 #### 效果预览 GIF
 
-![ImgCoverFlow 效果预览 GIF](http://p6wpxhpqt.bkt.clouddn.com/g_art_cf.gif)
+![ImgCoverFlow 效果预览 GIF](http://p6wpxhpqt.bkt.clouddn.com/img_art_cf_g.gif)
 
 ## 依赖
 [![](https://jitpack.io/v/lishide/ImgCoverFlow.svg)](https://jitpack.io/#lishide/ImgCoverFlow)
