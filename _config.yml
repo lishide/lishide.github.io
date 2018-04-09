@@ -4,11 +4,12 @@
 
 # Site
 title: 李世德的博客
-subtitle:
-description:
+subtitle: 我有故事，你有酒吗？
+description: 爱生活，爱学习，一个不羁的编码界小学生。
 author: 李世德
 language: zh-CN
 timezone:
+
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
