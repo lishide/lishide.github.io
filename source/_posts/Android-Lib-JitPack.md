@@ -24,7 +24,7 @@ classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
 maven { url "https://jitpack.io" }
 ```
 如图所示
-![Jitpack 插件配置](img_aj1_build.png)
+![Jitpack 插件配置](http://p6wpxhpqt.bkt.clouddn.com/img_aj1_build.png)
 
 Ps：在配置 JitPack 插件的时候，需要用到插件的版本号，目前为止最新版是 1.5。[查看最新版本号，插件的 GitHub 仓库](https://github.com/dcendents/android-maven-gradle-plugin)
 
@@ -41,7 +41,7 @@ group = 'com.github.YourUsername'  //替换成你的 Github 的用户名
 ```
 
 如图所示
-![配置 Library Module](img_aj2_lib.png)
+![配置 Library Module](http://p6wpxhpqt.bkt.clouddn.com/img_aj2_lib.png)
 
 **Sync Now**
 
@@ -51,15 +51,15 @@ group = 'com.github.YourUsername'  //替换成你的 Github 的用户名
 
 点击 release -> 点击创建新的 release 版本 -> 书写版本号和 release 信息
 
-![release.gif](img_aj3_release.gif)
+![release.gif](http://p6wpxhpqt.bkt.clouddn.com/img_aj3_release.gif)
 
 
 #### 5. 获取引用方式
 进入 JitPack 网站 [https://jitpack.io/](https://jitpack.io/)，输入项目的 GitHub 地址：https: // github . com/ username / repo，点击 Look up，下面就显示出了所有的 release 版本。
-![release 版本](img_aj4_look.png)
+![release 版本](http://p6wpxhpqt.bkt.clouddn.com/img_aj4_look.png)
 
 点击 Get it 查看引用方式
-![Get it](img_aj5_get.png)
+![Get it](http://p6wpxhpqt.bkt.clouddn.com/img_aj5_get.png)
 
 比如：
 ``` groovy

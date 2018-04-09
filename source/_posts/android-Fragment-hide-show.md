@@ -48,4 +48,4 @@ public void onHiddenChanged(boolean hidden) {
 
 下面贴出完整的生命周期：
 
-![img_fragment_llifecycle](img_fragment_llifecycle.png)
+![img_fragment_llifecycle](http://p6wpxhpqt.bkt.clouddn.com/img_fragment_llifecycle.png)

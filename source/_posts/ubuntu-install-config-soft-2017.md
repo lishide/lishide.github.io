@@ -6,7 +6,7 @@ tags: [Ubuntu, OS, ]
 
 记录 Ubuntu 系统安装配置及其软件安装的整个过程，同时分享给有需要的人。
 
-![Ubuntu](img_ubuntu1604.png)
+![Ubuntu](http://p6wpxhpqt.bkt.clouddn.com/img_uos_ubuntu1604.png)
 <!--more-->
 
 ## 1. U 盘安装 Ubuntu 和 Windows 双系统
@@ -53,7 +53,7 @@ tags: [Ubuntu, OS, ]
 
 将“安装启动引导器的设备”选择为之前分配`/boot`的那个分区名。如下图中，是`sda5`，选择你的电脑对应的分区名。
 
-![我的 Ubuntu 分区大小设置](img_show_disk part.jpg)
+![我的 Ubuntu 分区大小设置](http://p6wpxhpqt.bkt.clouddn.com/img_uos_show_diskpart.jpg)
 
 
 > 分区操作参考下面教程：
@@ -71,7 +71,7 @@ http://www.jianshu.com/p/53b8b76439d0
 
 在 Windows 中安装 EasyBCD 后打开，点击“添加新条目（Add New Entry）” ，选择 `Linux/BSD`，具体设置如下图。类型（Type）选择 GRUB(Legacy)；名称（Name）自己随便写，小编写的是 Ubuntu 作为标识；驱动器（Drive）选取我们设置的 /boot 分区，有 Linux 标记。设置完成后点击“添加条目（Add Entry）”。
 
-![EeayBCD](img_ease_bcd.jpg)
+![EeayBCD](http://p6wpxhpqt.bkt.clouddn.com/img_uos_ease_bcd.jpg)
 
 电脑再次启动时，就可以看到多了Ubuntu 的启动选项了。
 
@@ -103,15 +103,15 @@ sudo apt-get update
 sudo apt-get install ultra-flat-icons
 ```
 安装完成后，打开 unity-tweak-tool 软件，修改主题和图标。
-![Unity Tweak Tool_主题](img_utt_theme.png)
-![Unity Tweak Tool_图标](img_utt_icon.png)
+![Unity Tweak Tool_主题](http://p6wpxhpqt.bkt.clouddn.com/img_uos_utt_theme.png)
+![Unity Tweak Tool_图标](http://p6wpxhpqt.bkt.clouddn.com/img_uos_utt_icon.png)
 
 #### 2.2.3 字体：文泉译微米黑字体
 ``` bash
 sudo apt-get install fonts-wqy-microhei
 ```
 然后通过 unity-tweak-tool 来更换字体，按照自己的喜好选择字体和字号。
-![Unity Tweak Tool_字体](img_utt_font.png)
+![Unity Tweak Tool_字体](http://p6wpxhpqt.bkt.clouddn.com/img_uos_utt_font.png)
 
 ...
 主题美化参考自：http://www.jianshu.com/p/71b60921972b

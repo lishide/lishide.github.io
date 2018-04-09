@@ -13,7 +13,7 @@ tags: [Android, RecyclerView, 自定义 View]
 **ScrollRecyclerView——RecyclerView 横向 / 纵向滚动网格布局，适用于 Android 平板、Android TV 或其他定制化 Android 设备等，使用遥控器方向导航键控制列表滑动及 item 选择状态。**
 
 ## 效果预览
-![ScrollRecyclerView 效果演示](g_art_scroll.gif)
+![ScrollRecyclerView 效果演示](http://p6wpxhpqt.bkt.clouddn.com/g_art_scroll.gif)
 
 ---
 [![](https://jitpack.io/v/lishide/ScrollRecyclerView.svg)](https://jitpack.io/#lishide/ScrollRecyclerView)
