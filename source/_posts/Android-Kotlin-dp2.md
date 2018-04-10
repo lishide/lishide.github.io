@@ -305,14 +305,18 @@ if (product != null) {
 
 #### 4.8 输出结果
 ``` bash
+----------工厂方法模式 start----------
 具体工厂A: create ProductA
 print of ConcreteProductA
 具体工厂B: create ProductB
 print of ConcreteProductB
+----------工厂方法模式   end----------
+----------简单工厂模式 start----------
 create ProductA
 print of ConcreteProductA
 create ProductB
 print of ConcreteProductB
+----------简单工厂模式   end----------
 ```
 
 
