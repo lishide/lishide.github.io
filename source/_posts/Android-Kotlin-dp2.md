@@ -225,7 +225,7 @@ abstract class Factory {
 }
 ```
 
-#### 4.4 ConcreteFactoryA与ConcreteFactoryB
+## 4.4 ConcreteFactoryA与ConcreteFactoryB
 定义了两个具体工厂角色，分别实现了 factoryMethod 方法。
 ``` java
 class ConcreteFactoryA : Factory() {
