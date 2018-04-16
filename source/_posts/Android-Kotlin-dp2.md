@@ -7,10 +7,10 @@ tags: [Android, Kotlin, Design Patterns]
 
 <!--more-->
 
-### 1. Kotlin
+# 1. Kotlin
 
-#### 1.1 类与继承
-##### 1.1.1 类
+## 1.1 类与继承
+### 1.1.1 类
 使用关键字 class 声明类，类声明由类名、类头（指定其类型参数、主构造函数等）以及由花括号包围的类体构成。
 ``` java
 class Test {
@@ -19,7 +19,7 @@ class Test {
 class Empty
 ```
 
-##### 1.1.2 构造函数
+### 1.1.2 构造函数
 类可以有一个主构造函数以及多个二级构造函数。主构造函数是类头的一部分：跟在类名后面(可以有可选的类型参数)。
 
 ``` java
@@ -47,7 +47,7 @@ class Person(val firstName: String, val lastName: String, var age: Int) {
 class Customer public @inject constructor (name: String) {...}
 ```
 
-##### 1.1.3 二级构造函数
+### 1.1.3 二级构造函数
 类也可以有二级构造函数，需要加前缀 `constructor`:
 ``` java
 class Person {
@@ -57,7 +57,7 @@ class Person {
 }
 ```
 
-##### 1.1.4 创建类的实例
+### 1.1.4 创建类的实例
 我们可以像使用普通函数那样使用构造函数创建类实例：
 ``` java
 val test = Test()
@@ -66,7 +66,7 @@ val customer = Customer("Jobs")
 
 > Kotlin 没有 new 关键字
 
-##### 1.1.5 类成员
+### 1.1.5 类成员
 类可以包含：
 -- 构造函数和初始化代码块
 -- 函数
@@ -74,7 +74,7 @@ val customer = Customer("Jobs")
 -- 内部类
 -- 对象声明
 
-##### 1.1.6 继承
+### 1.1.6 继承
 ``` java
 class Example //　隐式继承于 Any
 ```
@@ -96,7 +96,7 @@ class MyView : View {
 }
 ```
 
-##### 1.1.7 复写方法
+### 1.1.7 复写方法
 kotlin 需要把可以复写的成员都明确注解出来，并且重写它们：
 ``` java
 open class Base {
@@ -116,7 +116,7 @@ open class AnotherDerived() : Base() {
 }
 ```
 
-##### 1.1.8 复写属性
+### 1.1.8 复写属性
 复写属性与复写方法类似
 ``` java
 open class Foo {
@@ -128,7 +128,7 @@ class Bar1 : Foo() {
 }
 ```
 
-##### 1.1.9 抽象类
+### 1.1.9 抽象类
 一个类或一些成员可能被声明成 abstract 。
 ``` java
 open class Base {
@@ -139,15 +139,15 @@ abstract class Derived : Base() {
     override abstract fun f()
 }
 ```
-#### 1.2 属性和字段
-##### 1.2.1 属性声明
+## 1.2 属性和字段
+### 1.2.1 属性声明
 使用 var 关键字声明可变属性，用 val 关键字声明只读属性
 ``` java
 var name: String = ...
 val result = ...
 ```
 
-##### 1.2.2 延迟初始化属性
+### 1.2.2 延迟初始化属性
 避免非空检查
 ``` java
 public class MyTest {
@@ -163,7 +163,7 @@ public class MyTest {
 }
 ```
 
-#### 1.3 可见性修饰词
+## 1.3 可见性修饰词
 类，对象，接口，构造函数，属性以及它们的 setter 方法都可以有可见性修饰词。( getter与对应的属性拥有相同的可见性)。在 Kotlin 中有四种修饰词：`private`,`protected`,`internal`,以及 `public` 。默认的修饰符是 `public`。
 
 ...（常见，略）
@@ -171,31 +171,29 @@ internal —— 模块
 `internal` 修饰符是指成员的可见性是只在同一个模块中才可见的。
 
 
-### 2. 工厂方法模式
-#### 2.1 定义
+# 2. 工厂方法模式
+## 2.1 定义
 
 工厂方法模式（Factory Method Pattern）又称为工厂模式，也叫虚拟构造器（Virtual Constructor）模式或者多态工厂（Polymorphic Factory）模式，它属于类创建型模式。在工厂方法模式中，工厂父类负责定义创建产品对象的公共接口，而工厂子类则负责生成具体的产品对象，这样做的目的是将产品类的实例化操作延迟到工厂子类中完成，即通过工厂子类来确定究竟应该实例化哪一个具体产品类。
 
-#### 2.2 结构
+## 2.2 结构
 
 Factory：抽象工厂角色，定义创建实例的抽象方法；
 ConcreteFactory：具体工厂角色，负责创建特定实例；
 Product：抽象产品角色，是所创建的所有对象的父类，负责描述所有实例所共有的公共接口；
 ConcreteProduct：具体产品角色，是创建目标，所有创建的对象都充当这个角色的某个具体类的实例。
 
-### 3. 简单工厂模式
-
-#### 3.1 定义
+# 3. 简单工厂模式
+## 3.1 定义
 简单工厂模式（Simple Factory Pattern）：又称为静态工厂方法（Static Factory Method）模式，它属于类创建型模式。在简单工厂模式中，可以根据参数的不同返回不同类的实例。简单工厂模式专门定义一个类来负责创建其他类的实例，被创建的实例通常都具有共同的父类。
 
-#### 3.2 结构
+## 3.2 结构
 Factory：工厂角色，负责实现创建所有实例的内部逻辑；
 Product：抽象产品角色，是所创建的所有对象的父类，负责描述所有实例所共有的公共接口；
 ConcreteProduct：具体产品角色，是创建目标，所有创建的对象都充当这个角色的某个具体类的实例。
 
-### 4 工厂模式的实现
-
-#### 4.1 Product
+# 4. 工厂模式的实现
+## 4.1 Product
 定义了抽象产品角色，及抽象方法 print。
 ``` java
 abstract class Product {
@@ -203,7 +201,7 @@ abstract class Product {
 }
 ```
 
-#### 4.2 ConcreteProductA 与 ConcreteProductB
+## 4.2 ConcreteProductA 与 ConcreteProductB
 定义了两个具体产品角色，分别实现了 print 方法。
 ``` java
 class ConcreteProductA : Product() {
@@ -219,7 +217,7 @@ class ConcreteProductB : Product() {
 }
 ```
 
-#### 4.3 抽象 Factory
+## 4.3 抽象 Factory
 定义了抽象工厂角色，及抽象方法 factoryMethod。
 ``` java
 abstract class Factory {
@@ -247,7 +245,7 @@ class ConcreteFactoryB : Factory() {
 }
 ```
 
-#### 4.5 生产产品
+## 4.5 生产产品
 不同的具体产品实例，用不同的具体工厂来创建。
 ``` java
 var factory1: Factory = ConcreteFactoryA()
@@ -259,7 +257,7 @@ product1 = factory1.factoryMethod()
 product1.print()
 ```
 
-#### 4.6 简单工厂
+## 4.6 简单工厂
 像这样拥有多个工厂的方式称之为多工厂方法模式，当工厂只有一个的时候，则可将其简化。
 ``` java
 class SimpleFactory {
@@ -284,7 +282,7 @@ class SimpleFactory {
 ```
 简单工厂角色，实现了根据传入的参数来创建产品的功能。
 
-#### 4.7 简单工厂生产产品
+## 4.7 简单工厂生产产品
 
 ``` java
 val factory = SimpleFactory()
@@ -303,7 +301,7 @@ if (product != null) {
 ```
 这里加入了产品对象是否为 null 的判断，当用户传入错误的参数时是不能得到想要的产品的。
 
-#### 4.8 输出结果
+## 4.8 输出结果
 ``` bash
 ----------工厂方法模式 start----------
 具体工厂A: create ProductA
