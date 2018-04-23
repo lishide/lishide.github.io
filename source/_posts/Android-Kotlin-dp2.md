@@ -183,6 +183,8 @@ ConcreteFactory：具体工厂角色，负责创建特定实例；
 Product：抽象产品角色，是所创建的所有对象的父类，负责描述所有实例所共有的公共接口；
 ConcreteProduct：具体产品角色，是创建目标，所有创建的对象都充当这个角色的某个具体类的实例。
 
+![工厂方法模式-类图](http://p6wpxhpqt.bkt.clouddn.com/img_dp_FactoryMethod.jpg)
+
 # 3. 简单工厂模式
 ## 3.1 定义
 简单工厂模式（Simple Factory Pattern）：又称为静态工厂方法（Static Factory Method）模式，它属于类创建型模式。在简单工厂模式中，可以根据参数的不同返回不同类的实例。简单工厂模式专门定义一个类来负责创建其他类的实例，被创建的实例通常都具有共同的父类。
@@ -191,6 +193,8 @@ ConcreteProduct：具体产品角色，是创建目标，所有创建的对象�
 Factory：工厂角色，负责实现创建所有实例的内部逻辑；
 Product：抽象产品角色，是所创建的所有对象的父类，负责描述所有实例所共有的公共接口；
 ConcreteProduct：具体产品角色，是创建目标，所有创建的对象都充当这个角色的某个具体类的实例。
+
+![简单工厂模式-类图](http://p6wpxhpqt.bkt.clouddn.com/img_dp_SimpleFactory.jpg)
 
 # 4. 工厂模式的实现
 ## 4.1 Product
