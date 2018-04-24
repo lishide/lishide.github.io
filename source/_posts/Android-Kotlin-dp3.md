@@ -3,7 +3,7 @@ title: 【团队分享】Kotlin 及设计模式实践（三）
 date: 2018-04-13 15:40:35
 tags: [Android, Kotlin, Design Patterns]
 ---
-本讲的 Kotlin 知识部分主要讲解接口、数据类及常见函数的使用。
+本讲的 Kotlin 知识部分主要讲解接口、数据类及常见函数的使用，第二部分讲解抽象工厂模式的简单实现。
 
 <!--more-->
 
@@ -248,6 +248,129 @@ class Sample() {
 Sample().foo() // 创建类 Sample 实例并调用 foo
 ```
 
+# 2. 抽象工厂模式
+## 2.1 定义
+抽象工厂模式(Abstract Factory Pattern)：提供一个创建一系列相关或相互依赖对象的接口，而无须指定它们具体的类。抽象工厂模式又称为 Kit 模式，属于对象创建型模式。
 
+## 2.2 结构
+AbstractFactory：抽象工厂，定义创建实例的抽象方法；
+ConcreteFactory：具体工厂，实现具体逻辑；
+AbstractProduct：抽象产品，定义产品的抽象方法；
+Product：具体产品，实现具体逻辑；
+
+![抽象工厂模式-类图](http://p6wpxhpqt.bkt.clouddn.com/img_dp_AbatractFactory.jpg)
+
+## 2.3 抽象工厂模式的简单实现
+### 2.3.1 AbstractProduct
+定义两个抽象产品角色，分别有其抽象方法 print。
+```java
+abstract class AbstractProductA {
+    abstract fun printA()
+}
+abstract class AbstractProductB {
+    abstract fun printB()
+}
+```
+
+### 2.3.2 ConcreteProduct
+
+定义了四个具体产品角色，分别实现了父类对应的 printA 和 printB 方法。
+
+A1 和 B1 属于同一个产品族的不同产品等级的两种产品，A2 和B2 类似。其中：
+
+产品等级——同一类产品的产品等级相同，如海尔冰箱、西门子冰箱等；
+
+产品族——同一家工厂生产的不同产品等级的产品，如海尔冰箱、海尔洗衣机等。
+```java
+class ConcreteProductA1 : AbstractProductA() {
+    override fun printA() {
+        println("printA of ConcreteProductA1")
+    }
+}
+
+class ConcreteProductA2 : AbstractProductA() {
+    override fun printA() {
+        println("printA of ConcreteProductA2")
+    }
+}
+
+class ConcreteProductB1 : AbstractProductB() {
+    override fun printB() {
+        println("printB of ConcreteProductB1")
+    }
+}
+
+class ConcreteProductB2 : AbstractProductB() {
+    override fun printB() {
+        println("printB of ConcreteProductB2")
+    }
+}
+```
+
+### 2.3.3 AbstractFactory
+定义抽象工厂角色，及抽象方法
+```java
+abstract class AbstractFactory {
+    abstract fun createProductA(): AbstractProductA
+    abstract fun createProductB(): AbstractProductB
+}
+```
+
+### 2.3.4 ConcreteFactory
+定义了两个具体工厂角色，分别实现
+```java
+class ConcreteFactory1 : AbstractFactory() {
+    override fun createProductA(): AbstractProductA {
+        println("create ProductA1")
+        return ConcreteProductA1()
+    }
+
+    override fun createProductB(): AbstractProductB {
+        println("create ProductB1")
+        return ConcreteProductB1()
+    }
+}
+
+class ConcreteFactory2 : AbstractFactory() {
+    override fun createProductA(): AbstractProductA {
+        println("create ProductA2")
+        return ConcreteProductA2()
+    }
+
+    override fun createProductB(): AbstractProductB {
+        println("create ProductB2")
+        return ConcreteProductB2()
+    }
+}
+```
+
+### 2.3.5 AbstractFactoryPattern
+不同产品族的具体产品实例，用不同的具体工厂来创建。
+```java
+var factory: AbstractFactory = ConcreteFactory1()
+var productA = factory.createProductA()
+var productB = factory.createProductB()
+productA.printA()
+productB.printB()
+
+factory = ConcreteFactory2()
+productA = factory.createProductA()
+productB = factory.createProductB()
+productA.printA()
+productB.printB()
+```
+### 2.3.6 输出结果
+```bash
+----------抽象工厂模式 start----------
+create ProductA1
+create ProductB1
+printA of ConcreteProductA1
+printB of ConcreteProductB1
+create ProductA2
+create ProductB2
+printA of ConcreteProductA2
+printB of ConcreteProductB2
+----------抽象工厂模式   end----------
+```
 
 

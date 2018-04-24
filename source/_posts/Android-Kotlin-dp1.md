@@ -240,7 +240,8 @@ class HonorMobile : Mobile() {
 }
 ```
 
-### 2.3.3 抽象 Builder 类，定义了5个抽象方法，用于设置产品属性及获取实例
+### 2.3.3 抽象 Builder 类
+定义了5个抽象方法，用于设置产品属性及获取实例
 ``` java
 abstract class Builder {
     // 设置品牌
@@ -256,7 +257,8 @@ abstract class Builder {
 }
 ```
 
-### 2.3.4 具体的 Builder 类，HonorBuilder，实现产品的创建
+### 2.3.4 具体的 Builder 类
+HonorBuilder，实现产品的创建
 ``` java
 class HonorBuilder : Builder() {
     private val mMobile = HonorMobile()
@@ -282,7 +284,8 @@ class HonorBuilder : Builder() {
 }
 ```
 
-### 2.3.5 Director 类，负责构造 Mobile，通过设置的建造者，创建产品实例
+### 2.3.5 Director 类
+负责构造 Mobile，通过设置的建造者，创建产品实例
 ``` java
 class Director(builder: Builder) {
     private var mBuilder: Builder? = null
@@ -303,7 +306,8 @@ class Director(builder: Builder) {
 }
 ```
 
-### 2.3.6 具体建造者，实现产品的创建
+### 2.3.6 具体建造者
+build，实现产品的创建
 ``` java
 val build = HonorBuilder()
 val aDirector: Director = Director(build)
