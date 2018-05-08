@@ -241,10 +241,10 @@ java -version
 ``` bash
 unzip android-studio-ide-145.3360264-linux.zip  //解压
 sudo mv android-studio /opt/  //移动
-cd ./android-studio/bin  //打开文件夹
+cd /opt/android-studio/bin  //切换文件夹
 sh studio.h（sudo ./studio.sh）  //运行
 ```
-按照提示下载安装 Sdk，完后就可以愉快的敲代码了。
+按照提示进行安装。
 
 - 如果运行的是 64 位版本 Ubuntu，则需要使用以下命令安装一些 32 位库：
  ``` bash
@@ -372,17 +372,26 @@ sudo apt-get phpmyadmin
 
 ### 3.16 福昕 PDF 阅读器
 PDF 阅读器，[下载地址](https://www.foxitsoftware.cn/downloads/)。
-下载完成后，切换到文件所在目录；
-（如果将文件下载到了 **download** 文件夹里，在安装时会默认在用户目录下安装，可以切换为 root 用户，将文件移动到`/opt`目录中，再进行下面的步骤）
-使用以下命令解压可执行文件：
+- 下载完成后，切换到文件所在目录
+
+- 解压可执行文件
 ``` bash
 gzip -d 'FoxitReader2.4.1.0609_Server_x64_enu_Setup.run.tar.gz'
 ```
-使用以下命令对`.tar`文件进行解包：
+- 对`.tar`文件进行解包
 ``` bash
 tar xvf 'FoxitReader2.4.1.0609_Server_x64_enu_Setup.run.tar'
 ```
-使用以下命令运行安装程序：
+- 移动到目标文件夹（可选，我将其移到了 `opt` 文件夹里）
+``` bash
+sudo mv FoxitReader.enu.setup.2.4.1.0609\(r08f07f8\).x64.run /opt/
+```
+- 切换到 root 用户
+比官方给的多这一步，为了有权限将软件安装到`opt/` 目录，否则直接进行下一步只能安装到用户目录下了。
+``` bash
+su root
+```
+- 运行安装程序
 ``` bash
 ./'FoxitReader.enu.setup.2.4.1.0609(r08f07f8).x64.run'
 ```
@@ -483,5 +492,15 @@ fi
 ```
 重启或者注销即可。
 
+### 4.3 Ubuntu 设置 root 密码
+设置 root 密码
+``` bash
+sudo passwd
+```
+输入两次密码。
+切换root用户
+``` bash
+su root
+```
 ## 5. 结尾
 文章持续更新中，遇到好的应用或美化相关的，会更新上来；文章中有不完美的地方，也请大佬指点出来，将做出修改和优化。希望这篇文章能帮到有需要的人，点滴积累，点滴分享。
