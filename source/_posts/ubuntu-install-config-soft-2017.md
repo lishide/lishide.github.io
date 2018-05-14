@@ -17,7 +17,7 @@ tags: [Ubuntu, OS, ]
 
  - 在电脑中插入一个空白的 U 盘（大小至少 2GB）
  - 使用 **Universal USB Installer** 烧写入 U 盘
- 官方网站是 http://www.pendrivelinux.com/ 
+ 官方网站是 http://www.pendrivelinux.com/
  我们下载它：http://www.pendrivelinux.com/universal-usb-installer-easy-as-1-2-3/ 并且安装。
 
 ### 1.3 安装位置准备
@@ -45,16 +45,19 @@ tags: [Ubuntu, OS, ]
 首先我们看到有一个空闲分区（白色的那条），这个就是一开始我们在 Windows 下面给 Ubuntu 分出来的空间。操作这个“空闲”分区，鼠标选中它，点击下面的“+”号，会弹出对话框，按照下表中的挂载点名称、大小及格式进行分区。分区大小只是建议，可根据实际情况进行调整。
 
 | 挂载点|分区大小|格式|
-| --------   | -----:                     | :----:  |
-| swap    | 内存大小（8 G） |  交换空间 |
-| /boot    | 300 M                   |  引导分区 |
-| /           | 20 - 30 G              | 逻辑分区 ext4 |
-| /home  | 60 - 80 G              | 逻辑分区 ext4 |
+| --------   | -----:        | :----:      |
+| swap       | 内存大小（8 G） |  交换空间     |
+| ~~/boot~~  | ~~300 M~~     |  ~~引导分区~~ |
+| /          | 20 - 30 G     | 逻辑分区 ext4 |
+| /home      | 60 - 80 G     | 逻辑分区 ext4 |
 
-将“安装启动引导器的设备”选择为之前分配`/boot`的那个分区名。如下图中，是`sda5`，选择你的电脑对应的分区名。
+~~将“安装启动引导器的设备”选择为之前分配`/boot`的那个分区名。如下图中，是`sda5`，选择你的电脑对应的分区名。~~
 
 ![我的 Ubuntu 分区大小设置](http://p6wpxhpqt.bkt.clouddn.com/img_uos_show_diskpart.jpg)
 
+==更新==
+在分区过程中，建议不划分 `/boot`分区，在使用中发现，在更新几次内核之后，就会提示空间不足，因此划分上面表格中其他三个分区即可，“安装启动引导器的设备”保持默认不变。
+系统安装完成后，电脑使用 Linux 的引导，有 Linux 和 Windows 的引导选项，如需修改启动项，详见下文中“4.4 双系统引导项设置”。如此分区后，下面的在 Windows 中使用 EasyBCD 修改引导的步骤不用再做了。
 
 > 分区操作参考下面教程：
 http://www.jianshu.com/p/53b8b76439d0
@@ -67,13 +70,15 @@ http://www.jianshu.com/p/53b8b76439d0
 
 安装完成，点击重启。
 
-> 如果重启之后发现启动选项没有 Ubuntu，而是直接进了 Windows 系统，那就需要在 Windows 中，用 EasyBCD 软件来添加启动引导项了。
+---------------分割线---------------
+
+> 如果为 Ubuntu 系统划分了 `/boot` 分区，重启之后发现启动选项没有 Ubuntu，而是直接进了 Windows 系统，那就需要在 Windows 中，用 EasyBCD 软件来添加启动引导项了。
 
 在 Windows 中安装 EasyBCD 后打开，点击“添加新条目（Add New Entry）” ，选择 `Linux/BSD`，具体设置如下图。类型（Type）选择 GRUB(Legacy)；名称（Name）自己随便写，小编写的是 Ubuntu 作为标识；驱动器（Drive）选取我们设置的 /boot 分区，有 Linux 标记。设置完成后点击“添加条目（Add Entry）”。
 
 ![EeayBCD](http://p6wpxhpqt.bkt.clouddn.com/img_uos_ease_bcd.jpg)
 
-电脑再次启动时，就可以看到多了Ubuntu 的启动选项了。
+电脑再次启动时，就可以看到多了 Ubuntu 的启动选项了。
 
 ## 2. 系统更新与美化
 
@@ -351,9 +356,7 @@ sudo mv PhpStorm-172.3317.83/ /opt/
 cd /opt/PhpStorm-172.3317.83/bin/
 ./phpstorm.sh
 ```
-- 启动后选择 Accept，然后会提示激活。都是 jetbrains IDEA 家族的东西，会收费，但激活方式都差不多，下面奉献我找的一个破解方法。
-链接：http://xidea.online
-其实就是选择 License Server，输入`http://xidea.online`，即可完成破解。
+按照提示进行安装。
 
 更多 Linux 安装 PhpStorm 的步骤请参考：http://www.linuxidc.com/Linux/2016-05/131373.htm
 
@@ -502,5 +505,26 @@ sudo passwd
 ``` bash
 su root
 ```
+
+### 4.4 双系统引导项设置
+默认情况是 Linux 系统在引导的第一个条目，Windows 系统在最后一个，默认启动项停留在第一个。如果你想设置不用手动选择的情况下默认进入的系统，则可以进行如下的修改。
+
+- 打开配置文件
+```bash
+sudo gedit /etc/default/grub
+```
+
+- 修改默认启动项
+GRUB_DEFAULT=0 设置成 GRUB_DEFAULT=4。
+> 索引值是从 0 开始的，第一个是 Ubuntu，第 5 个是 Windows，这样就可以设置开机默认启动 Windows。
+
+- 修改开机默认等待时间
+GRUB_HIDDEN_TIMEOUT= 秒数
+
+- 更新设置，使其有效
+```bash
+sudo update-grub
+```
+
 ## 5. 结尾
 文章持续更新中，遇到好的应用或美化相关的，会更新上来；文章中有不完美的地方，也请大佬指点出来，将做出修改和优化。希望这篇文章能帮到有需要的人，点滴积累，点滴分享。
