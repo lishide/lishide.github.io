@@ -67,21 +67,22 @@ tags: [hexo, NexT]
 - 打开`\themes\next\layout\_macro/post.swig`文件
 - 在 class 为 `post-mata` 的 **div** 中的添加如下内容：
 ```js
-{% if theme.wordcount %}
+{% if theme.post_wordcount.wordcount %}
 <span class="post-letters-count">
   <span class="post-meta-divider">|</span>
   <i class="fa fa-file-word-o"></i>
-  <span title="{{ __('post.wordcount') }}">
+  <span>
       {{ wordcount(post.content) }} 字
   </span>
   <span class="post-meta-divider">|</span>
   <i class="fa fa-clock-o"></i>
-  <span title="{{ __('post.min2read') }}">
+  <span>
       {{ min2read(post.content) }} 分钟
   </span>
 </span>
 {% endif %}
 ```
+> 设置了 `title` 但未显示，已移除。
 
 # 后记
 不断折腾中，不定期更新~
