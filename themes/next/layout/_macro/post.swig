@@ -266,6 +266,22 @@
             #}</div>
           {% endif %}
 
+          <!--/wordcount-->
+          {% if theme.post_wordcount.wordcount %}
+            <span class="post-letters-count">
+              <span class="post-meta-divider">|</span>
+              <i class="fa fa-file-word-o"></i>
+              <span>
+                  {{ wordcount(post.content) }} 字
+              </span>
+              <span class="post-meta-divider">|</span>
+              <i class="fa fa-clock-o"></i>
+              <span>
+                  {{ min2read(post.content) }} 分钟
+              </span>
+            </span>
+          {% endif %}
+
         </div>
       </header>
     {% endif %}

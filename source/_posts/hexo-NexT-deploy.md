@@ -29,6 +29,7 @@ tags: [hexo, NexT]
 ## 在网站底部加上访问量
 参考 N13
 
+步骤：
 - 打开`\themes\next\layout\_partials\footer.swig`文件
 - 在 `copyright` 的 div 前添加：
 ```js
@@ -56,6 +57,31 @@ tags: [hexo, NexT]
 ## 网站底部字数统计
 参考 N15
 
+## 添加字数统计、阅读时长
+参考 N18
+参考 [Hexo 添加字数统计、阅读时长](https://sessionch.com/hexo/hexo-common-plug.html)
+参考 [给hexo博客,next主题,文章添加字数和阅读时长](https://toxufe.github.io/posts/41943/)
+参考 [为Hexo NexT主题添加字数统计功能](https://eason-yang.com/2016/11/05/add-word-count-to-hexo-next/)
+
+步骤：
+- 打开`\themes\next\layout\_macro/post.swig`文件
+- 在 class 为 `post-mata` 的 **div** 中的添加如下内容：
+```js
+{% if theme.wordcount %}
+<span class="post-letters-count">
+  <span class="post-meta-divider">|</span>
+  <i class="fa fa-file-word-o"></i>
+  <span title="{{ __('post.wordcount') }}">
+      {{ wordcount(post.content) }} 字
+  </span>
+  <span class="post-meta-divider">|</span>
+  <i class="fa fa-clock-o"></i>
+  <span title="{{ __('post.min2read') }}">
+      {{ min2read(post.content) }} 分钟
+  </span>
+</span>
+{% endif %}
+```
 
 # 后记
 不断折腾中，不定期更新~
