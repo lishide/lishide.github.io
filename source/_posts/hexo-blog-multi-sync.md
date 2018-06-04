@@ -4,16 +4,16 @@ date: 2018-02-12 15:30:55
 tags: hexo
 ---
 
-### 前言
+# 前言
 
 在公司的 Mac 上使用 hexo 搭建了 GitHub 博客，然而我在自己的电脑上也想要同步 GitHub 博客到本地并发布更新，或者以后更换电脑了也希望最快的同步到最新的博客，不必重新搭建一遍。查询了一些网上的资料，现在记录一下，也给遇到同样问题的小伙伴们一个参考。
 <!--more-->
 
-### 多设备同步
+# 多设备同步
 
 同步思路与 GitHub 推拉源码思路相同，使用 git 指令，保持本地的**博客文件**与 GitHub 上的**博客文件**相同即可，其步骤如下：
 
-#### 1. 上传博客工程
+## 上传博客工程
 
 部署博客到 GitHub 以后，我们可以在 GitHub 仓库的 master 分支上看到我们上传的博客文件。
 
@@ -39,7 +39,7 @@ git commit -m ""
 git push origin hexo
 ```
 
-#### 2. 其他设备上 clone 下 GitHub 上新建的分支的文件到本地
+## 其他设备上 clone 下 GitHub 上新建的分支的文件到本地
 
 在另一台设备上使用 git 指令下载 GitHub 新建分支上的文件：
 
@@ -48,10 +48,10 @@ git push origin hexo
 git clone -b 分支名 https://github.com/用户名/仓库名.git
 ```
 
-#### 3. 本地写文章
+## 本地写文章
 在 `source` -> `_posts` 文件夹下新建 md 文件，编辑并保存。
 
-#### 4. 部署到 GitHub
+## 部署到 GitHub
 
 ```bash
 // 安装 hexo
@@ -63,7 +63,7 @@ npm install
 npm install hexo-deployer-git
 ```
 
-#### 5. 同步项目源文件到 GitHub
+## 同步项目源文件到 GitHub
 ```bash
 // 添加源文件
 git add .
@@ -76,7 +76,7 @@ git pull origin 分支名 --allow-unrelated-histories
 git push origin 分支名
 ```
 
-#### 6. 更新博客
+## 更新博客
 ```bash
 $ hexo clean
 $ hexo g
