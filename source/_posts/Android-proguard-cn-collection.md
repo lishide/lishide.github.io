@@ -1,5 +1,5 @@
 ---
-title: Android-proguard-cn-collection
+title: Android 混淆规则整理
 date: 2018-06-06 11:46:00
 tags: [Android, ProGuard]
 ---
@@ -8,7 +8,7 @@ tags: [Android, ProGuard]
 
 <!--more-->
 
-近期的一次发版中，同事反应一个发生在某米手机（没有黑~）上的奔溃 bug，手头的测试真机数量有限且均无此问题。使用云测试进行调试，上传了 release 和 debug 版的 apk，发现那款机型的确出现问题。经过分析，问题定位在了代码混淆问题上，因为想到自己之前的一次发版中也曾有过这个问题。
+近期的一次发版中，同事反应一个发生在某米手机（没有黑~）上的奔溃 bug，手头的测试真机数量有限且均无此问题。后来使用云测试进行调试，上传了 release 和 debug 版的 apk，发现那款机型的确出现问题。经过分析，问题定位在了代码混淆问题上，因为想到自己之前的一次发版中也曾有过这个问题。
 
 又一次遇到这样的问题，觉得有必要好好掌握一下正确地写代码混淆规则的姿势了，而不只是在使用第三方和轮子时，单纯地 copy 开源库的 ProGuard。
 
@@ -23,7 +23,7 @@ tags: [Android, ProGuard]
 整理了一个类似模板的项目吧，希望对大家有用，轻松搞定混淆。并已开源到 GitHub——[Android-proguard-cn-collection](https://github.com/lishide/Android-proguard-cn-collection)，收集整理中，如果你有补充，期待你的 PR。
 
 ### 基本混淆
-最基本的配置信息，任何 App 都要使用，基本不用动。（代码及注释均来自《App 研发录》）
+最基本的配置信息，任何 App 都要使用，基本不用动。（代码及注释来自《App 研发录》）
 
 ```groovy
 # # 1. 基本混淆======================================================================================
@@ -186,7 +186,9 @@ tags: [Android, ProGuard]
 ```groovy
 # # 3. 针对第三方 jar 包的解决方案=====================================================================
 # ## 3.1 针对 android-support-v4.jar 的解决方案-------------------------------
--libraryjars libs/android-support-v4.jar
+# 如果是直接包含的 jar 包的话，这样写
+# 如果 gradle 报错的话，可以考虑注释掉 -libraryjars
+#-libraryjars libs/android-support-v4.jar
 -dontwarn android.support.v4.**
 -keep class android.support.v4.** { *; }
 -keep interface android.support.v4.app.** { *; }
@@ -201,7 +203,7 @@ tags: [Android, ProGuard]
 ```
 
 ## 在项目中指定混淆文件
-将 Module 下的 build.gradle 中 minifyEnabled 设置为 true。
+将 Module 下的 build.gradle 中 minifyEnabled 设置为 `true`。
 
 ```groovy
 android {
