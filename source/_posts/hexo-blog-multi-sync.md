@@ -17,7 +17,7 @@ tags: hexo
 
 部署博客到 GitHub 以后，我们可以在 GitHub 仓库的 master 分支上看到我们上传的博客文件。
 
-> 「使用 hexo 搭建部署 GitHub 博客」步骤请移步另一篇[博文](https://lishide.github.io/2018/02/12/使用 hexo 搭建部署 GitHub 博客)查看更多。
+> 「使用 hexo 搭建部署 GitHub 博客」步骤请移步另一篇[博文](https://lishide.github.io/2018/02/12/hexo-blog-create/)查看更多。
 
 但是这个博客文件是不包含 hexo 配置的，所以我们需要新建分支，使用 git 指令将带 hexo 配置的 GitHub 工程文件上传到新建的分支上。
 
