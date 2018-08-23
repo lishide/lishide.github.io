@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.4.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="前言在这个酷热的 8 月，笔者经历了一次找工作。整理一下遇到的一些面试题，由于记忆比较零散，有一些也忘记了，这里记录其中的两家的面试题，各家问的有重复的问题，就不一一列举了。  相关题目的答案会在后期逐渐完善">
+<meta name="keywords" content="Android,面试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2018 年 8 月 Android 面试总结（亲历）">
+<meta property="og:url" content="https://lishide.github.io/2018/08/18/Android-interview-201808/index.html">
+<meta property="og:site_name" content="李世德的博客">
+<meta property="og:description" content="前言在这个酷热的 8 月，笔者经历了一次找工作。整理一下遇到的一些面试题，由于记忆比较零散，有一些也忘记了，这里记录其中的两家的面试题，各家问的有重复的问题，就不一一列举了。  相关题目的答案会在后期逐渐完善">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-08-23T12:35:02.168Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="2018 年 8 月 Android 面试总结（亲历）">
+<meta name="twitter:description" content="前言在这个酷热的 8 月，笔者经历了一次找工作。整理一下遇到的一些面试题，由于记忆比较零散，有一些也忘记了，这里记录其中的两家的面试题，各家问的有重复的问题，就不一一列举了。  相关题目的答案会在后期逐渐完善">
+
+
+
+
+
+
+  <link rel="canonical" href="https://lishide.github.io/2018/08/18/Android-interview-201808/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>2018 年 8 月 Android 面试总结（亲历） | 李世德的博客</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">李世德的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">我有故事，你有酒吗？</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://lishide.github.io/2018/08/18/Android-interview-201808/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="李世德">
+      <meta itemprop="description" content="爱生活，爱学习，一个不羁的编码界小学生。">
+      <meta itemprop="image" content="http://p6wpxhpqt.bkt.clouddn.com/img-okal-eltocat-300.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李世德的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">2018 年 8 月 Android 面试总结（亲历）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-08-18 10:36:12" itemprop="dateCreated datePublished" datetime="2018-08-18T10:36:12+08:00">2018-08-18</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-08-23 20:35:02" itemprop="dateModified" datetime="2018-08-23T20:35:02+08:00">2018-08-23</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+          <!--/wordcount-->
+          
+            <span class="post-letters-count">
+              <span class="post-meta-divider">|</span>
+              <i class="fa fa-file-word-o"></i>
+              <span>
+                  2,277 字
+              </span>
+              <span class="post-meta-divider">|</span>
+              <i class="fa fa-clock-o"></i>
+              <span>
+                  8 分钟
+              </span>
+            </span>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在这个酷热的 8 月，笔者经历了一次找工作。整理一下遇到的一些面试题，由于记忆比较零散，有一些也忘记了，这里记录其中的两家的面试题，各家问的有重复的问题，就不一一列举了。</p>
+<blockquote>
+<p>相关题目的答案会在后期逐渐完善</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="面试"><a href="#面试" class="headerlink" title="面试"></a>面试</h1><h2 id="丁香园-丁香医生高级-Android-开发面经（2018-07-31）"><a href="#丁香园-丁香医生高级-Android-开发面经（2018-07-31）" class="headerlink" title="丁香园-丁香医生高级 Android 开发面经（2018.07.31）"></a>丁香园-丁香医生高级 Android 开发面经（2018.07.31）</h2><ul>
+<li><p>自我介绍，之前项目介绍</p>
+</li>
+<li><p>离职原因</p>
+</li>
+<li><p>kotlin语言</p>
+</li>
+<li><p>Kotlin语言的好处<br>Kotlin编译为JVM字节码或JavaScript<br>Kotlin程序可以使用所有现有的Java框架和库<br>Kotlin可以轻松学习，平易近人。<br>Kotlin是开放源码，没有收费。<br>Kotlin的空安全性很好<br>代码审查不是问题</p>
+</li>
+<li><p>kotlin 高阶函数</p>
+</li>
+<li><p>kotlin 中的 when，when 在什么情况可以省略 else 分支，什么情况不可缺少？<br>when 取代了类 C 语言的 switch 操作符。when会对所有的分支进行检查直到有一个条件满足。when 可以用做表达式或声明。如果有分支可以用同样的方式处理的话，分支条件可以连在一起。when 也可以用来取代 if - else if 链。<br>如果把 when 做为表达式的话 else 分支是强制的，除非编译器可以证明分支条件已经覆盖所有可能性。</p>
+</li>
+<li><p>kotlin 的 Anko 库，为什么推出？<br>Anko是JetBrains开发的一个强大的库。它主要的目的是用来替代以前XML的方式来使用代码生成UI布局。Anko包含了很多的非常有帮助的函数和属性来避免让你写很多的模版代码。通过查看Anko源码学习kotlin语言是一种不错的方法。Anko能帮助我们简化代码，比如，实例化Intent，Activity之间的跳转，Fragment的创建，数据库的访问，Alert的创建等等。</p>
+</li>
+<li><p>kotlin 不用 findViewById，直接用控件 Id 做操作的内部原理<br><a href="https://blog.csdn.net/hust_twj/article/details/80290362" target="_blank" rel="noopener">https://blog.csdn.net/hust_twj/article/details/80290362</a></p>
+</li>
+<li><p>Retrofit 优点、涉及到的设计模式<br>概念：Retrofit是一个基于RESTful的HTTP网络请求框架的封装，其中网络请求的本质是由OKHttp完成的，而Retrofit仅仅负责网络请求接口的封装。<br>原理：App应用程序通过Retrofit请求网络，实际上是使用Retrofit接口层封装请求参数，Header、URL等信息，之后由OKHttp完成后续的请求，在服务器返回数据之后，OKHttp将原始的结果交给Retrofit，最后根据用户的需求对结果进行解析。<br>涉及到的设计模式：建造者模式、工厂方法模式、代理模式、外观模式、策略模式、单例模式、装饰器模式、适配器模式，责任链模式、装饰器模式的不同</p>
+</li>
+<li><p>Retrofit 提供了哪些拦截器</p>
+</li>
+<li><p>OkHttp 请求网络的原理（源码）<br>进行通信的原理主要是通过dispatcher不断从requestQueue中取出请求call，根据是否已经缓存调用Cache或NetWork这两类数据获取接口之一，从内存缓存或者服务器中获取请求的数据。分为同步和异步请求，同步请求通过call.execute()直接返回当前的response，而异步请求会将当前的call.enqueue添加到请求队列中，通过回调的方式来获取最后的结果。</p>
+</li>
+<li><p>哪些途径关注最新技术动态</p>
+</li>
+<li><p>组件化，以及你认为的组件化的应用场景</p>
+</li>
+<li><p>热更新</p>
+</li>
+<li><p>AIDL（了解）<br>AIDL是一个缩写，全称是Android Interface Definition Language，也就是Android接口定义语言。<br>为了实现进程间通信，尤其是在涉及多进程并发情况下的进程间通信。</p>
+</li>
+</ul>
+<ul>
+<li><p>GC算法（懵13，复习了四种引用，却略过了 GC 机制）<br>标记/清除算法<br>复制算法<br>标记/整理算法<br>分代收集算法</p>
+</li>
+<li><p>View 事件分发，涉及到的设计模式（责任链模式）<br>当一个事件点击后，系统需要将这个事件传递给一个具体的View去处理，这个事件的传递过程就是分发过程。<br>事件分发的顺序<br>即 事件传递的顺序：Activity -&gt; ViewGroup -&gt; View<br>事件分发由三个方法协作完成：<br>  dispatchTouchEvent() :分发（传递）点击事件<br>  onInterceptTouchEvent():判断是否拦截了某个事件(只存在于ViewGroup；普通的View是没有该方法)<br>  onTouchEvent():处理点击事件<br><a href="https://www.jianshu.com/p/38015afcdb58" target="_blank" rel="noopener">https://www.jianshu.com/p/38015afcdb58</a><br><a href="https://blog.csdn.net/qq_30379689/article/details/73698192" target="_blank" rel="noopener">https://blog.csdn.net/qq_30379689/article/details/73698192</a></p>
+</li>
+<li><p>Handler 相关知识点，理解，为什么不能在子线程更新 UI 等</p>
+</li>
+<li><p>RxJava，线程调度<br>subscribeOn 用于指定 subscribe() 时所发生的线程，从源码角度可以看出，内部线程调度是通过 ObservableSubscribeOn来实现的。<br>ObservableSubscribeOn 的核心源码在 subscribeActual 方法中，通过代理的方式使用 SubscribeOnObserver 包装 Observer 后，设置 Disposable 来将 subscribe 切换到 Scheduler 线程中。<br>observeOn 方法用于指定下游 Observer 回调发生的线程。</p>
+</li>
+<li><p>EventBus</p>
+</li>
+<li><p>路由（讲了我用过的协议跳转；了解阿里的 arouter，大概说了下，可能说的不太对）</p>
+</li>
+<li><p>Dagger2 依赖注入<br>一款基于Java注解来实现的完全在编译阶段完成依赖注入的开源库，主要用于模块间解耦、提高代码的健壮性和可维护性。</p>
+</li>
+<li><p>内存优化，怎么分析</p>
+</li>
+<li><p>性能优化，一个原生 App 界面卡顿，可能的原因（掉帧）</p>
+</li>
+<li><p>CPU、GPU、屏幕</p>
+</li>
+<li><p>熟悉 groovy 吗？写一个批量将…（忘了）。回答的是AS 的 gradle 配置使用的语言，写那个不会。。</p>
+</li>
+<li><p>Java 多态</p>
+</li>
+</ul>
+<p>还有个别几个问题，忘了。</p>
+<h2 id="目前接受-Offer-的公司"><a href="#目前接受-Offer-的公司" class="headerlink" title="目前接受 Offer 的公司"></a>目前接受 Offer 的公司</h2><h3 id="1-电面（半小时）"><a href="#1-电面（半小时）" class="headerlink" title="1. 电面（半小时）"></a>1. 电面（半小时）</h3><ul>
+<li><p>ArrayList 和 LinkedList</p>
+</li>
+<li><p>数组和链表区别<br><a href="https://blog.csdn.net/melody_day/article/details/53517550" target="_blank" rel="noopener">https://blog.csdn.net/melody_day/article/details/53517550</a></p>
+</li>
+<li><p>service保活</p>
+</li>
+<li><p>同一手机上安装不同版本的apk</p>
+</li>
+<li><p>组件化<br>（1）概念：<br>组件化：是将一个APP分成多个module，每个module都是一个组件，也可以是一个基础库供组件依赖，开发中可以单独调试部分组件，组件中不需要相互依赖但是可以相互调用，最终发布的时候所有组件以lib的形式被主APP工程依赖打包成一个apk。<br>（2）由来：<br>1、    APP版本迭代，新功能不断增加，业务变得复杂，维护成本高<br>2、    业务耦合度高，代码臃肿，团队内部多人协作开发困难<br>3、    Android编译代码卡顿，单一工程下代码耦合严重，修改一处需要重新编译打包，耗时耗力。<br>4、    方便单元测试，单独改一个业务模块，不需要着重关注其他模块。</p>
+</li>
+<li><p>路由</p>
+</li>
+</ul>
+<h3 id="2-笔试（半小时）"><a href="#2-笔试（半小时）" class="headerlink" title="2. 笔试（半小时）"></a>2. 笔试（半小时）</h3><ul>
+<li><p>斐波那切数列（黄金分割数列）算法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fib</span> <span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> b = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> c;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        c = a + b;</span><br><span class="line">        a = b;</span><br><span class="line">        b = c;</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="keyword">return</span> c;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>熟悉的三种算法，用代码或语言描述其中一种<br>冒泡排序、快速排序、选择排序、插入排序等<br>冒泡排序：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.length - <span class="number">1</span>; i++) &#123; <span class="comment">// 外层循环控制排序趟数</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; arr.length - <span class="number">1</span> - i; j++) &#123; <span class="comment">// 内层循环控制每一趟排序多少次</span></span><br><span class="line">        <span class="keyword">if</span> (arr[j] &gt; arr[j + <span class="number">1</span>]) &#123;</span><br><span class="line">            <span class="keyword">int</span> temp = arr[j];</span><br><span class="line">            arr[j] = arr[j + <span class="number">1</span>];</span><br><span class="line">            arr[j + <span class="number">1</span>] = temp;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Activity 生命周期</p>
+</li>
+<li><p>Activity 任务栈和使用方法</p>
+</li>
+<li><p>多渠道打包<br><a href="https://blog.csdn.net/Android_Study_OK/article/details/75371940" target="_blank" rel="noopener">https://blog.csdn.net/Android_Study_OK/article/details/75371940</a></p>
+</li>
+<li><p>用过的设计模式及其使用场景</p>
+</li>
+</ul>
+<h3 id="3-面试（一小时）"><a href="#3-面试（一小时）" class="headerlink" title="3. 面试（一小时）"></a>3. 面试（一小时）</h3><ul>
+<li><p>内存优化</p>
+</li>
+<li><p>MVP<br>M（Model）<br>数据层，和MVC中的M一样，用来放数据的处理（比如网络请求，缓存等）。<br>V(View)<br>负责UI具体实现展现。比如Presenter派发过来一个动作是showDialog显示进度命令，那么我们这个View就负责实现具体UI。<br>P(Presenter)<br>负责处理业务逻辑代码，处理Model数据，然后将处理完的数据分发到View层。</p>
+</li>
+<li><p>RxJava 操作符</p>
+</li>
+<li><p>大概介绍项目，亮点功能</p>
+</li>
+<li><p>数据库（项目中用到的）</p>
+</li>
+<li><p>EventBus</p>
+</li>
+<li><p>加载一个运营活动页，怎么做</p>
+</li>
+<li><p>Dagger2 依赖注入<br>一款基于Java注解来实现的完全在编译阶段完成依赖注入的开源库，主要用于模块间解耦、提高代码的健壮性和可维护性。</p>
+</li>
+</ul>
+<h3 id="4-Android-组长面（一小时）"><a href="#4-Android-组长面（一小时）" class="headerlink" title="4. Android 组长面（一小时）"></a>4. Android 组长面（一小时）</h3><ul>
+<li><p>自我介绍</p>
+</li>
+<li><p>项目介绍</p>
+</li>
+<li><p>fragment切换</p>
+</li>
+<li><p>自定义view</p>
+</li>
+<li><p>6.0、7.0、8.0适配</p>
+</li>
+<li><p>项目中一些第三方库</p>
+</li>
+<li><p>某框架使用中的问题</p>
+</li>
+<li><p>事件分发</p>
+</li>
+<li><p>常用的设计模式</p>
+</li>
+<li><p>单例模式中的 volatile</p>
+</li>
+<li><p>git 命令</p>
+</li>
+<li><p>离职原因</p>
+</li>
+</ul>
+<h3 id="5-主管面（半小时）"><a href="#5-主管面（半小时）" class="headerlink" title="5.主管面（半小时）"></a>5.主管面（半小时）</h3><ul>
+<li><p>自我介绍</p>
+</li>
+<li><p>离职原因</p>
+</li>
+<li><p>工作中职责</p>
+</li>
+</ul>
+<h3 id="6-HR（微信）"><a href="#6-HR（微信）" class="headerlink" title="6. HR（微信）"></a>6. HR（微信）</h3><ul>
+<li>谈薪资</li>
+<li>入职相关事项</li>
+<li>offer</li>
+</ul>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>最后，说几点个人看法。</p>
+<ul>
+<li>平时的积累很重要，要善于积累。</li>
+<li>开发有一定年限，一定需要懂得深层原理（源码）。</li>
+<li>持续学习，保持求知欲。</li>
+<li>不卑不亢，尽最大努力发挥自己了解的，不懂的地方虚心请教。</li>
+</ul>
+<p>希望大家都会找到满意的工作。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"><i class="fa fa-tag"></i> Android</a>
+          
+            <a href="/tags/面试/" rel="tag"><i class="fa fa-tag"></i> 面试</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/10/Android-solutions-list-item-dyna-transform-edit/" rel="next" title="列表动态增减并移动，以及 item 中使用 EditText 的问题扫坑">
+                <i class="fa fa-chevron-left"></i> 列表动态增减并移动，以及 item 中使用 EditText 的问题扫坑
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/23/hello-world/" rel="prev" title="Hello World">
+                Hello World <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://p6wpxhpqt.bkt.clouddn.com/img-okal-eltocat-300.jpg"
+                alt="李世德" />
+            
+              <p class="site-author-name" itemprop="name">李世德</p>
+              <p class="site-description motion-element" itemprop="description">爱生活，爱学习，一个不羁的编码界小学生。</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">26</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">29</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lishide" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/u/3235831430" target="_blank" title="Weibo"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#面试"><span class="nav-number">2.</span> <span class="nav-text">面试</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#丁香园-丁香医生高级-Android-开发面经（2018-07-31）"><span class="nav-number">2.1.</span> <span class="nav-text">丁香园-丁香医生高级 Android 开发面经（2018.07.31）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目前接受-Offer-的公司"><span class="nav-number">2.2.</span> <span class="nav-text">目前接受 Offer 的公司</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-电面（半小时）"><span class="nav-number">2.2.1.</span> <span class="nav-text">1. 电面（半小时）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-笔试（半小时）"><span class="nav-number">2.2.2.</span> <span class="nav-text">2. 笔试（半小时）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-面试（一小时）"><span class="nav-number">2.2.3.</span> <span class="nav-text">3. 面试（一小时）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Android-组长面（一小时）"><span class="nav-number">2.2.4.</span> <span class="nav-text">4. Android 组长面（一小时）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-主管面（半小时）"><span class="nav-number">2.2.5.</span> <span class="nav-text">5.主管面（半小时）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-HR（微信）"><span class="nav-number">2.2.6.</span> <span class="nav-text">6. HR（微信）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李世德</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">
+    <i class="fa fa-eye"></i>
+    <span id="busuanzi_container_site_pv">
+      访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <i class="fa fa-user-md"></i>
+    <span id="busuanzi_container_site_uv">
+      访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+  </div>
+  <span class="post-meta-divider">|</span>
+  <i class="fa fa-pencil"></i>
+  <div class="theme-info">
+    <div class="powered-by"></div>
+    <span class="post-count">博客全站共 32.1k 字</span>
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.6.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Gemini</a> v6.4.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.4.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

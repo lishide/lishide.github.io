@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.4.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="上一讲中以建造者模式开始，代码使用了 Kotlin 语言，有些写法可能不太理解，本讲先讲解一些常见的关于类与继承、属性和字段及修饰符等相关的知识，然后分享工厂方法模式的简单实现。">
+<meta name="keywords" content="Android,Kotlin,Design Patterns">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【团队分享】Kotlin 及设计模式实践（二）">
+<meta property="og:url" content="https://lishide.github.io/2018/03/28/Android-Kotlin-dp2/index.html">
+<meta property="og:site_name" content="李世德的博客">
+<meta property="og:description" content="上一讲中以建造者模式开始，代码使用了 Kotlin 语言，有些写法可能不太理解，本讲先讲解一些常见的关于类与继承、属性和字段及修饰符等相关的知识，然后分享工厂方法模式的简单实现。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://p6wpxhpqt.bkt.clouddn.com/img_dp_FactoryMethod.jpg">
+<meta property="og:image" content="http://p6wpxhpqt.bkt.clouddn.com/img_dp_SimpleFactory.jpg">
+<meta property="og:updated_time" content="2018-08-23T12:19:27.259Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【团队分享】Kotlin 及设计模式实践（二）">
+<meta name="twitter:description" content="上一讲中以建造者模式开始，代码使用了 Kotlin 语言，有些写法可能不太理解，本讲先讲解一些常见的关于类与继承、属性和字段及修饰符等相关的知识，然后分享工厂方法模式的简单实现。">
+<meta name="twitter:image" content="http://p6wpxhpqt.bkt.clouddn.com/img_dp_FactoryMethod.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="https://lishide.github.io/2018/03/28/Android-Kotlin-dp2/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>【团队分享】Kotlin 及设计模式实践（二） | 李世德的博客</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">李世德的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">我有故事，你有酒吗？</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://lishide.github.io/2018/03/28/Android-Kotlin-dp2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="李世德">
+      <meta itemprop="description" content="爱生活，爱学习，一个不羁的编码界小学生。">
+      <meta itemprop="image" content="http://p6wpxhpqt.bkt.clouddn.com/img-okal-eltocat-300.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李世德的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【团队分享】Kotlin 及设计模式实践（二）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-03-28 10:43:05" itemprop="dateCreated datePublished" datetime="2018-03-28T10:43:05+08:00">2018-03-28</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-08-23 20:19:27" itemprop="dateModified" datetime="2018-08-23T20:19:27+08:00">2018-08-23</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+          <!--/wordcount-->
+          
+            <span class="post-letters-count">
+              <span class="post-meta-divider">|</span>
+              <i class="fa fa-file-word-o"></i>
+              <span>
+                  2,003 字
+              </span>
+              <span class="post-meta-divider">|</span>
+              <i class="fa fa-clock-o"></i>
+              <span>
+                  8 分钟
+              </span>
+            </span>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>上一讲中以建造者模式开始，代码使用了 Kotlin 语言，有些写法可能不太理解，本讲先讲解一些常见的关于类与继承、属性和字段及修饰符等相关的知识，然后分享工厂方法模式的简单实现。</p>
+<a id="more"></a>
+<h1 id="1-Kotlin"><a href="#1-Kotlin" class="headerlink" title="1. Kotlin"></a>1. Kotlin</h1><h2 id="1-1-类与继承"><a href="#1-1-类与继承" class="headerlink" title="1.1 类与继承"></a>1.1 类与继承</h2><h3 id="1-1-1-类"><a href="#1-1-1-类" class="headerlink" title="1.1.1 类"></a>1.1.1 类</h3><p>使用关键字 class 声明类，类声明由类名、类头（指定其类型参数、主构造函数等）以及由花括号包围的类体构成。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Empty</span></span></span><br></pre></td></tr></table></figure></p>
+<h3 id="1-1-2-构造函数"><a href="#1-1-2-构造函数" class="headerlink" title="1.1.2 构造函数"></a>1.1.2 构造函数</h3><p>类可以有一个主构造函数以及多个二级构造函数。主构造函数是类头的一部分：跟在类名后面(可以有可选的类型参数)。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">class Person constructor(firstName: String) &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>如果主构造函数没有注解或可见性说明，则 <code>constructor</code> 关键字是可以省略</p>
+</blockquote>
+<p>主构造函数不能包含任意代码。初始化代码可以放在以 init 做前缀的初始化块内<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class Customer(name: String) &#123;</span><br><span class="line">    init &#123;</span><br><span class="line">        println(<span class="string">"Customer initialized with value $&#123;name&#125;"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>声明属性并在主构造函数中初始化,在 Kotlin 中有更简单的语法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">class Person(val firstName: String, val lastName: String, var age: Int) &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果构造函数有注解或可见性声明，则 <code>constructor</code> 关键字是不可少的，并且可见性应该在前：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">class Customer public @inject constructor (name: String) &#123;...&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="1-1-3-二级构造函数"><a href="#1-1-3-二级构造函数" class="headerlink" title="1.1.3 二级构造函数"></a>1.1.3 二级构造函数</h3><p>类也可以有二级构造函数，需要加前缀 <code>constructor</code>:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    constructor(parent: Person) &#123;</span><br><span class="line">        parent.children.add(<span class="keyword">this</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="1-1-4-创建类的实例"><a href="#1-1-4-创建类的实例" class="headerlink" title="1.1.4 创建类的实例"></a>1.1.4 创建类的实例</h3><p>我们可以像使用普通函数那样使用构造函数创建类实例：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">val test = Test()</span><br><span class="line">val customer = Customer(<span class="string">"Jobs"</span>)</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>Kotlin 没有 new 关键字</p>
+</blockquote>
+<h3 id="1-1-5-类成员"><a href="#1-1-5-类成员" class="headerlink" title="1.1.5 类成员"></a>1.1.5 类成员</h3><p>类可以包含：<br>– 构造函数和初始化代码块<br>– 函数<br>– 属性<br>– 内部类<br>– 对象声明</p>
+<h3 id="1-1-6-继承"><a href="#1-1-6-继承" class="headerlink" title="1.1.6 继承"></a>1.1.6 继承</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Example</span> //　隐式继承于 <span class="title">Any</span></span></span><br></pre></td></tr></table></figure>
+<p>声明一个明确的父类，需要在类头后加冒号再加父类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">open class <span class="title">Base</span><span class="params">(p: Int)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">class <span class="title">Derived</span><span class="params">(p: Int)</span> : <span class="title">Base</span><span class="params">(p)</span></span></span><br></pre></td></tr></table></figure></p>
+<p>如果类有主构造函数，则基类可以而且是必须在主构造函数中使用参数立即初始化。<br>如果类没有主构造函数，则必须在每一个构造函数中用 super 关键字初始化基类，或者在代理另一个构造函数做这件事。注意在这种情形中不同的二级构造函数可以调用基类不同的构造方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">class MyView : View &#123;</span><br><span class="line">    constructor(ctx: Context) : <span class="keyword">super</span>(ctx) &#123;</span><br><span class="line">    &#125;</span><br><span class="line">    constructor(ctx: Context, attrs: AttributeSet) : <span class="keyword">super</span>(ctx,attrs) &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="1-1-7-复写方法"><a href="#1-1-7-复写方法" class="headerlink" title="1.1.7 复写方法"></a>1.1.7 复写方法</h3><p>kotlin 需要把可以复写的成员都明确注解出来，并且重写它们：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">open <span class="class"><span class="keyword">class</span> <span class="title">Base</span> </span>&#123;</span><br><span class="line">    <span class="function">open fun <span class="title">v</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">    <span class="function">fun <span class="title">nv</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Derived() : Base() &#123;</span><br><span class="line">    <span class="function">override fun <span class="title">v</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>标记为override的成员是open的，它可以在子类中被复写。如果你不想被重写就要加 final:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">open class <span class="title">AnotherDerived</span><span class="params">()</span> : <span class="title">Base</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">final</span> override fun <span class="title">v</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="1-1-8-复写属性"><a href="#1-1-8-复写属性" class="headerlink" title="1.1.8 复写属性"></a>1.1.8 复写属性</h3><p>复写属性与复写方法类似<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">open <span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span>&#123;</span><br><span class="line">  open val x: Int get &#123; ... &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Bar1 : Foo() &#123;</span><br><span class="line">  override val x: Int = ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="1-1-9-抽象类"><a href="#1-1-9-抽象类" class="headerlink" title="1.1.9 抽象类"></a>1.1.9 抽象类</h3><p>一个类或一些成员可能被声明成 abstract 。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">open <span class="class"><span class="keyword">class</span> <span class="title">Base</span> </span>&#123;</span><br><span class="line">    <span class="function">open fun <span class="title">f</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">abstract class Derived : Base() &#123;</span><br><span class="line">    <span class="function">override <span class="keyword">abstract</span> fun <span class="title">f</span><span class="params">()</span></span></span><br><span class="line"><span class="function">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="1-2-属性和字段"><a href="#1-2-属性和字段" class="headerlink" title="1.2 属性和字段"></a>1.2 属性和字段</h2><h3 id="1-2-1-属性声明"><a href="#1-2-1-属性声明" class="headerlink" title="1.2.1 属性声明"></a>1.2.1 属性声明</h3><p>使用 var 关键字声明可变属性，用 val 关键字声明只读属性<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var name: String = ...</span><br><span class="line">val result = ...</span><br></pre></td></tr></table></figure></p>
+<h3 id="1-2-2-延迟初始化属性"><a href="#1-2-2-延迟初始化属性" class="headerlink" title="1.2.2 延迟初始化属性"></a>1.2.2 延迟初始化属性</h3><p>避免非空检查<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyTest</span> </span>&#123;</span><br><span class="line">    lateinit var subject: TestSubject</span><br><span class="line"></span><br><span class="line">    <span class="meta">@SetUp</span> <span class="function">fun <span class="title">setup</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        subject = TestSubject()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span> <span class="function">fun <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        subject.method()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="1-3-可见性修饰词"><a href="#1-3-可见性修饰词" class="headerlink" title="1.3 可见性修饰词"></a>1.3 可见性修饰词</h2><p>类，对象，接口，构造函数，属性以及它们的 setter 方法都可以有可见性修饰词。( getter与对应的属性拥有相同的可见性)。在 Kotlin 中有四种修饰词：<code>private</code>,<code>protected</code>,<code>internal</code>,以及 <code>public</code> 。默认的修饰符是 <code>public</code>。</p>
+<p>…（常见，略）<br>internal —— 模块<br><code>internal</code> 修饰符是指成员的可见性是只在同一个模块中才可见的。</p>
+<h1 id="2-工厂方法模式"><a href="#2-工厂方法模式" class="headerlink" title="2. 工厂方法模式"></a>2. 工厂方法模式</h1><h2 id="2-1-定义"><a href="#2-1-定义" class="headerlink" title="2.1 定义"></a>2.1 定义</h2><p>工厂方法模式（Factory Method Pattern）又称为工厂模式，它属于类创建型模式。在工厂方法模式中，工厂父类负责定义创建产品对象的公共接口，而工厂子类则负责生成具体的产品对象，这样做的目的是将产品类的实例化操作延迟到工厂子类中完成，即通过工厂子类来确定究竟应该实例化哪一个具体产品类。</p>
+<h2 id="2-2-结构"><a href="#2-2-结构" class="headerlink" title="2.2 结构"></a>2.2 结构</h2><p>Factory：抽象工厂角色，定义创建实例的抽象方法；<br>ConcreteFactory：具体工厂角色，负责创建特定实例；<br>Product：抽象产品角色，是所创建的所有对象的父类，负责描述所有实例所共有的公共接口；<br>ConcreteProduct：具体产品角色，是创建目标，所有创建的对象都充当这个角色的某个具体类的实例。</p>
+<p><img src="http://p6wpxhpqt.bkt.clouddn.com/img_dp_FactoryMethod.jpg" alt="工厂方法模式-类图"></p>
+<h1 id="3-简单工厂模式"><a href="#3-简单工厂模式" class="headerlink" title="3. 简单工厂模式"></a>3. 简单工厂模式</h1><h2 id="3-1-定义"><a href="#3-1-定义" class="headerlink" title="3.1 定义"></a>3.1 定义</h2><p>简单工厂模式（Simple Factory Pattern）：又称为静态工厂方法（Static Factory Method）模式，它属于类创建型模式。在简单工厂模式中，可以根据参数的不同返回不同类的实例。简单工厂模式专门定义一个类来负责创建其他类的实例，被创建的实例通常都具有共同的父类。</p>
+<h2 id="3-2-结构"><a href="#3-2-结构" class="headerlink" title="3.2 结构"></a>3.2 结构</h2><p>Factory：工厂角色，负责实现创建所有实例的内部逻辑；<br>Product：抽象产品角色，是所创建的所有对象的父类，负责描述所有实例所共有的公共接口；<br>ConcreteProduct：具体产品角色，是创建目标，所有创建的对象都充当这个角色的某个具体类的实例。</p>
+<p><img src="http://p6wpxhpqt.bkt.clouddn.com/img_dp_SimpleFactory.jpg" alt="简单工厂模式-类图"></p>
+<h1 id="4-工厂模式的实现"><a href="#4-工厂模式的实现" class="headerlink" title="4. 工厂模式的实现"></a>4. 工厂模式的实现</h1><h2 id="4-1-Product"><a href="#4-1-Product" class="headerlink" title="4.1 Product"></a>4.1 Product</h2><p>定义了抽象产品角色，及抽象方法 print。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Product</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">abstract</span> fun <span class="title">print</span><span class="params">()</span></span></span><br><span class="line"><span class="function">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="4-2-ConcreteProductA-与-ConcreteProductB"><a href="#4-2-ConcreteProductA-与-ConcreteProductB" class="headerlink" title="4.2 ConcreteProductA 与 ConcreteProductB"></a>4.2 ConcreteProductA 与 ConcreteProductB</h2><p>定义了两个具体产品角色，分别实现了 print 方法。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class ConcreteProductA : Product() &#123;</span><br><span class="line">    <span class="function">override fun <span class="title">print</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        println(<span class="string">"print of ConcreteProductA"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class ConcreteProductB : Product() &#123;</span><br><span class="line">    <span class="function">override fun <span class="title">print</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        println(<span class="string">"print of ConcreteProductB"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="4-3-抽象-Factory"><a href="#4-3-抽象-Factory" class="headerlink" title="4.3 抽象 Factory"></a>4.3 抽象 Factory</h2><p>定义了抽象工厂角色，及抽象方法 factoryMethod。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Factory</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">abstract</span> fun <span class="title">factoryMethod</span><span class="params">()</span>: Product</span></span><br><span class="line"><span class="function">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="4-4-ConcreteFactoryA与ConcreteFactoryB"><a href="#4-4-ConcreteFactoryA与ConcreteFactoryB" class="headerlink" title="4.4 ConcreteFactoryA与ConcreteFactoryB"></a>4.4 ConcreteFactoryA与ConcreteFactoryB</h2><p>定义了两个具体工厂角色，分别实现了 factoryMethod 方法。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">class ConcreteFactoryA : Factory() &#123;</span><br><span class="line">    <span class="function">override fun <span class="title">factoryMethod</span><span class="params">()</span>: Product </span>&#123;</span><br><span class="line">        println(<span class="string">"具体工厂A: create ProductA"</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ConcreteProductA()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class ConcreteFactoryB : Factory() &#123;</span><br><span class="line">    <span class="function">override fun <span class="title">factoryMethod</span><span class="params">()</span>: Product </span>&#123;</span><br><span class="line">        println(<span class="string">"具体工厂B: create ProductB"</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ConcreteProductB()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="4-5-生产产品"><a href="#4-5-生产产品" class="headerlink" title="4.5 生产产品"></a>4.5 生产产品</h2><p>不同的具体产品实例，用不同的具体工厂来创建。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var factory1: Factory = ConcreteFactoryA()</span><br><span class="line">var product1 = factory1.factoryMethod()</span><br><span class="line">product1.print()</span><br><span class="line"></span><br><span class="line">factory1 = ConcreteFactoryB()</span><br><span class="line">product1 = factory1.factoryMethod()</span><br><span class="line">product1.print()</span><br></pre></td></tr></table></figure></p>
+<h2 id="4-6-简单工厂"><a href="#4-6-简单工厂" class="headerlink" title="4.6 简单工厂"></a>4.6 简单工厂</h2><p>像这样拥有多个工厂的方式称之为多工厂方法模式，当工厂只有一个的时候，则可将其简化。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SimpleFactory</span> </span>&#123;</span><br><span class="line">    <span class="function">fun <span class="title">createProduct</span><span class="params">(tag: String)</span>: Product? </span>&#123;</span><br><span class="line">        var product: Product? = <span class="keyword">null</span></span><br><span class="line">        when (tag) &#123;</span><br><span class="line">            <span class="string">"A"</span> -&gt; &#123;</span><br><span class="line">                product = ConcreteProductA()</span><br><span class="line">                println(<span class="string">"create ProductA"</span>)</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="string">"B"</span> -&gt; &#123;</span><br><span class="line">                product = ConcreteProductB()</span><br><span class="line">                println(<span class="string">"create ProductB"</span>)</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> -&gt; &#123;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> product</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>简单工厂角色，实现了根据传入的参数来创建产品的功能。</p>
+<h2 id="4-7-简单工厂生产产品"><a href="#4-7-简单工厂生产产品" class="headerlink" title="4.7 简单工厂生产产品"></a>4.7 简单工厂生产产品</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">val factory = SimpleFactory()</span><br><span class="line">var product: Product? = factory.createProduct(<span class="string">"A"</span>)</span><br><span class="line"><span class="keyword">if</span> (product != <span class="keyword">null</span>) &#123;</span><br><span class="line">    product.print()</span><br><span class="line">&#125;</span><br><span class="line">product = factory.createProduct(<span class="string">"B"</span>)</span><br><span class="line"><span class="keyword">if</span> (product != <span class="keyword">null</span>) &#123;</span><br><span class="line">    product.print()</span><br><span class="line">&#125;</span><br><span class="line">product = factory.createProduct(<span class="string">"C"</span>)</span><br><span class="line"><span class="keyword">if</span> (product != <span class="keyword">null</span>) &#123;</span><br><span class="line">    product.print()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里加入了产品对象是否为 null 的判断，当用户传入错误的参数时是不能得到想要的产品的。</p>
+<h2 id="4-8-输出结果"><a href="#4-8-输出结果" class="headerlink" title="4.8 输出结果"></a>4.8 输出结果</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">----------工厂方法模式 start----------</span><br><span class="line">具体工厂A: create ProductA</span><br><span class="line"><span class="built_in">print</span> of ConcreteProductA</span><br><span class="line">具体工厂B: create ProductB</span><br><span class="line"><span class="built_in">print</span> of ConcreteProductB</span><br><span class="line">----------工厂方法模式   end----------</span><br><span class="line">----------简单工厂模式 start----------</span><br><span class="line">create ProductA</span><br><span class="line"><span class="built_in">print</span> of ConcreteProductA</span><br><span class="line">create ProductB</span><br><span class="line"><span class="built_in">print</span> of ConcreteProductB</span><br><span class="line">----------简单工厂模式   end----------</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"><i class="fa fa-tag"></i> Android</a>
+          
+            <a href="/tags/Kotlin/" rel="tag"><i class="fa fa-tag"></i> Kotlin</a>
+          
+            <a href="/tags/Design-Patterns/" rel="tag"><i class="fa fa-tag"></i> Design Patterns</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/27/hexo-NexT-deploy/" rel="next" title="hexo 的主题切换为 NexT 后的若干个性化配置">
+                <i class="fa fa-chevron-left"></i> hexo 的主题切换为 NexT 后的若干个性化配置
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/08/ubuntu-install-config-soft-2017/" rel="prev" title="一只小白的 Linux 之旅|Ubuntu 安装配置及软件安装（持续更新）">
+                一只小白的 Linux 之旅|Ubuntu 安装配置及软件安装（持续更新） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://p6wpxhpqt.bkt.clouddn.com/img-okal-eltocat-300.jpg"
+                alt="李世德" />
+            
+              <p class="site-author-name" itemprop="name">李世德</p>
+              <p class="site-description motion-element" itemprop="description">爱生活，爱学习，一个不羁的编码界小学生。</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">26</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">29</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lishide" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/u/3235831430" target="_blank" title="Weibo"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Kotlin"><span class="nav-number">1.</span> <span class="nav-text">1. Kotlin</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-类与继承"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 类与继承</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-1-类"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1.1 类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-2-构造函数"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.1.2 构造函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-3-二级构造函数"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.1.3 二级构造函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-4-创建类的实例"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.1.4 创建类的实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-5-类成员"><span class="nav-number">1.1.5.</span> <span class="nav-text">1.1.5 类成员</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-6-继承"><span class="nav-number">1.1.6.</span> <span class="nav-text">1.1.6 继承</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-7-复写方法"><span class="nav-number">1.1.7.</span> <span class="nav-text">1.1.7 复写方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-8-复写属性"><span class="nav-number">1.1.8.</span> <span class="nav-text">1.1.8 复写属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-9-抽象类"><span class="nav-number">1.1.9.</span> <span class="nav-text">1.1.9 抽象类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-属性和字段"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 属性和字段</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-1-属性声明"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.2.1 属性声明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-延迟初始化属性"><span class="nav-number">1.2.2.</span> <span class="nav-text">1.2.2 延迟初始化属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-可见性修饰词"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 可见性修饰词</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-工厂方法模式"><span class="nav-number">2.</span> <span class="nav-text">2. 工厂方法模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-定义"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-结构"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 结构</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-简单工厂模式"><span class="nav-number">3.</span> <span class="nav-text">3. 简单工厂模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-定义"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-结构"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 结构</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-工厂模式的实现"><span class="nav-number">4.</span> <span class="nav-text">4. 工厂模式的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-Product"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 Product</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-ConcreteProductA-与-ConcreteProductB"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 ConcreteProductA 与 ConcreteProductB</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-抽象-Factory"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 抽象 Factory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-4-ConcreteFactoryA与ConcreteFactoryB"><span class="nav-number">4.4.</span> <span class="nav-text">4.4 ConcreteFactoryA与ConcreteFactoryB</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-5-生产产品"><span class="nav-number">4.5.</span> <span class="nav-text">4.5 生产产品</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-6-简单工厂"><span class="nav-number">4.6.</span> <span class="nav-text">4.6 简单工厂</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-7-简单工厂生产产品"><span class="nav-number">4.7.</span> <span class="nav-text">4.7 简单工厂生产产品</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-8-输出结果"><span class="nav-number">4.8.</span> <span class="nav-text">4.8 输出结果</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李世德</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">
+    <i class="fa fa-eye"></i>
+    <span id="busuanzi_container_site_pv">
+      访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <i class="fa fa-user-md"></i>
+    <span id="busuanzi_container_site_uv">
+      访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+  </div>
+  <span class="post-meta-divider">|</span>
+  <i class="fa fa-pencil"></i>
+  <div class="theme-info">
+    <div class="powered-by"></div>
+    <span class="post-count">博客全站共 32.1k 字</span>
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.6.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Gemini</a> v6.4.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.4.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

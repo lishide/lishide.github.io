@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.4.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="1. 前言近期开发中有个需求涉及到多张图片选择、裁剪及上传功能，原项目中有类似的库和第三方框架，花了很长时间把相关的大部分功能加入进来，并未完全实现需求，然而最后发现有问题，查找解决方法，发现该开源的 Issues 中很多人都提到了我遇到的几个问题，尚未解决，该库也停止维护；现有的第三方框架的裁剪样式也不符合 App 要求。在一系列问题寻求解决方案无果后，决定弃用以前使用的框架，使用实现此功能更优">
+<meta name="keywords" content="Android,album,permission">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 开发中常见的图片选择、裁剪及权限管理等第三方功能库的升级优化">
+<meta property="og:url" content="https://lishide.github.io/2018/05/22/Android-improve-frame-album-permission/index.html">
+<meta property="og:site_name" content="李世德的博客">
+<meta property="og:description" content="1. 前言近期开发中有个需求涉及到多张图片选择、裁剪及上传功能，原项目中有类似的库和第三方框架，花了很长时间把相关的大部分功能加入进来，并未完全实现需求，然而最后发现有问题，查找解决方法，发现该开源的 Issues 中很多人都提到了我遇到的几个问题，尚未解决，该库也停止维护；现有的第三方框架的裁剪样式也不符合 App 要求。在一系列问题寻求解决方案无果后，决定弃用以前使用的框架，使用实现此功能更优">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-08-23T12:19:27.296Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android 开发中常见的图片选择、裁剪及权限管理等第三方功能库的升级优化">
+<meta name="twitter:description" content="1. 前言近期开发中有个需求涉及到多张图片选择、裁剪及上传功能，原项目中有类似的库和第三方框架，花了很长时间把相关的大部分功能加入进来，并未完全实现需求，然而最后发现有问题，查找解决方法，发现该开源的 Issues 中很多人都提到了我遇到的几个问题，尚未解决，该库也停止维护；现有的第三方框架的裁剪样式也不符合 App 要求。在一系列问题寻求解决方案无果后，决定弃用以前使用的框架，使用实现此功能更优">
+
+
+
+
+
+
+  <link rel="canonical" href="https://lishide.github.io/2018/05/22/Android-improve-frame-album-permission/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Android 开发中常见的图片选择、裁剪及权限管理等第三方功能库的升级优化 | 李世德的博客</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">李世德的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">我有故事，你有酒吗？</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://lishide.github.io/2018/05/22/Android-improve-frame-album-permission/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="李世德">
+      <meta itemprop="description" content="爱生活，爱学习，一个不羁的编码界小学生。">
+      <meta itemprop="image" content="http://p6wpxhpqt.bkt.clouddn.com/img-okal-eltocat-300.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李世德的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android 开发中常见的图片选择、裁剪及权限管理等第三方功能库的升级优化
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-05-22 16:38:37" itemprop="dateCreated datePublished" datetime="2018-05-22T16:38:37+08:00">2018-05-22</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-08-23 20:19:27" itemprop="dateModified" datetime="2018-08-23T20:19:27+08:00">2018-08-23</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+          <!--/wordcount-->
+          
+            <span class="post-letters-count">
+              <span class="post-meta-divider">|</span>
+              <i class="fa fa-file-word-o"></i>
+              <span>
+                  1,224 字
+              </span>
+              <span class="post-meta-divider">|</span>
+              <i class="fa fa-clock-o"></i>
+              <span>
+                  5 分钟
+              </span>
+            </span>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h1><p>近期开发中有个需求涉及到多张图片选择、裁剪及上传功能，原项目中有类似的库和第三方框架，花了很长时间把相关的大部分功能加入进来，并未完全实现需求，然而最后发现有问题，查找解决方法，发现该开源的 Issues 中很多人都提到了我遇到的几个问题，尚未解决，该库也停止维护；现有的第三方框架的裁剪样式也不符合 App 要求。在一系列问题寻求解决方案无果后，决定弃用以前使用的框架，使用实现此功能更优秀的框架。<br>后台同事有其他的工作，这块需求的 API 尚未开发，有时间留给我们做优（tian）化（keng），在跟另一位 Android 同事提议和沟通后，决定把图片选择、图片裁剪、权限管理的第三方工具进行优化和升级，一方面是为此项目做优化，避免以后问题越来越多；另一方面作为学习和知识储备，选择和会使用更加优秀的轮子。</p>
+<a id="more"></a>
+<h1 id="2-升级优化"><a href="#2-升级优化" class="headerlink" title="2. 升级优化"></a>2. 升级优化</h1><h2 id="2-1-图片选择"><a href="#2-1-图片选择" class="headerlink" title="2.1 图片选择"></a>2.1 图片选择</h2><p>严大的库：<a href="https://github.com/yanzhenjie/Album" target="_blank" rel="noopener">Album</a></p>
+<h3 id="2-1-1-Gradle"><a href="#2-1-1-Gradle" class="headerlink" title="2.1.1 Gradle"></a>2.1.1 Gradle</h3><p><code>&#39;com.yanzhenjie:album:2.1.1&#39;</code></p>
+<h3 id="2-1-2-简单使用"><a href="#2-1-2-简单使用" class="headerlink" title="2.1.2 简单使用"></a>2.1.2 简单使用</h3><h4 id="2-1-2-1-初始化"><a href="#2-1-2-1-初始化" class="headerlink" title="2.1.2.1 初始化"></a>2.1.2.1 初始化</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Album.initialize(AlbumConfig.newBuilder(<span class="keyword">this</span>)</span><br><span class="line">        .setAlbumLoader(MediaLoader())</span><br><span class="line">        .setLocale(Locale.getDefault())</span><br><span class="line">        .build()</span><br></pre></td></tr></table></figure>
+<h4 id="2-1-2-2-图片加载器"><a href="#2-1-2-2-图片加载器" class="headerlink" title="2.1.2.2 图片加载器"></a>2.1.2.2 图片加载器</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MediaLoader</span> <span class="keyword">implements</span> <span class="title">AlbumLoader</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">load</span><span class="params">(ImageView imageView, AlbumFile albumFile)</span> </span>&#123;</span><br><span class="line">        load(imageView, albumFile.getPath());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">load</span><span class="params">(ImageView imageView, String url)</span> </span>&#123;</span><br><span class="line">        Glide.with(imageView.getContext())</span><br><span class="line">                .load(url)</span><br><span class="line">                .into(imageView);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="2-1-2-3-调用"><a href="#2-1-2-3-调用" class="headerlink" title="2.1.2.3 调用"></a>2.1.2.3 调用</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> fun <span class="title">selectImage</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Album.image(<span class="keyword">this</span>)</span><br><span class="line">            .singleChoice()</span><br><span class="line">            .camera(<span class="keyword">true</span>)</span><br><span class="line">            .columnCount(<span class="number">2</span>)</span><br><span class="line">            .widget(</span><br><span class="line">                    Widget.newDarkBuilder(<span class="keyword">this</span>)</span><br><span class="line">                            .title(R.string.choose_album)</span><br><span class="line">                            .statusBarColor(ContextCompat.getColor(<span class="keyword">this</span>, R.color.albumColorPrimaryBlack))</span><br><span class="line">                            .toolBarColor(ContextCompat.getColor(<span class="keyword">this</span>, R.color.albumColorPrimaryBlack))</span><br><span class="line">                            .build()</span><br><span class="line">            )</span><br><span class="line">            .onResult &#123; result -&gt;</span><br><span class="line">                <span class="comment">// do something</span></span><br><span class="line">            &#125;</span><br><span class="line">            .start()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>onResult</code> 中返回图片相关的信息，根据需要做处理。上述示例是 Album 的简单使用，也是我在项目中做头像选择时的代码，简单吧！Album 不仅可以选择图片，还可以选择视频（单个或多个）、拍摄照片、拍摄视频、画廊等，支持在 Activity、Fragment 中调用，<code>.with()</code> 中传 <strong>this</strong>，即当前 Activity 或 Fragment。</p>
+<h2 id="2-2-图片裁剪"><a href="#2-2-图片裁剪" class="headerlink" title="2.2 图片裁剪"></a>2.2 图片裁剪</h2><p>还是严大的库：<a href="https://github.com/yanzhenjie/Durban" target="_blank" rel="noopener">Durban</a></p>
+<h3 id="2-2-1-Gradle"><a href="#2-2-1-Gradle" class="headerlink" title="2.2.1 Gradle"></a>2.2.1 Gradle</h3><p><code>&#39;com.yanzhenjie:durban:1.0.1&#39;</code></p>
+<h3 id="2-2-2-简单使用"><a href="#2-2-2-简单使用" class="headerlink" title="2.2.2 简单使用"></a>2.2.2 简单使用</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> fun <span class="title">cropImage</span><span class="params">(imagePathList: String)</span> </span>&#123;</span><br><span class="line">    val cropDirectory = Constants.sdPath(<span class="keyword">this</span>) + Constants.APP_CROP_PATH</span><br><span class="line">    val file = File(cropDirectory)</span><br><span class="line">    <span class="comment">// 判断文件目录是否存在</span></span><br><span class="line">    <span class="keyword">if</span> (!file.exists()) &#123;</span><br><span class="line">        file.mkdirs()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Durban.with(<span class="keyword">this</span>)</span><br><span class="line">            .statusBarColor(ContextCompat.getColor(<span class="keyword">this</span>, R.color.albumColorPrimaryBlack))</span><br><span class="line">            .toolBarColor(ContextCompat.getColor(<span class="keyword">this</span>, R.color.albumColorPrimaryBlack))</span><br><span class="line">            .navigationBarColor(ContextCompat.getColor(<span class="keyword">this</span>, R.color.albumColorPrimaryBlack))</span><br><span class="line">            <span class="comment">// Image path list/array.</span></span><br><span class="line">            .inputImagePaths(imagePathList)</span><br><span class="line">            <span class="comment">// Image output directory.</span></span><br><span class="line">            .outputDirectory(cropDirectory)</span><br><span class="line">            <span class="comment">// Image size limit.</span></span><br><span class="line">            .maxWidthHeight(<span class="number">1000</span>, <span class="number">1000</span>)</span><br><span class="line">            <span class="comment">// Aspect ratio.</span></span><br><span class="line">            .aspectRatio(<span class="number">1f</span>, <span class="number">1f</span>)</span><br><span class="line">            <span class="comment">// Output format: JPEG, PNG.</span></span><br><span class="line">            .compressFormat(Durban.COMPRESS_JPEG)</span><br><span class="line">            <span class="comment">// Compress quality, see Bitmap#compress(Bitmap.CompressFormat, int, OutputStream)</span></span><br><span class="line">            .compressQuality(<span class="number">90</span>)</span><br><span class="line">            <span class="comment">// Gesture: ROTATE, SCALE, ALL, NONE.</span></span><br><span class="line">            .gesture(Durban.GESTURE_ALL)</span><br><span class="line">            .controller(Controller.newBuilder()</span><br><span class="line">                    .enable(<span class="keyword">false</span>)</span><br><span class="line">                    .rotation(<span class="keyword">true</span>)</span><br><span class="line">                    .rotationTitle(<span class="keyword">true</span>)</span><br><span class="line">                    .scale(<span class="keyword">true</span>)</span><br><span class="line">                    .scaleTitle(<span class="keyword">true</span>)</span><br><span class="line">                    .build())</span><br><span class="line">            .requestCode(REQUEST_CODE_SELECT)</span><br><span class="line">            .start()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">override fun <span class="title">onActivityResult</span><span class="params">(requestCode: Int, resultCode: Int, data: Intent?)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onActivityResult(requestCode, resultCode, data)</span><br><span class="line">    <span class="keyword">if</span> (data != <span class="keyword">null</span> &amp;&amp; requestCode == REQUEST_CODE_SELECT) &#123;</span><br><span class="line">        val images = Durban.parseResult(data)</span><br><span class="line">        <span class="comment">// accept the cropping results</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">companion object &#123;</span><br><span class="line">    <span class="keyword">const</span> val REQUEST_CODE_SELECT = <span class="number">123</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 <code>onActivityResult</code> 回调中接收裁剪后的结果，inputImagePaths()方法的参数传入了一张图片的路径，还可以是路径 list，也可以是路径数组，同样支持在 Activity、Fragment 中调用。</p>
+<h2 id="2-3-权限管理"><a href="#2-3-权限管理" class="headerlink" title="2.3 权限管理"></a>2.3 权限管理</h2><p>又是严大的库：<a href="https://github.com/yanzhenjie/AndPermission" target="_blank" rel="noopener">AndPermission</a><br>之前使用的是 1.x 的版本，这次升级到 2.x，变动有点大，但变得功能健壮和使用简洁了，还是决定有必要升级一下。支持在 Activity、Fragment 中调用，提供用户拒绝权限后再次申请权限的处理。</p>
+<h3 id="2-3-1-Gradle"><a href="#2-3-1-Gradle" class="headerlink" title="2.3.1 Gradle"></a>2.3.1 Gradle</h3><p><code>&#39;com.yanzhenjie:permission:2.0.0-rc5&#39;</code></p>
+<h3 id="2-3-2-简单使用"><a href="#2-3-2-简单使用" class="headerlink" title="2.3.2 简单使用"></a>2.3.2 简单使用</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> fun <span class="title">requestPermission</span><span class="params">(vararg permission: String)</span> </span>&#123;</span><br><span class="line">    AndPermission.with(<span class="keyword">this</span>)</span><br><span class="line">            .runtime()</span><br><span class="line">            .permission(*permission)</span><br><span class="line">            .rationale(RuntimeRationale())</span><br><span class="line">            .onGranted &#123;</span><br><span class="line">                <span class="comment">// success, do something</span></span><br><span class="line">            &#125;</span><br><span class="line">            .onDenied &#123; permissions -&gt;</span><br><span class="line">                <span class="keyword">if</span> (AndPermission.hasAlwaysDeniedPermission(<span class="keyword">this</span>, permissions)) &#123;</span><br><span class="line">                    PermissionHandleUtil.showSettingDialog(<span class="keyword">this</span>, permissions)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            .start()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用</span></span><br><span class="line">requestPermission(*Permission.Group.STORAGE, Permission.CAMERA)</span><br></pre></td></tr></table></figure>
+<p><code>requestPermission()</code> 中传入需要的权限，是可变参数。Kotlin 可同时传入已有字符串和字符串数组，字符串数组前加 <code>*</code>，就是这么6（关于语法，此处不做详解）。<br><code>RuntimeRationale</code> 和 <code>PermissionHandleUtil</code> 中包含权限处理的提示 dialog，我将其封装成了工具类，在作者的 simple 中可以找到，此处不再列出。</p>
+<h1 id="3-总结"><a href="#3-总结" class="headerlink" title="3. 总结"></a>3. 总结</h1><p>结合以上三个开源库，就顺利完成了权限管理、图片选择、裁剪的整个流程。以上只是我在某个功能上用到的，每个框架都有更多可选的配置，满足很多需求，方便高效。</p>
+<p>又安利了一波严大的开源库，哈哈哈！</p>
+<ul>
+<li>学习并实践优秀开源库，避免重复造轮子</li>
+<li>选择成熟的开源项目，降低风险</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"><i class="fa fa-tag"></i> Android</a>
+          
+            <a href="/tags/album/" rel="tag"><i class="fa fa-tag"></i> album</a>
+          
+            <a href="/tags/permission/" rel="tag"><i class="fa fa-tag"></i> permission</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/02/Android-Kotlin-dp4/" rel="next" title="【团队分享】Kotlin 及设计模式实践（四）">
+                <i class="fa fa-chevron-left"></i> 【团队分享】Kotlin 及设计模式实践（四）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/30/Android-fix-rv-item-view-overlap/" rel="prev" title="Android：解决 RecyclerView 的 item 复用引起的布局错乱问题">
+                Android：解决 RecyclerView 的 item 复用引起的布局错乱问题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://p6wpxhpqt.bkt.clouddn.com/img-okal-eltocat-300.jpg"
+                alt="李世德" />
+            
+              <p class="site-author-name" itemprop="name">李世德</p>
+              <p class="site-description motion-element" itemprop="description">爱生活，爱学习，一个不羁的编码界小学生。</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">26</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">29</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lishide" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/u/3235831430" target="_blank" title="Weibo"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-前言"><span class="nav-number">1.</span> <span class="nav-text">1. 前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-升级优化"><span class="nav-number">2.</span> <span class="nav-text">2. 升级优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-图片选择"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 图片选择</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-1-Gradle"><span class="nav-number">2.1.1.</span> <span class="nav-text">2.1.1 Gradle</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-2-简单使用"><span class="nav-number">2.1.2.</span> <span class="nav-text">2.1.2 简单使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-2-1-初始化"><span class="nav-number">2.1.2.1.</span> <span class="nav-text">2.1.2.1 初始化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-2-2-图片加载器"><span class="nav-number">2.1.2.2.</span> <span class="nav-text">2.1.2.2 图片加载器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-2-3-调用"><span class="nav-number">2.1.2.3.</span> <span class="nav-text">2.1.2.3 调用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-图片裁剪"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 图片裁剪</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-Gradle"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.2.1 Gradle</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-2-简单使用"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2.2 简单使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-权限管理"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 权限管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-1-Gradle"><span class="nav-number">2.3.1.</span> <span class="nav-text">2.3.1 Gradle</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-2-简单使用"><span class="nav-number">2.3.2.</span> <span class="nav-text">2.3.2 简单使用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-总结"><span class="nav-number">3.</span> <span class="nav-text">3. 总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李世德</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">
+    <i class="fa fa-eye"></i>
+    <span id="busuanzi_container_site_pv">
+      访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <i class="fa fa-user-md"></i>
+    <span id="busuanzi_container_site_uv">
+      访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+  </div>
+  <span class="post-meta-divider">|</span>
+  <i class="fa fa-pencil"></i>
+  <div class="theme-info">
+    <div class="powered-by"></div>
+    <span class="post-count">博客全站共 32.1k 字</span>
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.6.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Gemini</a> v6.4.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.4.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
