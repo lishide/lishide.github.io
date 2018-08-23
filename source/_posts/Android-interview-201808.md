@@ -19,7 +19,13 @@ tags: [Android, 面试]
 
 - kotlin语言
 
-- kotlin 相比 Java 的优势
+- Kotlin语言的好处
+Kotlin编译为JVM字节码或JavaScript
+Kotlin程序可以使用所有现有的Java框架和库
+Kotlin可以轻松学习，平易近人。
+Kotlin是开放源码，没有收费。
+Kotlin的空安全性很好
+代码审查不是问题
 
 - kotlin 高阶函数
 
