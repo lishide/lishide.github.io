@@ -10,6 +10,7 @@ tags: [IDE, Android Studio]
 字体、字号、行号、导包等相关的配置。
 
 ## 代码配色主题下载
+### 下载安装
 在 [Color Themes](http://color-themes.com) 有很多的代码配色主题，应该能找到自己喜欢的。
 
 步骤：
@@ -19,6 +20,39 @@ tags: [IDE, Android Studio]
 4. 修改个别不喜欢的地方（比如字体、某种类型字体颜色）
 
 希望大家都找到自己喜欢的配色方案。其实，自带的 Darcula 主题就很棒了，官方出品，适配很好。
+
+### Ladies Night 2 个人修改
+试用了很多款主题，目前在用的是：**Ladies Night 2**，此主题在 ++Color Themes++ 上下载量最多。当然，每一款主题都并非完美的，并不一定适合所有人的口味，自己喜欢才好。针对几处不完美的地方（某些关键词色值或背景色值不合适导致的关键词看不清楚）做了一些修改，以备后用。
+
+#### 字体字号
+Color Scheme Font，选择合适的字体字号。
+
+#### Java
+- Comments
+	- JavaDoc
+		- Text： **7D8C93 -> 629755**
+    	- tag value： **[ ? ] -> 8A653B**
+
+- Parameters
+	- Type parameter： **E0E2E4 -> 507874**
+
+#### Kotlin
+- Smart-casts
+	- Smart-cast implicit receiver： **[ ? ] -> 223C23**
+	- Smart-cast value： **[ ? ] -> 223C23**
+
+- KDoc
+	- KDoc comment： **[ ? ] -> 629755**
+	- KDoc Link in KDoc tag： **3D3D3D -> 8A653B**
+
+- Properties and Variables
+	- Instanceproperty： **FEFFFB -> 9876AA**
+
+#### Groovy
+- Keyword： **000043 -> CC7832**
+
+#### XML
+- Namespace prefix： **FEFFFB -> 9876AA**
 
 ## Logcat 配色
 Android Logcat 默认主题的配色只有红白两种颜色，不太便于我们区分 Log 的类型。
@@ -49,7 +83,7 @@ Android Logcat 默认主题的配色只有红白两种颜色，不太便于我�
 12. **.ignore**：过滤 git 忽略文件
 13. **Translation**：翻译插件
 14. **Exynap**：一个帮助开发者自动生成样板代码的 AndroidStudio 插件。
-15. **Lombok**：在项目中使用Lombok可以减少很多重复代码的书写。比如说getter/setter/toString等方法的编写。
+15. **Lombok**：在项目中使用 Lombok 可以减少很多重复代码的书写。比如说 getter/setter/toString 等方法的编写。
 
 
 
