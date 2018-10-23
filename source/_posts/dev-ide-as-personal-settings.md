@@ -22,37 +22,60 @@ tags: [IDE, Android Studio]
 希望大家都找到自己喜欢的配色方案。其实，自带的 Darcula 主题就很棒了，官方出品，适配很好。
 
 ### Ladies Night 2 个人修改
-试用了很多款主题，目前在用的是：**Ladies Night 2**，此主题在 ++Color Themes++ 上下载量最多。当然，每一款主题都并非完美的，并不一定适合所有人的口味，自己喜欢才好。针对几处不完美的地方（某些关键词色值或背景色值不合适导致的关键词看不清楚）做了一些修改，以备后用。
+试用了很多款主题，目前在用的是：**Ladies Night 2**，此主题在 Color Themes 上下载量最多。当然，每一款主题都并非完美的，并不一定适合所有人的口味，自己喜欢才好。针对几处不完美的地方（某些关键词色值或背景色值不合适导致的关键词看不清楚）做了一些修改，以备后用。
 
 #### 字体字号
 Color Scheme Font，选择合适的字体字号。
 
+#### Language Defaults
+- Inline Parameter hints
+	- Default： **F：7A7A7A -> 787878；B：EDEDED -> 3B3B3B**
+	- Current： **F：5B5B5B -> ACACAC；B：BCDAF7 -> 305D78**
+	- Highlighted： **F：5B5B5B -> ACACAC；B：CCCCCC -> 4D4D4D**
+
+- Braces and Operators
+	- Semicolon&Comma： **E8E2B7 -> CC7832**
+
 #### Java
 - Comments
 	- JavaDoc
-		- Text： **7D8C93 -> 629755**
-    	- tag value： **[ ? ] -> 8A653B**
+		- Tag： **E0E2E4 -> 629755**
+    	- Tag value： **[ ? ] -> 8A653B**
+    	- Text： **7D8C93 -> 629755**
 
 - Parameters
 	- Type parameter： **E0E2E4 -> 507874**
 
 #### Kotlin
 - Smart-casts
-	- Smart-cast implicit receiver： **[ ? ] -> 223C23**
-	- Smart-cast value： **[ ? ] -> 223C23**
+	- Smart-cast implicit receiver(B)： **[ ? ] -> 223C23**
+	- Smart-cast value(B)： **[ ? ] -> 223C23**
+	- Smart constant(B)： **[ ? ] -> 223C23**
 
 - KDoc
 	- KDoc comment： **[ ? ] -> 629755**
+	- tag： **E0E2E4 -> 629755**
 	- KDoc Link in KDoc tag： **3D3D3D -> 8A653B**
 
 - Properties and Variables
-	- Instanceproperty： **FEFFFB -> 9876AA**
+	- Instance property： **FEFFFB -> 9876AA**
 
 #### Groovy
 - Keyword： **000043 -> CC7832**
 
 #### XML
 - Namespace prefix： **FEFFFB -> 9876AA**
+
+#### VCS
+- VCS Annotations
+	- Foreground： **000080 -> 8B999F**
+
+#### General
+- Errors and Warnings
+	- Warning
+        B：[ ] -> 52503A
+        Error：E3BF20 -> BE9117
+        Effects （取消勾选）
 
 ## Logcat 配色
 Android Logcat 默认主题的配色只有红白两种颜色，不太便于我们区分 Log 的类型。
