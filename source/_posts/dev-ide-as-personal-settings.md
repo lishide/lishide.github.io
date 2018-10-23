@@ -29,12 +29,19 @@ Color Scheme Font，选择合适的字体字号。
 
 #### Language Defaults
 - Inline Parameter hints
-	- Default： **F：7A7A7A -> 787878；B：EDEDED -> 3B3B3B**
-	- Current： **F：5B5B5B -> ACACAC；B：BCDAF7 -> 305D78**
-	- Highlighted： **F：5B5B5B -> ACACAC；B：CCCCCC -> 4D4D4D**
+	- Default
+		F：**7A7A7A -> 787878**
+        B：**EDEDED -> 3B3B3B**
+	- Current：
+		 F：**5B5B5B -> ACACAC**
+         B：**BCDAF7 -> 305D78**
+	- Highlighted
+		 F：**5B5B5B -> ACACAC**
+         B：**CCCCCC -> 4D4D4D**
 
 - Braces and Operators
-	- Semicolon&Comma： **E8E2B7 -> CC7832**
+	- Semicolon&Comma
+		F：**E8E2B7 -> CC7832**
 
 #### Java
 - Comments
@@ -98,6 +105,16 @@ Color Scheme Font，选择合适的字体字号。
 	- Error（这个较有用，提示错误）
 		E：**BC3F3C -> 9E2927**
 		Effects：**3C3F3C -> BC3F3C** （Underwaved）
+	- Unsed symbol
+		Effects：**3C3F3C -> 808080** （Underwaved）
+	- Typo
+		Effects：**3C3F3C -> 659C6B** （Underwaved）
+	- Problem from server
+		E：**F49810 -> B06100**
+		Effects：**3C3F3C -> F49810** （Underscored）
+	- Weak warning
+		E：**AEAE80 -> 756D56**
+		Effects：**[ ] -> AEAE80** （Underwaved）
 
 - Search Results
 	- Search Results
@@ -118,28 +135,54 @@ Color Scheme Font，选择合适的字体字号。
 	- Identifier under caret
         B：**000000 -> 40332B**
         E：**000000 -> B56277**
-
+- Editor
+	- Gutter background（编码区左侧信息区域背景）
+		B：**272822 -> 313335**
+	- Caret row（光标所在行）
+		B：**5B5A4E -> 323232(383341)**
+	- Selection background（选中行背景）
+		B：**CC9900 -> 214283**
+	- Selection foreground（选中行前景）
+		F：关闭，即显示原代码颜色
 
 #### Language Defaults
 - Inline Parameter hints
-	- Default： **F：7A7A7A -> 787878；B：EDEDED -> 3B3B3B**
-	- Current： **F：5B5B5B -> ACACAC；B：BCDAF7 -> 305D78**
-	- Highlighted： **F：5B5B5B -> ACACAC；B：CCCCCC -> 4D4D4D**
+	- Default
+		F：**7A7A7A -> 787878**
+        B：**EDEDED -> 3B3B3B**
+	- Current：
+		 F：**5B5B5B -> ACACAC**
+         B：**BCDAF7 -> 305D78**
+	- Highlighted
+		 F：**5B5B5B -> ACACAC**
+         B：**CCCCCC -> 4D4D4D**
 
 - Comments
-- Doc Comment
-	- Tag： **8A826B -> 629755**
-	- Tag value： **3D3D3D -> 8A653B**
+    - Doc Comment
+        - Tag： **8A826B -> 629755**
+        - Tag value： **3D3D3D -> 8A653B**
 - String
 	- Escape Sequence
 		- Invalid
 			F：**FF0000 -> ECE47E**
             Effects：**[ ] -> FF0000** （Underwaved）
+- Bad character
+	F：（关）
+    Effects：**[ ] -> FF0000** （Underwaved）
+- Template language
+	F：（关）
+    B：**[ ] -> 232525**
+- Number
+	F：**C48CFF -> 6897BB**
 
 #### Java
 - Class Fields
 	- Constant(static final field)： **660E7A -> 9876AA**
-
+	- Instance field
+		F：**CFBFAD -> 9876AA**
+- Parameters
+	- Implicit anonymous class parameter
+		Effects：**[ ] -> 52E3F6** （Underscored）
 
 #### Kotlin
 - Smart-casts
@@ -147,7 +190,8 @@ Color Scheme Font，选择合适的字体字号。
 	- Smart-cast value(B)： **DBFFDB -> 223C23**
 	- Smart constant(B)： **DBFFDB -> 223C23**
 - Annotation： **000080 -> CC7832**
-
+- Properties and Variables
+	- Instance property： **FEFFFB -> 9876AA**
 
 #### Groovy
 - Keyword： **000043 -> CC7832**
