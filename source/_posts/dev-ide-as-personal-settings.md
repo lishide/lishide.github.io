@@ -48,9 +48,9 @@ Color Scheme Font，选择合适的字体字号。
 
 #### Kotlin
 - Smart-casts
-	- Smart-cast implicit receiver(B)： **[ ? ] -> 223C23**
-	- Smart-cast value(B)： **[ ? ] -> 223C23**
-	- Smart constant(B)： **[ ? ] -> 223C23**
+	- Smart-cast implicit receiver(B)： **DBFFDB -> 223C23**
+	- Smart-cast value(B)： **DBFFDB -> 223C23**
+	- Smart constant(B)： **DBFFDB -> 223C23**
 
 - KDoc
 	- KDoc comment： **[ ? ] -> 629755**
@@ -73,9 +73,102 @@ Color Scheme Font，选择合适的字体字号。
 #### General
 - Errors and Warnings
 	- Warning
-        B：[ ] -> 52503A
-        Error：E3BF20 -> BE9117
+        B：**[ ] -> 52503A**
+        Error：**E3BF20 -> BE9117**
         Effects （取消勾选）
+
+### Sublime Text 2 个人修改
+#### General
+- Text
+	- Default text
+		F：**CFBFAD -> A9B7C6**
+		B：**272822 -> 2B2B2B**
+	- Folded text
+		F：**404040 -> 8C8C8C**
+        B：**CC9900 -> 3A3A3A**
+	- Deleted text
+		F：**272822 -> BBBBBB**
+        B：**CFBFAD -> 450505**
+		Effects：**[ ] -> C3C3C3**
+
+- Errors and Warnings
+	- Deprecated symbol
+		Foreground **（取消）**
+		Effects：**[ ] -> C3C3C3**
+	- Error（这个较有用，提示错误）
+		E：**BC3F3C -> 9E2927**
+		Effects：**3C3F3C -> BC3F3C** （Underwaved）
+
+- Search Results
+	- Search Results
+		- Search result
+			B：**000000 -> 155221**
+			E：**000000 -> 00530D**
+		- Search result(write access)
+			B：**000000 -> 532B2E**
+            E：**000000 -> 8D4457**
+		- Search result(write access)
+			B：**D8D8D8 -> 32593D**
+            E：**D8D8D8 -> 61936F**
+            Effects：**[ ] -> 3C704B**
+- Code
+	- Identifier under caret
+        B：**000000 -> 344134**
+        E：**000000 -> 036B13**
+	- Identifier under caret
+        B：**000000 -> 40332B**
+        E：**000000 -> B56277**
+
+
+#### Language Defaults
+- Inline Parameter hints
+	- Default： **F：7A7A7A -> 787878；B：EDEDED -> 3B3B3B**
+	- Current： **F：5B5B5B -> ACACAC；B：BCDAF7 -> 305D78**
+	- Highlighted： **F：5B5B5B -> ACACAC；B：CCCCCC -> 4D4D4D**
+
+- Comments
+- Doc Comment
+	- Tag： **8A826B -> 629755**
+	- Tag value： **3D3D3D -> 8A653B**
+- String
+	- Escape Sequence
+		- Invalid
+			F：**FF0000 -> ECE47E**
+            Effects：**[ ] -> FF0000** （Underwaved）
+
+#### Java
+- Class Fields
+	- Constant(static final field)： **660E7A -> 9876AA**
+
+
+#### Kotlin
+- Smart-casts
+	- Smart-cast implicit receiver(B)： **DBFFDB -> 223C23**
+	- Smart-cast value(B)： **DBFFDB -> 223C23**
+	- Smart constant(B)： **DBFFDB -> 223C23**
+- Annotation： **000080 -> CC7832**
+
+
+#### Groovy
+- Keyword： **000043 -> CC7832**
+- Bad character
+	F：（关）
+    Effects：**[ ] -> FF0000** （Underwaved）
+- References
+	- Unresolved reference
+		F：**000080 -> 808080**
+
+#### XML
+- Namespace prefix： **CFBFAD -> 9876AA**
+- Attribute name： **BFA4A4 -> BABABA**
+- Attribute value： **ECE47E -> 4CD656**
+
+
+#### VCS
+- VCS Annotations
+	- Foreground： **000080 -> 8B999F**
+
+
 
 ## Logcat 配色
 Android Logcat 默认主题的配色只有红白两种颜色，不太便于我们区分 Log 的类型。
