@@ -9,6 +9,38 @@ tags: [IDE, Android Studio]
 ## 基础配置
 字体、字号、行号、导包等相关的配置。
 
+## Logcat 配色
+Android Logcat 默认主题（或导入的其他 Color Scheme）的配色只有红白两种颜色，不太便于我们区分 Log 的类型。
+建议采用鲜明的配色，按照下面的色值修改配置。
+
+| Log 级别 | 颜色   |
+|-------- |--------|
+| Assert  | AA66CC |
+| Debug   | 33B5E5 |
+| Error   | FF4444 |
+| Info    | 99CC00 |
+| Verbose | FFFFFF |
+| Warning | FFBB33 |
+
+## AS 插件
+
+1. **GsonFormat**：快速将 json 字符串转换成一个 Java Bean。
+2. **Android ButterKnife Zelezny**：自动生成 butterknife 注解。
+3. **ADB WIFI**：使用 wifi 无线调试你的 app，无需 root 权限。
+4. **Android WiFi ADB**：无线调试应用
+5. **WakaTime**：记录你在 IDE 上的工作时间（推荐）。
+6. **String Manipulation**：一个为文本操作提供操作的插件。
+7. **postfix**：此插件可以快速进行 Log、Toast、isEmpty 的代码书写。
+8. **Alibaba Java Coding Guidelines**：《阿里巴巴Java开发规约》的扫描插件。
+9. **IconViewer**：图标预览
+10. **TinyPic**：压缩图片资源
+11. **Statistic**：统计代码量
+12. **.ignore**：过滤 git 忽略文件
+13. **Translation**：翻译插件
+14. **Exynap**：一个帮助开发者自动生成样板代码的 AndroidStudio 插件。
+15. **Lombok**：在项目中使用 Lombok 可以减少很多重复代码的书写。比如说 getter/setter/toString 等方法的编写。
+
+
 ## 代码配色主题下载
 ### 下载安装
 在 [Color Themes](http://color-themes.com) 有很多的代码配色主题，应该能找到自己喜欢的。
@@ -21,11 +53,18 @@ tags: [IDE, Android Studio]
 
 希望大家都找到自己喜欢的配色方案。其实，自带的 Darcula 主题就很棒了，官方出品，适配很好。
 
-### Ladies Night 2 个人修改
-试用了很多款主题，目前在用的是：**Ladies Night 2**，此主题在 Color Themes 上下载量最多。当然，每一款主题都并非完美的，并不一定适合所有人的口味，自己喜欢才好。针对几处不完美的地方（某些关键词色值或背景色值不合适导致的关键词看不清楚）做了一些修改，以备后用。
+试用了很多款主题，个人比较喜欢 **Ladies Night 2** 和 **Sublime Text 2**。 Ladies Night 2 主题在 Color Themes 上下载量最多，Sublime Text 2 也有很多人推荐。目前在用的是：**Sublime Text 2**，当然，每一款主题都并非完美的，并不一定适合所有人的口味，自己喜欢才好。针对几处不完美的地方（某些关键词色值或背景色值不合适导致的关键词看不清楚）做了一些修改，以备后用。结合 **Darcula** 主题比较有用的提示功能，配置最适合自己的、赏心悦目的 Color Scheme。
 
+### Ladies Night 2 个人修改
 #### 字体字号
 Color Scheme Font，选择合适的字体字号。
+
+#### General
+- Errors and Warnings
+	- Warning
+        B：**[ ] -> 52503A**
+        Error：**E3BF20 -> BE9117**
+        Effects：**（取消勾选）**
 
 #### Language Defaults
 - Inline Parameter hints
@@ -75,14 +114,7 @@ Color Scheme Font，选择合适的字体字号。
 
 #### VCS
 - VCS Annotations
-	- Foreground： **000080 -> 8B999F**
-
-#### General
-- Errors and Warnings
-	- Warning
-        B：**[ ] -> 52503A**
-        Error：**E3BF20 -> BE9117**
-        Effects （取消勾选）
+	- F： **000080 -> 8B999F**
 
 ### Sublime Text 2 个人修改
 #### General
@@ -100,21 +132,21 @@ Color Scheme Font，选择合适的字体字号。
 
 - Errors and Warnings
 	- Deprecated symbol
-		Foreground **（取消）**
+		Foreground **（关）**
 		Effects：**[ ] -> C3C3C3**
 	- Error（这个较有用，提示错误）
 		E：**BC3F3C -> 9E2927**
-		Effects：**3C3F3C -> BC3F3C** （Underwaved）
+		Effects：**3C3F3C -> BC3F3C （Underwaved）**
 	- Unsed symbol
-		Effects：**3C3F3C -> 808080** （Underwaved）
+		Effects：**3C3F3C -> 808080 （Underwaved）**
 	- Typo
-		Effects：**3C3F3C -> 659C6B** （Underwaved）
+		Effects：**3C3F3C -> 659C6B （Underwaved）**
 	- Problem from server
 		E：**F49810 -> B06100**
-		Effects：**3C3F3C -> F49810** （Underscored）
+		Effects：**3C3F3C -> F49810 （Underscored）**
 	- Weak warning
 		E：**AEAE80 -> 756D56**
-		Effects：**[ ] -> AEAE80** （Underwaved）
+		Effects：**[ ] -> AEAE80 （Underwaved）**
 
 - Search Results
 	- Search Results
@@ -143,7 +175,7 @@ Color Scheme Font，选择合适的字体字号。
 	- Selection background（选中行背景）
 		B：**CC9900 -> 214283**
 	- Selection foreground（选中行前景）
-		F：关闭，即显示原代码颜色
+		F：**关闭，即显示原代码颜色**
 
 #### Language Defaults
 - Inline Parameter hints
@@ -165,12 +197,12 @@ Color Scheme Font，选择合适的字体字号。
 	- Escape Sequence
 		- Invalid
 			F：**FF0000 -> ECE47E**
-            Effects：**[ ] -> FF0000** （Underwaved）
+            Effects：**[ ] -> FF0000 （Underwaved）**
 - Bad character
-	F：（关）
-    Effects：**[ ] -> FF0000** （Underwaved）
+	F：**（关）**
+    Effects：**[ ] -> FF0000 （Underwaved）**
 - Template language
-	F：（关）
+	F：**（关）**
     B：**[ ] -> 232525**
 - Number
 	F：**C48CFF -> 6897BB**
@@ -182,7 +214,7 @@ Color Scheme Font，选择合适的字体字号。
 		F：**CFBFAD -> 9876AA**
 - Parameters
 	- Implicit anonymous class parameter
-		Effects：**[ ] -> 52E3F6** （Underscored）
+		Effects：**[ ] -> 52E3F6 （Underscored）**
 
 #### Kotlin
 - Smart-casts
@@ -196,8 +228,8 @@ Color Scheme Font，选择合适的字体字号。
 #### Groovy
 - Keyword： **000043 -> CC7832**
 - Bad character
-	F：（关）
-    Effects：**[ ] -> FF0000** （Underwaved）
+	F：**（关）**
+    Effects：**[ ] -> FF0000 （Underwaved）**
 - References
 	- Unresolved reference
 		F：**000080 -> 808080**
@@ -210,40 +242,8 @@ Color Scheme Font，选择合适的字体字号。
 
 #### VCS
 - VCS Annotations
-	- Foreground： **000080 -> 8B999F**
+	- F： **000080 -> 8B999F**
 
-
-
-## Logcat 配色
-Android Logcat 默认主题的配色只有红白两种颜色，不太便于我们区分 Log 的类型。
-建议采用鲜明的配色，按照下面的色值修改配置。
-
-| Log 级别 | 颜色   |
-|-------- |--------|
-| Assert  | AA66CC |
-| Debug   | 33B5E5 |
-| Error   | FF4444 |
-| Info    | 99CC00 |
-| Verbose | FFFFFF |
-| Warning | FFBB33 |
-
-## AS 插件
-
-1. **GsonFormat**：快速将 json 字符串转换成一个 Java Bean。
-2. **Android ButterKnife Zelezny**：自动生成 butterknife 注解。
-3. **ADB WIFI**：使用 wifi 无线调试你的 app，无需 root 权限。
-4. **Android WiFi ADB**：无线调试应用
-5. **WakaTime**：记录你在 IDE 上的工作时间（推荐）。
-6. **String Manipulation**：一个为文本操作提供操作的插件。
-7. **postfix**：此插件可以快速进行 Log、Toast、isEmpty 的代码书写。
-8. **Alibaba Java Coding Guidelines**：《阿里巴巴Java开发规约》的扫描插件。
-9. **IconViewer**：图标预览
-10. **TinyPic**：压缩图片资源
-11. **Statistic**：统计代码量
-12. **.ignore**：过滤 git 忽略文件
-13. **Translation**：翻译插件
-14. **Exynap**：一个帮助开发者自动生成样板代码的 AndroidStudio 插件。
-15. **Lombok**：在项目中使用 Lombok 可以减少很多重复代码的书写。比如说 getter/setter/toString 等方法的编写。
-
+> 备份很重要！！！记得把自己配置好的 Color Scheme 导出 jar，云盘备份保存。
 
 
