@@ -129,6 +129,14 @@ Color Scheme Font，选择合适的字体字号。
 		F：**272822 -> BBBBBB**
         B：**CFBFAD -> 450505**
 		Effects：**[ ] -> C3C3C3**
+	- Hyperlinks
+		- Reference
+			F：**0000FF -> 589DF6**
+			Effects：**0000FF -> 589DF6 （Underscored）**
+		- Followed
+			Effects：**同 F （Underscored）**
+		- Unfollowed
+			Effects：**同 F （Underscored）**
 
 - Errors and Warnings
 	- Deprecated symbol
