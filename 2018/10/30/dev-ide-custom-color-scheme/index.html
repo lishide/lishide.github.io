@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.4.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="试用了很多款主题，个人比较喜欢 Ladies Night 2 和 Sublime Text 2。 Ladies Night 2 主题在 Color Themes 上下载量最多，Sublime Text 2 也有很多人推荐。目前在用的是：Sublime Text 2，当然，每一款主题都并非完美的，并不一定适合所有人的口味，自己喜欢才好。针对几处不完美的地方（某些关键词色值或背景色值不合适导致的关键词">
+<meta name="keywords" content="IDE,Color Scheme">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自定义 IDE 配色主题">
+<meta property="og:url" content="https://lishide.github.io/2018/10/30/dev-ide-custom-color-scheme/index.html">
+<meta property="og:site_name" content="李世德的博客">
+<meta property="og:description" content="试用了很多款主题，个人比较喜欢 Ladies Night 2 和 Sublime Text 2。 Ladies Night 2 主题在 Color Themes 上下载量最多，Sublime Text 2 也有很多人推荐。目前在用的是：Sublime Text 2，当然，每一款主题都并非完美的，并不一定适合所有人的口味，自己喜欢才好。针对几处不完美的地方（某些关键词色值或背景色值不合适导致的关键词">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-10-30T08:16:51.892Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="自定义 IDE 配色主题">
+<meta name="twitter:description" content="试用了很多款主题，个人比较喜欢 Ladies Night 2 和 Sublime Text 2。 Ladies Night 2 主题在 Color Themes 上下载量最多，Sublime Text 2 也有很多人推荐。目前在用的是：Sublime Text 2，当然，每一款主题都并非完美的，并不一定适合所有人的口味，自己喜欢才好。针对几处不完美的地方（某些关键词色值或背景色值不合适导致的关键词">
+
+
+
+
+
+
+  <link rel="canonical" href="https://lishide.github.io/2018/10/30/dev-ide-custom-color-scheme/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>自定义 IDE 配色主题 | 李世德的博客</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">李世德的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">我有故事，你有酒吗？</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://lishide.github.io/2018/10/30/dev-ide-custom-color-scheme/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="李世德">
+      <meta itemprop="description" content="爱生活，爱学习，一个不羁的编码界小学生。">
+      <meta itemprop="image" content="http://p6wpxhpqt.bkt.clouddn.com/img-okal-eltocat-300.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李世德的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">自定义 IDE 配色主题
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-10-30 16:08:47 / 修改时间：16:16:51" itemprop="dateCreated datePublished" datetime="2018-10-30T16:08:47+08:00">2018-10-30</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+          <!--/wordcount-->
+          
+            <span class="post-letters-count">
+              <span class="post-meta-divider">|</span>
+              <i class="fa fa-file-word-o"></i>
+              <span>
+                  709 字
+              </span>
+              <span class="post-meta-divider">|</span>
+              <i class="fa fa-clock-o"></i>
+              <span>
+                  4 分钟
+              </span>
+            </span>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>试用了很多款主题，个人比较喜欢 <strong>Ladies Night 2</strong> 和 <strong>Sublime Text 2</strong>。 Ladies Night 2 主题在 Color Themes 上下载量最多，Sublime Text 2 也有很多人推荐。目前在用的是：<strong>Sublime Text 2</strong>，当然，每一款主题都并非完美的，并不一定适合所有人的口味，自己喜欢才好。针对几处不完美的地方（某些关键词色值或背景色值不合适导致的关键词看不清楚）做了一些修改，以备后用。结合 <strong>Darcula</strong> 主题比较有用的提示功能，配置最适合自己的、赏心悦目的 Color Scheme。</p>
+<a id="more"></a>
+<h3 id="Ladies-Night-2-个人修改"><a href="#Ladies-Night-2-个人修改" class="headerlink" title="Ladies Night 2 个人修改"></a>Ladies Night 2 个人修改</h3><h4 id="字体字号"><a href="#字体字号" class="headerlink" title="字体字号"></a>字体字号</h4><p>Color Scheme Font，选择合适的字体字号。</p>
+<h4 id="General"><a href="#General" class="headerlink" title="General"></a>General</h4><ul>
+<li>Errors and Warnings<ul>
+<li>Warning<br>  B：<strong>[ ] -&gt; 52503A</strong><br>  Error：<strong>E3BF20 -&gt; BE9117</strong><br>  Effects：<strong>（取消勾选）</strong></li>
+</ul>
+</li>
+</ul>
+<h4 id="Language-Defaults"><a href="#Language-Defaults" class="headerlink" title="Language Defaults"></a>Language Defaults</h4><ul>
+<li><p>Inline Parameter hints</p>
+<ul>
+<li>Default<br>  F：<strong>7A7A7A -&gt; 787878</strong><br>  B：<strong>EDEDED -&gt; 3B3B3B</strong></li>
+<li>Current：<br>   F：<strong>5B5B5B -&gt; ACACAC</strong><br>   B：<strong>BCDAF7 -&gt; 305D78</strong></li>
+<li>Highlighted<br>   F：<strong>5B5B5B -&gt; ACACAC</strong><br>   B：<strong>CCCCCC -&gt; 4D4D4D</strong></li>
+</ul>
+</li>
+<li><p>Braces and Operators</p>
+<ul>
+<li>Semicolon&amp;Comma<br>  F：<strong>E8E2B7 -&gt; CC7832</strong></li>
+</ul>
+</li>
+</ul>
+<h4 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h4><ul>
+<li><p>Comments</p>
+<ul>
+<li>JavaDoc<ul>
+<li>Tag： <strong>E0E2E4 -&gt; 629755</strong></li>
+<li>Tag value： <strong>[ ? ] -&gt; 8A653B</strong></li>
+<li>Text： <strong>7D8C93 -&gt; 629755</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Parameters</p>
+<ul>
+<li>Type parameter： <strong>E0E2E4 -&gt; 507874</strong></li>
+</ul>
+</li>
+</ul>
+<h4 id="Kotlin"><a href="#Kotlin" class="headerlink" title="Kotlin"></a>Kotlin</h4><ul>
+<li><p>Smart-casts</p>
+<ul>
+<li>Smart-cast implicit receiver(B)： <strong>DBFFDB -&gt; 223C23</strong></li>
+<li>Smart-cast value(B)： <strong>DBFFDB -&gt; 223C23</strong></li>
+<li>Smart constant(B)： <strong>DBFFDB -&gt; 223C23</strong></li>
+</ul>
+</li>
+<li><p>KDoc</p>
+<ul>
+<li>KDoc comment： <strong>[ ? ] -&gt; 629755</strong></li>
+<li>tag： <strong>E0E2E4 -&gt; 629755</strong></li>
+<li>KDoc Link in KDoc tag： <strong>3D3D3D -&gt; 8A653B</strong></li>
+</ul>
+</li>
+<li><p>Properties and Variables</p>
+<ul>
+<li>Instance property： <strong>FEFFFB -&gt; 9876AA</strong></li>
+</ul>
+</li>
+</ul>
+<h4 id="Groovy"><a href="#Groovy" class="headerlink" title="Groovy"></a>Groovy</h4><ul>
+<li>Keyword： <strong>000043 -&gt; CC7832</strong></li>
+</ul>
+<h4 id="XML"><a href="#XML" class="headerlink" title="XML"></a>XML</h4><ul>
+<li>Namespace prefix： <strong>FEFFFB -&gt; 9876AA</strong></li>
+</ul>
+<h4 id="VCS"><a href="#VCS" class="headerlink" title="VCS"></a>VCS</h4><ul>
+<li>VCS Annotations<ul>
+<li>F： <strong>000080 -&gt; 8B999F</strong></li>
+</ul>
+</li>
+</ul>
+<h3 id="Sublime-Text-2-个人修改"><a href="#Sublime-Text-2-个人修改" class="headerlink" title="Sublime Text 2 个人修改"></a>Sublime Text 2 个人修改</h3><h4 id="General-1"><a href="#General-1" class="headerlink" title="General"></a>General</h4><ul>
+<li><p>Text</p>
+<ul>
+<li>Default text<br>  F：<strong>CFBFAD -&gt; A9B7C6</strong><br>  B：<strong>272822 -&gt; 2B2B2B</strong></li>
+<li>Folded text<br>  F：<strong>404040 -&gt; 8C8C8C</strong><br>  B：<strong>CC9900 -&gt; 3A3A3A</strong></li>
+<li>Deleted text<br>  F：<strong>272822 -&gt; BBBBBB</strong><br>  B：<strong>CFBFAD -&gt; 450505</strong><br>  Effects：<strong>[ ] -&gt; C3C3C3</strong></li>
+<li>Hyperlinks<ul>
+<li>Reference<br>  F：<strong>0000FF -&gt; 589DF6</strong><br>  Effects：<strong>0000FF -&gt; 589DF6 （Underscored）</strong></li>
+<li>Followed<br>  Effects：<strong>同 F （Underscored）</strong></li>
+<li>Unfollowed<br>  Effects：<strong>同 F （Underscored）</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Errors and Warnings</p>
+<ul>
+<li>Deprecated symbol<br>  Foreground <strong>（关）</strong><br>  Effects：<strong>[ ] -&gt; C3C3C3</strong></li>
+<li>Error（这个较有用，提示错误）<br>  E：<strong>BC3F3C -&gt; 9E2927</strong><br>  Effects：<strong>3C3F3C -&gt; BC3F3C （Underwaved）</strong></li>
+<li>Unsed symbol<br>  Effects：<strong>3C3F3C -&gt; 808080 （Underwaved）</strong></li>
+<li>Typo<br>  Effects：<strong>3C3F3C -&gt; 659C6B （Underwaved）</strong></li>
+<li>Problem from server<br>  E：<strong>F49810 -&gt; B06100</strong><br>  Effects：<strong>3C3F3C -&gt; F49810 （Underscored）</strong></li>
+<li>Weak warning<br>  E：<strong>AEAE80 -&gt; 756D56</strong><br>  Effects：<strong>[ ] -&gt; AEAE80 （Underwaved）</strong></li>
+</ul>
+</li>
+<li><p>Search Results</p>
+<ul>
+<li>Search Results<ul>
+<li>Search result<br>  B：<strong>000000 -&gt; 155221</strong><br>  E：<strong>000000 -&gt; 00530D</strong></li>
+<li>Search result(write access)<br>  B：<strong>000000 -&gt; 532B2E</strong><br>  E：<strong>000000 -&gt; 8D4457</strong></li>
+<li>Search result(write access)<br>  B：<strong>D8D8D8 -&gt; 32593D</strong><br>  E：<strong>D8D8D8 -&gt; 61936F</strong><br>  Effects：<strong>[ ] -&gt; 3C704B</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Code<ul>
+<li>Identifier under caret<br>  B：<strong>000000 -&gt; 344134</strong><br>  E：<strong>000000 -&gt; 036B13</strong></li>
+<li>Identifier under caret<br>  B：<strong>000000 -&gt; 40332B</strong><br>  E：<strong>000000 -&gt; B56277</strong></li>
+</ul>
+</li>
+<li>Editor<ul>
+<li>Gutter background（编码区左侧信息区域背景）<br>  B：<strong>272822 -&gt; 313335</strong></li>
+<li>Caret row（光标所在行）<br>  B：<strong>5B5A4E -&gt; 323232(383341)</strong></li>
+<li>Selection background（选中行背景）<br>  B：<strong>CC9900 -&gt; 214283</strong></li>
+<li>Selection foreground（选中行前景）<br>  F：<strong>关闭，即显示原代码颜色</strong></li>
+<li>Notification background（通知背景）<br>  F：<strong>FFFFCC -&gt; 5C5C42</strong></li>
+</ul>
+</li>
+</ul>
+<h4 id="Language-Defaults-1"><a href="#Language-Defaults-1" class="headerlink" title="Language Defaults"></a>Language Defaults</h4><ul>
+<li><p>Inline Parameter hints</p>
+<ul>
+<li>Default<br>  F：<strong>7A7A7A -&gt; 787878</strong><br>  B：<strong>EDEDED -&gt; 3B3B3B</strong></li>
+<li>Current：<br>   F：<strong>5B5B5B -&gt; ACACAC</strong><br>   B：<strong>BCDAF7 -&gt; 305D78</strong></li>
+<li>Highlighted<br>   F：<strong>5B5B5B -&gt; ACACAC</strong><br>   B：<strong>CCCCCC -&gt; 4D4D4D</strong></li>
+</ul>
+</li>
+<li><p>Comments</p>
+<ul>
+<li>Doc Comment<ul>
+<li>Tag： <strong>8A826B -&gt; 629755</strong></li>
+<li>Tag value： <strong>3D3D3D -&gt; 8A653B</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>String<ul>
+<li>Escape Sequence<ul>
+<li>Invalid<br>  F：<strong>FF0000 -&gt; ECE47E</strong><br>  Effects：<strong>[ ] -&gt; FF0000 （Underwaved）</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Bad character<br>  F：<strong>（关）</strong><br>  Effects：<strong>[ ] -&gt; FF0000 （Underwaved）</strong></li>
+<li>Template language<br>  F：<strong>（关）</strong><br>  B：<strong>[ ] -&gt; 232525</strong></li>
+<li>Number<br>  F：<strong>C48CFF -&gt; 6897BB</strong></li>
+</ul>
+<h4 id="Java-1"><a href="#Java-1" class="headerlink" title="Java"></a>Java</h4><ul>
+<li>Class Fields<ul>
+<li>Constant(static final field)： <strong>660E7A -&gt; 9876AA</strong></li>
+<li>Instance field<br>  F：<strong>CFBFAD -&gt; 9876AA</strong></li>
+</ul>
+</li>
+<li>Parameters<ul>
+<li>Implicit anonymous class parameter<br>  Effects：<strong>[ ] -&gt; 52E3F6 （Underscored）</strong></li>
+</ul>
+</li>
+</ul>
+<h4 id="Kotlin-1"><a href="#Kotlin-1" class="headerlink" title="Kotlin"></a>Kotlin</h4><ul>
+<li>Smart-casts<ul>
+<li>Smart-cast implicit receiver(B)： <strong>DBFFDB -&gt; 223C23</strong></li>
+<li>Smart-cast value(B)： <strong>DBFFDB -&gt; 223C23</strong></li>
+<li>Smart constant(B)： <strong>DBFFDB -&gt; 223C23</strong></li>
+</ul>
+</li>
+<li>Annotation： <strong>000080 -&gt; CC7832</strong></li>
+<li>Properties and Variables<ul>
+<li>Instance property： <strong>FEFFFB -&gt; 9876AA</strong></li>
+</ul>
+</li>
+</ul>
+<h4 id="Groovy-1"><a href="#Groovy-1" class="headerlink" title="Groovy"></a>Groovy</h4><ul>
+<li>Keyword： <strong>000043 -&gt; CC7832</strong></li>
+<li>Bad character<br>  F：<strong>（关）</strong><br>  Effects：<strong>[ ] -&gt; FF0000 （Underwaved）</strong></li>
+<li>References<ul>
+<li>Unresolved reference<br>  F：<strong>000080 -&gt; 808080</strong></li>
+</ul>
+</li>
+</ul>
+<h4 id="XML-1"><a href="#XML-1" class="headerlink" title="XML"></a>XML</h4><ul>
+<li>Namespace prefix： <strong>CFBFAD -&gt; 9876AA</strong></li>
+<li>Attribute name： <strong>BFA4A4 -&gt; BABABA</strong></li>
+<li>Attribute value： <strong>ECE47E -&gt; 4CD656</strong></li>
+</ul>
+<h4 id="VCS-1"><a href="#VCS-1" class="headerlink" title="VCS"></a>VCS</h4><ul>
+<li>VCS Annotations<ul>
+<li>F： <strong>000080 -&gt; 8B999F</strong></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>备份很重要！！！记得把自己配置好的 Color Scheme 导出 jar，云盘备份保存。</p>
+</blockquote>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/IDE/" rel="tag"><i class="fa fa-tag"></i> IDE</a>
+          
+            <a href="/tags/Color-Scheme/" rel="tag"><i class="fa fa-tag"></i> Color Scheme</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/05/dev-ide-as-personal-settings/" rel="next" title="个人 IDEA（Android Studio）生产工具个性化配置">
+                <i class="fa fa-chevron-left"></i> 个人 IDEA（Android Studio）生产工具个性化配置
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://p6wpxhpqt.bkt.clouddn.com/img-okal-eltocat-300.jpg"
+                alt="李世德" />
+            
+              <p class="site-author-name" itemprop="name">李世德</p>
+              <p class="site-description motion-element" itemprop="description">爱生活，爱学习，一个不羁的编码界小学生。</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">28</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">32</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lishide" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/u/3235831430" target="_blank" title="Weibo"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Ladies-Night-2-个人修改"><span class="nav-number">1.</span> <span class="nav-text">Ladies Night 2 个人修改</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#字体字号"><span class="nav-number">1.1.</span> <span class="nav-text">字体字号</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#General"><span class="nav-number">1.2.</span> <span class="nav-text">General</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Language-Defaults"><span class="nav-number">1.3.</span> <span class="nav-text">Language Defaults</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java"><span class="nav-number">1.4.</span> <span class="nav-text">Java</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Kotlin"><span class="nav-number">1.5.</span> <span class="nav-text">Kotlin</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Groovy"><span class="nav-number">1.6.</span> <span class="nav-text">Groovy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#XML"><span class="nav-number">1.7.</span> <span class="nav-text">XML</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#VCS"><span class="nav-number">1.8.</span> <span class="nav-text">VCS</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sublime-Text-2-个人修改"><span class="nav-number">2.</span> <span class="nav-text">Sublime Text 2 个人修改</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#General-1"><span class="nav-number">2.1.</span> <span class="nav-text">General</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Language-Defaults-1"><span class="nav-number">2.2.</span> <span class="nav-text">Language Defaults</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java-1"><span class="nav-number">2.3.</span> <span class="nav-text">Java</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Kotlin-1"><span class="nav-number">2.4.</span> <span class="nav-text">Kotlin</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Groovy-1"><span class="nav-number">2.5.</span> <span class="nav-text">Groovy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#XML-1"><span class="nav-number">2.6.</span> <span class="nav-text">XML</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#VCS-1"><span class="nav-number">2.7.</span> <span class="nav-text">VCS</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李世德</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">
+    <i class="fa fa-eye"></i>
+    <span id="busuanzi_container_site_pv">
+      访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <i class="fa fa-user-md"></i>
+    <span id="busuanzi_container_site_uv">
+      访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+  </div>
+  <span class="post-meta-divider">|</span>
+  <i class="fa fa-pencil"></i>
+  <div class="theme-info">
+    <div class="powered-by"></div>
+    <span class="post-count">博客全站共 33.5k 字</span>
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.6.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Gemini</a> v6.4.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.4.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
