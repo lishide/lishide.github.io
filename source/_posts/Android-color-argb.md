@@ -3,7 +3,7 @@ title: Android-color-argb
 date: 2018-11-26 22:18:53
 tags: [Android, ARGB]
 ---
-Android 颜色值透明度，快速查询工具，装载备用。
+Android 颜色值透明度，快速查询工具，转载备用。
 
 <!--more-->
 
