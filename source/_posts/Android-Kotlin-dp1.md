@@ -3,30 +3,59 @@ title: 【团队分享】Kotlin 及设计模式实践（一）
 date: 2018-03-19 11:13:38
 tags: [Android, Kotlin, Design Patterns]
 ---
-今天给大家分享 Kotlin 入门的一些基本语法概念以及其独特的优秀特性和最近一段时间在实际开发中使用到的一些习惯用法，至于基础知识，例如变量、类定义、函数等这些不在本次分享中详细阐述。有 Java 开发基础，甚至说有某一种开发语言的基础，都是比较容易上手的。通过下面的几点分享，大家先领略一下 Kotlin 的简洁和优雅。结合一种较为常用且简单的设计模式——建造者模式进行本次的讲解，作为抛砖引玉，可能经验不足，但希望我们团队能够固定有这样的分享学习活动，激活团队的氛围，传递更多的知识与技能。
+今天给大家分享 Kotlin 入门的一些基本语法概念以及其独特的优秀特性和最近一段时间在实际开发中使用到的一些习惯用法。有 Java 开发基础，甚至说有某一种开发语言的基础，都是比较容易上手的。通过下面的几点分享，大家先领略一下 Kotlin 的简洁和优雅。结合一种较为常用且简单的设计模式——建造者模式进行本次的讲解。
+希望我们团队能够固定有这样的分享学习活动，激活团队的氛围，传递更多的知识与技能。
 
 <!--more-->
 
 # 1. Kotlin
 
-## 1.1 （对 Android 开发而言）不用 `findViewById`，提高开发效率
-可以直接使用控件的 id 进行操作，减少原先在 Java 中大量的 `findViewById` 的代码。
-``` xml
-<android.support.v7.widget.RecyclerView
-    android:id="@+id/recyclerView"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+## 1.1 定义变量
+只读局部变量使用关键字 `val` 定义。只能为其赋值一次。
+```java
+fun main() {
+//sampleStart
+    val a: Int = 1  // 立即赋值
+    val b = 2   // 自动推断出 `Int` 类型
+    val c: Int  // 如果没有初始值类型不能省略
+    c = 3       // 明确赋值
+//sampleEnd
+    println("a = $a, b = $b, c = $c")
+}
 ```
-IDE 提示导入类似这个包 `import kotlinx.android.synthetic.main.activity_main.*`，则可直接使用控件的 id 来操作。
-``` java
-recyclerView.layoutManager = LinearLayoutManager(this)
-recyclerView.adapter = mAdapter
+可重新赋值的变量使用 `var` 关键字：
+```java
+fun main() {
+//sampleStart
+    var x = 5 // 自动推断出 `Int` 类型
+    x += 1
+//sampleEnd
+    println("x = $x")
+}
+```
+顶层变量：
+```java
+//sampleStart
+val PI = 3.14
+var x = 0
+
+fun incrementX() {
+    x += 1
+}
+//sampleEnd
+
+fun main() {
+    println("x = $x; PI = $PI")
+    incrementX()
+    println("incrementX()")
+    println("x = $x; PI = $PI")
+}
 ```
 
 ## 1.2 if 表达式
 在 Kotlin 中， `if` 是一个表达式，即它会返回一个值。 因此就不需要三元运算符（条件 ? 然后 : 否则） ，因为普通的 `if` 就能胜任这个角色。
 ### 1.2.1 用法
-```groovy
+```java
 // 传统用法
 var max = a
 if (a < b) max = b
@@ -186,6 +215,21 @@ val l = b!!.length
 >  如果值为空，就会抛出一个 NPE 异常
 
 另外还有通过**安全的类型转换**或其他方式来避免这些异常的发生，涉及到 Kotlin 的扩展函数，本次暂不做讲解。
+
+
+## 1.7 （对 Android 开发而言）不用 `findViewById`，提高开发效率
+可以直接使用控件的 id 进行操作，减少原先在 Java 中大量的 `findViewById` 的代码。
+``` xml
+<android.support.v7.widget.RecyclerView
+    android:id="@+id/recyclerView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
+```
+IDE 提示导入类似这个包 `import kotlinx.android.synthetic.main.activity_main.*`，则可直接使用控件的 id 来操作。
+``` java
+recyclerView.layoutManager = LinearLayoutManager(this)
+recyclerView.adapter = mAdapter
+```
 
 # 2. 建造者模式
 
