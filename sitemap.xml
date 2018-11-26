@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://lishide.github.io/2018/03/19/Android-Kotlin-dp1/</loc>
+    
+    <lastmod>2018-11-26T13:56:39.685Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://lishide.github.io/2018/09/05/dev-ide-as-personal-settings/</loc>
     
     <lastmod>2018-10-30T08:21:10.255Z</lastmod>
@@ -194,13 +201,6 @@
     <loc>https://lishide.github.io/2018/03/28/Android-Kotlin-dp2/</loc>
     
     <lastmod>2018-08-23T12:19:27.259Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://lishide.github.io/2018/03/19/Android-Kotlin-dp1/</loc>
-    
-    <lastmod>2018-08-23T12:19:27.252Z</lastmod>
     
   </url>
   
