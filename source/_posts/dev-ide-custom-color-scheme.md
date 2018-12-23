@@ -184,8 +184,14 @@ Color Scheme Font，选择合适的字体字号。
 	- Smart-cast value(B)： **DBFFDB -> 223C23**
 	- Smart constant(B)： **DBFFDB -> 223C23**
 - Annotation： **000080 -> CC7832**
+- Parameters
+	- Type parameter： **BFA4A4 -> 20999D**
 - Properties and Variables
 	- Instance property： **FEFFFB -> 9876AA**
+	- Extension property： **CFBFAD -> 9876AA(Bold,Italic)**
+	- Package-level property： **CFBFAD -> 9876AA(Bold,Italic)**
+	- Synthetic extension property： **CFBFAD -> 9876AA**
+	- Var(Effects)： **000000 -> BCA5C4**
 
 #### Groovy
 - Keyword： **000043 -> CC7832**
