@@ -191,17 +191,17 @@ links_layout: block
   #Title: http://example.com/
 
 # Sidebar Avatar
-avatar:
+#avatar:
   # in theme directory(source/images): /images/avatar.gif
   # in site  directory(source/uploads): /uploads/avatar.gif
   # You can also use other linking images.
-  url: http://p6wpxhpqt.bkt.clouddn.com/img-okal-eltocat-300.jpg
+  #url: http://p6wpxhpqt.bkt.clouddn.com/img-okal-eltocat-300.jpg
   # If true, the avatar would be dispalyed in circle.
-  rounded: false
+  #rounded: false
   # The value of opacity should be choose from 0 to 1 to set the opacity of the avatar.
-  opacity: 1
+  #opacity: 1
   # If true, the avatar would be rotated with the cursor.
-  rotated: false
+  #rotated: false
 
 # Table Of Contents in the Sidebar
 toc:
