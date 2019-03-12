@@ -11,7 +11,7 @@ language: zh-CN
 timezone:
 
 # Avatar
-avatar: http://p6wpxhpqt.bkt.clouddn.com/img-okal-eltocat-300.jpg
+#avatar: http://p6wpxhpqt.bkt.clouddn.com/img-okal-eltocat-300.jpg
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
