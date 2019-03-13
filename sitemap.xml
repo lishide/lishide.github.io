@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://lishide.github.io/2018/02/12/hexo-blog-create/</loc>
+    
+    <lastmod>2019-03-13T14:10:37.926Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://lishide.github.io/2018/03/01/Android-Lib-JitPack/</loc>
     
     <lastmod>2019-03-13T13:42:27.310Z</lastmod>
@@ -82,13 +89,6 @@
     <loc>https://lishide.github.io/2018/03/19/hexo-blog-customize/</loc>
     
     <lastmod>2018-08-23T12:19:27.433Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://lishide.github.io/2018/02/12/hexo-blog-create/</loc>
-    
-    <lastmod>2018-08-23T12:19:27.424Z</lastmod>
     
   </url>
   
