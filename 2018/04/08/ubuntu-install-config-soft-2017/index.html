@@ -116,17 +116,17 @@
 <meta property="og:site_name" content="李世德的博客">
 <meta property="og:description" content="记录 Ubuntu 系统安装配置及其软件安装的整个过程，同时分享给有需要的人。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://p6wpxhpqt.bkt.clouddn.com/img_uos_ubuntu1604.png">
-<meta property="og:image" content="http://p6wpxhpqt.bkt.clouddn.com/img_uos_show_diskpart.jpg">
-<meta property="og:image" content="http://p6wpxhpqt.bkt.clouddn.com/img_uos_ease_bcd.jpg">
-<meta property="og:image" content="http://p6wpxhpqt.bkt.clouddn.com/img_uos_utt_theme.png">
-<meta property="og:image" content="http://p6wpxhpqt.bkt.clouddn.com/img_uos_utt_icon.png">
-<meta property="og:image" content="http://p6wpxhpqt.bkt.clouddn.com/img_uos_utt_font.png">
-<meta property="og:updated_time" content="2018-08-23T12:19:27.449Z">
+<meta property="og:image" content="https://s2.ax1x.com/2019/03/13/Akw9DU.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/03/13/AkwCbF.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/03/13/AkwiE4.jpg">
+<meta property="og:image" content="https://s2.ax1x.com/2019/03/13/AkwFUJ.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/03/13/AkwECR.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/03/13/AkwpuT.png">
+<meta property="og:updated_time" content="2019-03-13T12:37:54.900Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一只小白的 Linux 之旅|Ubuntu 安装配置及软件安装（持续更新）">
 <meta name="twitter:description" content="记录 Ubuntu 系统安装配置及其软件安装的整个过程，同时分享给有需要的人。">
-<meta name="twitter:image" content="http://p6wpxhpqt.bkt.clouddn.com/img_uos_ubuntu1604.png">
+<meta name="twitter:image" content="https://s2.ax1x.com/2019/03/13/Akw9DU.png">
 
 
 
@@ -351,7 +351,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-08-23 20:19:27" itemprop="dateModified" datetime="2018-08-23T20:19:27+08:00">2018-08-23</time>
+                <time title="修改时间：2019-03-13 20:37:54" itemprop="dateModified" datetime="2019-03-13T20:37:54+08:00">2019-03-13</time>
               
             
           </span>
@@ -401,7 +401,7 @@
 
       
         <p>记录 Ubuntu 系统安装配置及其软件安装的整个过程，同时分享给有需要的人。</p>
-<p><img src="http://p6wpxhpqt.bkt.clouddn.com/img_uos_ubuntu1604.png" alt="Ubuntu"><br><a id="more"></a></p>
+<p><img src="https://s2.ax1x.com/2019/03/13/Akw9DU.png" alt="Ubuntu"><br><a id="more"></a></p>
 <h2 id="1-U-盘安装-Ubuntu-和-Windows-双系统"><a href="#1-U-盘安装-Ubuntu-和-Windows-双系统" class="headerlink" title="1. U 盘安装 Ubuntu 和 Windows 双系统"></a>1. U 盘安装 Ubuntu 和 Windows 双系统</h2><h3 id="1-1-下载-Ubuntu-的-iso-文件"><a href="#1-1-下载-Ubuntu-的-iso-文件" class="headerlink" title="1.1 下载 Ubuntu 的 .iso 文件"></a>1.1 下载 Ubuntu 的 <code>.iso</code> 文件</h3><p>可以在 <a href="https://www.ubuntu.com/download" target="_blank" rel="noopener">Ubuntu 官网</a>或者 <a href="https://cn.ubuntu.com/" target="_blank" rel="noopener">Ubuntu 中文官网</a>上下载系统镜像文件。</p>
 <h3 id="1-2-制作-U-盘启动盘"><a href="#1-2-制作-U-盘启动盘" class="headerlink" title="1.2 制作 U 盘启动盘"></a>1.2 制作 U 盘启动盘</h3><ul>
 <li>在电脑中插入一个空白的 U 盘（大小至少 2GB）</li>
@@ -463,7 +463,7 @@
 </tbody>
 </table>
 <p><del>将“安装启动引导器的设备”选择为之前分配<code>/boot</code>的那个分区名。如下图中，是<code>sda5</code>，选择你的电脑对应的分区名。</del></p>
-<p><img src="http://p6wpxhpqt.bkt.clouddn.com/img_uos_show_diskpart.jpg" alt="我的 Ubuntu 分区大小设置"></p>
+<p><img src="https://s2.ax1x.com/2019/03/13/AkwCbF.png" alt="我的 Ubuntu 分区大小设置"></p>
 <p>==更新==<br>在分区过程中，建议不划分 <code>/boot</code>分区，在使用中发现，在更新几次内核之后，就会提示空间不足，因此划分上面表格中其他三个分区即可，“安装启动引导器的设备”保持默认不变。<br>系统安装完成后，电脑使用 Linux 的引导，有 Linux 和 Windows 的引导选项，如需修改启动项，详见下文中“4.4 双系统引导项设置”。如此分区后，下面的在 Windows 中使用 EasyBCD 修改引导的步骤不用再做了。</p>
 <blockquote>
 <p>分区操作参考下面教程：<br><a href="http://www.jianshu.com/p/53b8b76439d0" target="_blank" rel="noopener">http://www.jianshu.com/p/53b8b76439d0</a></p>
@@ -480,15 +480,15 @@
 <p>如果为 Ubuntu 系统划分了 <code>/boot</code> 分区，重启之后发现启动选项没有 Ubuntu，而是直接进了 Windows 系统，那就需要在 Windows 中，用 EasyBCD 软件来添加启动引导项了。</p>
 </blockquote>
 <p>在 Windows 中安装 EasyBCD 后打开，点击“添加新条目（Add New Entry）” ，选择 <code>Linux/BSD</code>，具体设置如下图。类型（Type）选择 GRUB(Legacy)；名称（Name）自己随便写，小编写的是 Ubuntu 作为标识；驱动器（Drive）选取我们设置的 /boot 分区，有 Linux 标记。设置完成后点击“添加条目（Add Entry）”。</p>
-<p><img src="http://p6wpxhpqt.bkt.clouddn.com/img_uos_ease_bcd.jpg" alt="EeayBCD"></p>
+<p><img src="https://s2.ax1x.com/2019/03/13/AkwiE4.jpg" alt="EeayBCD"></p>
 <p>电脑再次启动时，就可以看到多了 Ubuntu 的启动选项了。</p>
 <h2 id="2-系统更新与美化"><a href="#2-系统更新与美化" class="headerlink" title="2. 系统更新与美化"></a>2. 系统更新与美化</h2><h3 id="2-1-系统更新"><a href="#2-1-系统更新" class="headerlink" title="2.1 系统更新"></a>2.1 系统更新</h3><p>安装完系统之后，需要更新一些补丁。CTRL+ALT+T 打开终端，输入下面代码<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get upgrade</span><br></pre></td></tr></table></figure></p>
 <h3 id="2-2-系统美化"><a href="#2-2-系统美化" class="headerlink" title="2.2 系统美化"></a>2.2 系统美化</h3><h4 id="2-2-1-调整-Unity-桌面环境：Unity-Tweak-Tool"><a href="#2-2-1-调整-Unity-桌面环境：Unity-Tweak-Tool" class="headerlink" title="2.2.1 调整 Unity 桌面环境：Unity Tweak Tool"></a>2.2.1 调整 Unity 桌面环境：Unity Tweak Tool</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install unity-tweak-tool</span><br></pre></td></tr></table></figure>
 <h4 id="2-2-2-主题-amp-图标"><a href="#2-2-2-主题-amp-图标" class="headerlink" title="2.2.2 主题 &amp; 图标"></a>2.2.2 主题 &amp; 图标</h4><p>Flatabulous 主题（扁平化主题）<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo add-apt-repository ppa:noobslab/themes</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install flatabulous-theme</span><br></pre></td></tr></table></figure></p>
 <p>该主题有配套的图标，安装方式如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo add-apt-repository ppa:noobslab/icons</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install ultra-flat-icons</span><br></pre></td></tr></table></figure></p>
-<p>安装完成后，打开 unity-tweak-tool 软件，修改主题和图标。<br><img src="http://p6wpxhpqt.bkt.clouddn.com/img_uos_utt_theme.png" alt="Unity Tweak Tool_主题"><br><img src="http://p6wpxhpqt.bkt.clouddn.com/img_uos_utt_icon.png" alt="Unity Tweak Tool_图标"></p>
+<p>安装完成后，打开 unity-tweak-tool 软件，修改主题和图标。<br><img src="https://s2.ax1x.com/2019/03/13/AkwFUJ.png" alt="Unity Tweak Tool_主题"><br><img src="https://s2.ax1x.com/2019/03/13/AkwECR.png" alt="AkUnity Tweak Tool_图标"></p>
 <h4 id="2-2-3-字体：文泉译微米黑字体"><a href="#2-2-3-字体：文泉译微米黑字体" class="headerlink" title="2.2.3 字体：文泉译微米黑字体"></a>2.2.3 字体：文泉译微米黑字体</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install fonts-wqy-microhei</span><br></pre></td></tr></table></figure>
-<p>然后通过 unity-tweak-tool 来更换字体，按照自己的喜好选择字体和字号。<br><img src="http://p6wpxhpqt.bkt.clouddn.com/img_uos_utt_font.png" alt="Unity Tweak Tool_字体"></p>
+<p>然后通过 unity-tweak-tool 来更换字体，按照自己的喜好选择字体和字号。<br><img src="https://s2.ax1x.com/2019/03/13/AkwpuT.png" alt="Unity Tweak Tool_字体"></p>
 <p>…<br>主题美化参考自：<a href="http://www.jianshu.com/p/71b60921972b" target="_blank" rel="noopener">http://www.jianshu.com/p/71b60921972b</a></p>
 <h2 id="3-软件安装"><a href="#3-软件安装" class="headerlink" title="3. 软件安装"></a>3. 软件安装</h2><h3 id="3-0-软件中心"><a href="#3-0-软件中心" class="headerlink" title="3.0 软件中心"></a>3.0 软件中心</h3><p>3.0.1 gdebi——deb 安装器（<code>*.deb</code>文件右键选择打开方式）<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install gdebi</span><br></pre></td></tr></table></figure></p>
 <blockquote>
