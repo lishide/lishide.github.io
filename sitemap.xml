@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://lishide.github.io/2018/03/01/Android-Lib-JitPack/</loc>
+    
+    <lastmod>2019-03-13T13:42:27.310Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://lishide.github.io/2018/04/08/ubuntu-install-config-soft-2017/</loc>
     
     <lastmod>2019-03-13T13:15:54.666Z</lastmod>
@@ -187,13 +194,6 @@
     <loc>https://lishide.github.io/2018/05/30/Android-fix-rv-item-view-overlap/</loc>
     
     <lastmod>2018-08-23T12:19:27.289Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://lishide.github.io/2018/03/01/Android-Lib-JitPack/</loc>
-    
-    <lastmod>2018-08-23T12:19:27.282Z</lastmod>
     
   </url>
   
