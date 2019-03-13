@@ -39,8 +39,7 @@ hexo init
 hexo s
 ```
 
-此时，浏览器中打开网址：[http://localhost:4000](http://localhost:4000)，能看到如下页面：
-![hexo_local](http://p6wpxhpqt.bkt.clouddn.com/img_hexo_local.jpg)
+此时，浏览器中打开网址：[http://localhost:4000](http://localhost:4000)，能看到 Hexo 默认的星空主题的网页。
 
 # 关联 GitHub
 ## 创建 GitHub 账号并新建项目
