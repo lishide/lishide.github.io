@@ -116,13 +116,13 @@
 <meta property="og:site_name" content="李世德的博客">
 <meta property="og:description" content="【来自本人2017年简书文章，将其同步至个人博客】 今天分享一个自己封装的 RecyclerView 横向 / 纵向滚动网格布局，先来水一水它产生的背景吧 ~ 也许看完下面简单的介绍，你才能大致了解 ScrollRecyclerView 是做什么的，要不然只知道是 RecyclerView 的封装的话，你肯定不会往下看了，因为已经有太多好用的 RecyclerView  封装了……给个机会吧，往下">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://p6wpxhpqt.bkt.clouddn.com/img_art_scroll_g.gif">
+<meta property="og:image" content="https://github.com/lishide/ScrollRecyclerView/raw/master/art/ScrollRecyclerView_art.gif">
 <meta property="og:image" content="https://jitpack.io/v/lishide/ScrollRecyclerView.svg">
-<meta property="og:updated_time" content="2018-08-23T12:19:27.385Z">
+<meta property="og:updated_time" content="2019-03-13T14:22:03.431Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ScrollRecyclerView——RecyclerView 横向 &#x2F; 纵向滚动网格布局">
 <meta name="twitter:description" content="【来自本人2017年简书文章，将其同步至个人博客】 今天分享一个自己封装的 RecyclerView 横向 / 纵向滚动网格布局，先来水一水它产生的背景吧 ~ 也许看完下面简单的介绍，你才能大致了解 ScrollRecyclerView 是做什么的，要不然只知道是 RecyclerView 的封装的话，你肯定不会往下看了，因为已经有太多好用的 RecyclerView  封装了……给个机会吧，往下">
-<meta name="twitter:image" content="http://p6wpxhpqt.bkt.clouddn.com/img_art_scroll_g.gif">
+<meta name="twitter:image" content="https://github.com/lishide/ScrollRecyclerView/raw/master/art/ScrollRecyclerView_art.gif">
 
 
 
@@ -347,7 +347,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-08-23 20:19:27" itemprop="dateModified" datetime="2018-08-23T20:19:27+08:00">2018-08-23</time>
+                <time title="修改时间：2019-03-13 22:22:03" itemprop="dateModified" datetime="2019-03-13T22:22:03+08:00">2019-03-13</time>
               
             
           </span>
@@ -400,7 +400,7 @@
 <p>今天分享一个自己封装的 RecyclerView 横向 / 纵向滚动网格布局，先来水一水它产生的背景吧 ~ 也许看完下面简单的介绍，你才能大致了解 <strong>ScrollRecyclerView</strong> 是做什么的，要不然只知道是 RecyclerView 的封装的话，你肯定不会往下看了，因为已经有太多好用的 RecyclerView  封装了……给个机会吧，往下再瞅瞅(⊙o⊙) ~~<br><a id="more"></a></p>
 <p>由于公司的产品是针对某种特制的 Android 系统设备（14 吋）的定制化研发，前段时间，工厂那边提供了新设备，话说是很多性能方面都有了较大的提升，遥控器也更新了。(⊙o⊙)哦，对了，忘了说，设备是不支持触摸操作的，使用遥控器控制。之前的那款遥控器是内置陀螺仪的，可以模拟用户手指操作，就是说能像操作手机触摸屏那样操作屏幕，而这款遥控器却没有了这项功能，只有普通遥控器的功能了，像电视机遥控器一样，操作起来特别费劲，产品中很多界面操作不便，体验很差。遂今天的主角——<strong>ScrollRecyclerView</strong> 产生了，希望通过它能改善遥控器操作的使用体验。</p>
 <p><strong>ScrollRecyclerView——RecyclerView 横向 / 纵向滚动网格布局，适用于 Android 平板、Android TV 或其他定制化 Android 设备等，使用遥控器方向导航键控制列表滑动及 item 选择状态。</strong></p>
-<h2 id="效果预览"><a href="#效果预览" class="headerlink" title="效果预览"></a>效果预览</h2><p><img src="http://p6wpxhpqt.bkt.clouddn.com/img_art_scroll_g.gif" alt="ScrollRecyclerView 效果演示"></p>
+<h2 id="效果预览"><a href="#效果预览" class="headerlink" title="效果预览"></a>效果预览</h2><p><img src="https://github.com/lishide/ScrollRecyclerView/raw/master/art/ScrollRecyclerView_art.gif" alt="ScrollRecyclerView 效果演示"></p>
 <hr>
 <p><a href="https://jitpack.io/#lishide/ScrollRecyclerView" target="_blank" rel="noopener"><img src="https://jitpack.io/v/lishide/ScrollRecyclerView.svg" alt=""></a></p>
 <h2 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h2><h4 id="JitPack-引入方法"><a href="#JitPack-引入方法" class="headerlink" title="JitPack 引入方法"></a>JitPack 引入方法</h4><h5 id="1-在-Project-下的-build-gradle-添加"><a href="#1-在-Project-下的-build-gradle-添加" class="headerlink" title="1. 在 Project 下的 build.gradle 添加"></a>1. 在 Project 下的 build.gradle 添加</h5><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">allprojects &#123;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        ...</span><br><span class="line">        maven &#123; url <span class="string">'https://jitpack.io'</span> &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>

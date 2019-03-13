@@ -116,14 +116,12 @@
 <meta property="og:site_name" content="李世德的博客">
 <meta property="og:description" content="参考 ImageCoverFlow-master 修改的，使用 ImageView 来实现，可加载本地图片和网络图片等，使用方法与 LIST 一样，设置相应的控件、修改 imageCoverFlow 布局的参数即可。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://p6wpxhpqt.bkt.clouddn.com/img_art_cf.jpg">
-<meta property="og:image" content="http://p6wpxhpqt.bkt.clouddn.com/img_art_cf_g.gif">
 <meta property="og:image" content="https://jitpack.io/v/lishide/ImgCoverFlow.svg">
-<meta property="og:updated_time" content="2018-08-23T12:19:27.375Z">
+<meta property="og:updated_time" content="2019-03-13T14:20:43.075Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ImgCoverFlow——CoverFlow 列表的实现">
 <meta name="twitter:description" content="参考 ImageCoverFlow-master 修改的，使用 ImageView 来实现，可加载本地图片和网络图片等，使用方法与 LIST 一样，设置相应的控件、修改 imageCoverFlow 布局的参数即可。">
-<meta name="twitter:image" content="http://p6wpxhpqt.bkt.clouddn.com/img_art_cf.jpg">
+<meta name="twitter:image" content="https://jitpack.io/v/lishide/ImgCoverFlow.svg">
 
 
 
@@ -348,7 +346,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-08-23 20:19:27" itemprop="dateModified" datetime="2018-08-23T20:19:27+08:00">2018-08-23</time>
+                <time title="修改时间：2019-03-13 22:20:43" itemprop="dateModified" datetime="2019-03-13T22:20:43+08:00">2019-03-13</time>
               
             
           </span>
@@ -398,8 +396,10 @@
 
       
         <p>参考 <a href="https://github.com/dolphinwang/ImageCoverFlow" target="_blank" rel="noopener">ImageCoverFlow-master</a> 修改的，使用 ImageView 来实现，可加载本地图片和网络图片等，使用方法与 LIST 一样，设置相应的控件、修改 imageCoverFlow 布局的参数即可。<br><a id="more"></a></p>
-<h2 id="效果预览"><a href="#效果预览" class="headerlink" title="效果预览"></a>效果预览</h2><h4 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h4><p><img src="http://p6wpxhpqt.bkt.clouddn.com/img_art_cf.jpg" alt="ImgCoverFlow 效果图"></p>
-<h4 id="效果预览-GIF"><a href="#效果预览-GIF" class="headerlink" title="效果预览 GIF"></a>效果预览 GIF</h4><p><img src="http://p6wpxhpqt.bkt.clouddn.com/img_art_cf_g.gif" alt="ImgCoverFlow 效果预览 GIF"></p>
+<h2 id="效果预览"><a href="#效果预览" class="headerlink" title="效果预览"></a>效果预览</h2><h4 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h4><image src="https://github.com/lishide/ImgCoverFlow/raw/master/art/ImgCoverFlow_screen1.jpg" width="280px">
+
+<h4 id="效果预览-GIF"><a href="#效果预览-GIF" class="headerlink" title="效果预览 GIF"></a>效果预览 GIF</h4><image src="https://github.com/lishide/ImgCoverFlow/raw/master/art/ImgCoverFlow_art.gif?raw=true" width="280px">
+
 <h2 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h2><p><a href="https://jitpack.io/#lishide/ImgCoverFlow" target="_blank" rel="noopener"><img src="https://jitpack.io/v/lishide/ImgCoverFlow.svg" alt=""></a></p>
 <h4 id="JitPack-引入方法"><a href="#JitPack-引入方法" class="headerlink" title="JitPack 引入方法"></a>JitPack 引入方法</h4><h5 id="1-在-Project-下的-build-gradle-添加"><a href="#1-在-Project-下的-build-gradle-添加" class="headerlink" title="1. 在 Project 下的 build.gradle 添加"></a>1. 在 Project 下的 build.gradle 添加</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">allprojects &#123;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        ...</span><br><span class="line">        maven &#123; url <span class="string">'https://jitpack.io'</span> &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h5 id="2-在-Module-下的-build-gradle-添加"><a href="#2-在-Module-下的-build-gradle-添加" class="headerlink" title="2. 在 Module 下的 build.gradle 添加"></a>2. 在 Module 下的 build.gradle 添加</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    compile <span class="string">'com.github.lishide:ImgCoverFlow:v1.0.1'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -439,7 +439,7 @@
 <p>……</p>
 <hr>
 <p><strong>就到这里，更多的细节，请参考 demo 和源码，<a href="https://github.com/lishide/ImgCoverFlow" target="_blank" rel="noopener">传送门</a> 。</strong></p>
-
+</image></image>
       
     </div>
 
