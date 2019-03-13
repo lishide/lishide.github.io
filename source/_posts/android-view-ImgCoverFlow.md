@@ -10,11 +10,11 @@ tags: [Android, 自定义 View, CoverFlow]
 
 #### 效果图
 
-![ImgCoverFlow 效果图](http://p6wpxhpqt.bkt.clouddn.com/img_art_cf.jpg)
+<image src="https://github.com/lishide/ImgCoverFlow/raw/master/art/ImgCoverFlow_screen1.jpg" width="280px"/>
 
 #### 效果预览 GIF
 
-![ImgCoverFlow 效果预览 GIF](http://p6wpxhpqt.bkt.clouddn.com/img_art_cf_g.gif)
+<image src="https://github.com/lishide/ImgCoverFlow/raw/master/art/ImgCoverFlow_art.gif?raw=true" width="280px"/>
 
 ## 依赖
 [![](https://jitpack.io/v/lishide/ImgCoverFlow.svg)](https://jitpack.io/#lishide/ImgCoverFlow)
