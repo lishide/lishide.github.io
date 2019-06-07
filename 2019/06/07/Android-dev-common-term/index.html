@@ -116,7 +116,7 @@
 <meta property="og:site_name" content="李世德的博客">
 <meta property="og:description" content="Android 开发和调试常用命令Android 开发和调试中使用到的常用命令。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-06-07T07:34:06.405Z">
+<meta property="og:updated_time" content="2019-06-07T07:39:07.645Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 开发和调试中使用到的常用命令">
 <meta name="twitter:description" content="Android 开发和调试常用命令Android 开发和调试中使用到的常用命令。">
@@ -327,7 +327,7 @@
                 
               
 
-              <time title="创建时间：2019-06-07 15:23:44 / 修改时间：15:34:06" itemprop="dateCreated datePublished" datetime="2019-06-07T15:23:44+08:00">2019-06-07</time>
+              <time title="创建时间：2019-06-07 15:23:44 / 修改时间：15:39:07" itemprop="dateCreated datePublished" datetime="2019-06-07T15:23:44+08:00">2019-06-07</time>
             
 
             
@@ -358,7 +358,7 @@
               <span class="post-meta-divider">|</span>
               <i class="fa fa-file-word-o"></i>
               <span>
-                  405 字
+                  406 字
               </span>
               <span class="post-meta-divider">|</span>
               <i class="fa fa-clock-o"></i>
@@ -448,14 +448,10 @@
 <li><p>卸载 Release 模式包</p>
 <p><code>./gradlew uninstallRelease</code></p>
 </li>
-<li><p>指定 Module 打包</p>
+<li><p>指定 Module 打包<br>项目中有许多的可以直接独立运行的 Module，如果在 Gradle 中将签名文件配置好了，那么就不需要普通的手动点击 <code>Generate Signed APK</code>，使用 <code>Terminal</code>更加方便。</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./gradlew :&lt;ModuleName&gt;:assembleRelease</span><br><span class="line">// 示例：</span><br><span class="line">./gradlew :sampleApp:assembleRelease</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<blockquote>
-<p>项目中有许多的可以直接独立运行的 Module，如果在 Gradle 中将签名文件配置好了，那么就不需要普通的手动点击 <code>Generate Signed APK</code>，使用 <code>Terminal</code>更加方便。</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./gradlew :&lt;ModuleName&gt;:assembleRelease</span><br></pre></td></tr></table></figure>
-<p>示例：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./gradlew :sampleApp:assembleRelease</span><br></pre></td></tr></table></figure></p>
 <p><code>[error]command not found</code>，通常是因为 gradle 没有加入到<code>PATH</code>中。将<code>gradle</code>改为<code>./gradlew</code>即可。( <code>./</code>表示同级目录）</p>
 
       
