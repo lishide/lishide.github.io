@@ -108,25 +108,25 @@
 
 
 
-  <meta name="description" content="1. 前言转载自 赵彦军博客 最近封装了几个 Android 的  Library，想把它们放到仓库，方便在以后的项目中直接以依赖的方式引用。参考了几个博客，今天这篇博文总结和推荐一个最简单方便的方式 —— JitPack。">
-<meta name="keywords" content="Android,GitHub,JitPack">
+  <meta name="description" content="解决 Android 的 webview 不支持 input type=file 标签项目中遇到  H5 的 input type=&amp;quot;file&amp;quot; 标签在 Android 的 webview 中失效，查了一下是安卓禁用掉了。 重写 webview 的 WebChromeClient 可以解决。">
+<meta name="keywords" content="Android,RecyclerView,ConstraintLayout">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android 发布 Lib 到 JitPack">
-<meta property="og:url" content="https://lishide.github.io/2018/03/01/Android-Lib-JitPack/index.html">
+<meta property="og:title" content="解决 Android 的 webview 不支持 input type=file 标签">
+<meta property="og:url" content="https://lishide.github.io/2019/06/15/Android-fix-web-input-file/index.html">
 <meta property="og:site_name" content="李世德的博客">
-<meta property="og:description" content="1. 前言转载自 赵彦军博客 最近封装了几个 Android 的  Library，想把它们放到仓库，方便在以后的项目中直接以依赖的方式引用。参考了几个博客，今天这篇博文总结和推荐一个最简单方便的方式 —— JitPack。">
+<meta property="og:description" content="解决 Android 的 webview 不支持 input type=file 标签项目中遇到  H5 的 input type=&amp;quot;file&amp;quot; 标签在 Android 的 webview 中失效，查了一下是安卓禁用掉了。 重写 webview 的 WebChromeClient 可以解决。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-13T13:42:27.310Z">
+<meta property="og:updated_time" content="2019-06-15T04:27:22.464Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android 发布 Lib 到 JitPack">
-<meta name="twitter:description" content="1. 前言转载自 赵彦军博客 最近封装了几个 Android 的  Library，想把它们放到仓库，方便在以后的项目中直接以依赖的方式引用。参考了几个博客，今天这篇博文总结和推荐一个最简单方便的方式 —— JitPack。">
+<meta name="twitter:title" content="解决 Android 的 webview 不支持 input type=file 标签">
+<meta name="twitter:description" content="解决 Android 的 webview 不支持 input type=file 标签项目中遇到  H5 的 input type=&amp;quot;file&amp;quot; 标签在 Android 的 webview 中失效，查了一下是安卓禁用掉了。 重写 webview 的 WebChromeClient 可以解决。">
 
 
 
 
 
 
-  <link rel="canonical" href="https://lishide.github.io/2018/03/01/Android-Lib-JitPack/"/>
+  <link rel="canonical" href="https://lishide.github.io/2019/06/15/Android-fix-web-input-file/"/>
 
 
 
@@ -136,7 +136,7 @@
   };
 </script>
 
-  <title>Android 发布 Lib 到 JitPack | 李世德的博客</title>
+  <title>解决 Android 的 webview 不支持 input type=file 标签 | 李世德的博客</title>
   
 
 
@@ -285,7 +285,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://lishide.github.io/2018/03/01/Android-Lib-JitPack/">
+    <link itemprop="mainEntityOfPage" href="https://lishide.github.io/2019/06/15/Android-fix-web-input-file/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="李世德">
@@ -302,7 +302,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Android 发布 Lib 到 JitPack
+          <h1 class="post-title" itemprop="name headline">解决 Android 的 webview 不支持 input type=file 标签
               
             
           </h1>
@@ -327,24 +327,12 @@
                 
               
 
-              <time title="创建时间：2018-03-01 08:57:16" itemprop="dateCreated datePublished" datetime="2018-03-01T08:57:16+08:00">2018-03-01</time>
+              <time title="创建时间：2019-06-15 12:23:32 / 修改时间：12:27:22" itemprop="dateCreated datePublished" datetime="2019-06-15T12:23:32+08:00">2019-06-15</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-03-13 21:42:27" itemprop="dateModified" datetime="2019-03-13T21:42:27+08:00">2019-03-13</time>
               
             
           </span>
@@ -370,7 +358,7 @@
               <span class="post-meta-divider">|</span>
               <i class="fa fa-file-word-o"></i>
               <span>
-                  369 字
+                  441 字
               </span>
               <span class="post-meta-divider">|</span>
               <i class="fa fa-clock-o"></i>
@@ -393,27 +381,14 @@
       
 
       
-        <h1 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h1><p>转载自 <a href="http://www.cnblogs.com/zhaoyanjun/p/5942616.html" target="_blank" rel="noopener">赵彦军博客</a></p>
-<p>最近封装了几个 Android 的  Library，想把它们放到仓库，方便在以后的项目中直接以依赖的方式引用。参考了几个博客，今天这篇博文<strong>总结</strong>和<strong>推荐</strong>一个最简单方便的方式 —— JitPack。<br><a id="more"></a></p>
-<h1 id="2-步骤"><a href="#2-步骤" class="headerlink" title="2. 步骤"></a>2. 步骤</h1><h2 id="2-1-在-Android-Studio-里面配置-Jitpack-插件"><a href="#2-1-在-Android-Studio-里面配置-Jitpack-插件" class="headerlink" title="2.1 在 Android Studio 里面配置 Jitpack 插件"></a>2.1 在 Android Studio 里面配置 Jitpack 插件</h2><p>在项目的根目录下的 build.gradle 文件里面添加</p>
-<ul>
-<li><p>在 dependencies 下面添加</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">classpath <span class="string">'com.github.dcendents:android-maven-gradle-plugin:1.5'</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在 repositories 下面添加</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">maven &#123; url <span class="string">"https://jitpack.io"</span> &#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>Ps：在配置 JitPack 插件的时候，需要用到插件的版本号，目前为止最新版是 1.5。<a href="https://github.com/dcendents/android-maven-gradle-plugin" target="_blank" rel="noopener">查看最新版本号，插件的 GitHub 仓库</a></p>
-<h2 id="2-2-配置-Library-Module-的-build-gradle"><a href="#2-2-配置-Library-Module-的-build-gradle" class="headerlink" title="2.2 配置 Library Module 的 build.gradle"></a>2.2 配置 Library Module 的 build.gradle</h2><p>在 Library module 的 build.gradle 文件里面添加<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apply <span class="string">plugin:</span> <span class="string">'com.github.dcendents.android-maven'</span></span><br></pre></td></tr></table></figure></p>
-<p>有的教程说还有这条，加了好像没有被用到 …<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">group = <span class="string">'com.github.YourUsername'</span>  <span class="comment">//替换成你的 Github 的用户名</span></span><br></pre></td></tr></table></figure></p>
-<p><strong>Sync Now</strong></p>
-<h2 id="2-3-将项目提交到-GitHub-上"><a href="#2-3-将项目提交到-GitHub-上" class="headerlink" title="2.3 将项目提交到 GitHub 上"></a>2.3 将项目提交到 GitHub 上</h2><h2 id="2-4-登录-GitHub-发布一个发行版本"><a href="#2-4-登录-GitHub-发布一个发行版本" class="headerlink" title="2.4 登录 GitHub 发布一个发行版本"></a>2.4 登录 GitHub 发布一个发行版本</h2><p>点击 release -&gt; 点击创建新的 release 版本 -&gt; 书写版本号和 release 信息</p>
-<h2 id="2-5-获取引用方式"><a href="#2-5-获取引用方式" class="headerlink" title="2.5 获取引用方式"></a>2.5 获取引用方式</h2><p>进入 JitPack 网站 <a href="https://jitpack.io/" target="_blank" rel="noopener">https://jitpack.io/</a>，输入项目的 GitHub 地址：https: // github . com/ username / repo，点击 Look up，下面就显示出了所有的 release 版本。</p>
-<p>点击 Get it 查看引用方式。</p>
-<p>比如：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compile <span class="string">'com.github.username:repo:v1.0.0'</span></span><br></pre></td></tr></table></figure></p>
-<hr>
-<p><strong>到此，就结束了，对，就是这么简单。</strong></p>
+        <h1 id="解决-Android-的-webview-不支持-input-type-file-标签"><a href="#解决-Android-的-webview-不支持-input-type-file-标签" class="headerlink" title="解决 Android 的 webview 不支持 input type=file 标签"></a>解决 Android 的 webview 不支持 <code>input type=file</code> 标签</h1><p>项目中遇到  H5 的 <code>input type=&quot;file&quot;</code> 标签在 Android 的 webview 中失效，查了一下是安卓禁用掉了。</p>
+<p>重写 webview 的 WebChromeClient 可以解决。</p>
+<a id="more"></a>
+<h2 id="WebView设置WebChromeClient"><a href="#WebView设置WebChromeClient" class="headerlink" title="WebView设置WebChromeClient"></a>WebView设置WebChromeClient</h2><p>重写 WebChromeClient 中关于文件选择的方法，onShowFileChooser 和 openFileChooser。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">mWebView.setWebChromeClient(<span class="keyword">new</span> WebChromeClient() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// For 3.0+ Devices (Start)</span></span><br><span class="line">    <span class="comment">// onActivityResult attached before constructor</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">openFileChooser</span><span class="params">(ValueCallback uploadMsg, String acceptType)</span> </span>&#123;</span><br><span class="line">        mUploadMessage = uploadMsg;</span><br><span class="line">        Intent i = <span class="keyword">new</span> Intent(Intent.ACTION_GET_CONTENT);</span><br><span class="line">        i.addCategory(Intent.CATEGORY_OPENABLE);</span><br><span class="line">        i.setType(<span class="string">"image/*"</span>);</span><br><span class="line">        startActivityForResult(Intent.createChooser(i, <span class="string">"File Browser"</span>), FILE_CHOOSER_RESULT_CODE);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// For Lollipop 5.0+ Devices</span></span><br><span class="line">    <span class="meta">@TargetApi</span>(Build.VERSION_CODES.LOLLIPOP)</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onShowFileChooser</span><span class="params">(WebView webView, ValueCallback&lt;Uri[]&gt; filePathCallback, FileChooserParams fileChooserParams)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (uploadMessage != <span class="keyword">null</span>) &#123;</span><br><span class="line">            uploadMessage.onReceiveValue(<span class="keyword">null</span>);</span><br><span class="line">            uploadMessage = <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        uploadMessage = filePathCallback;</span><br><span class="line">        Intent intent = fileChooserParams.createIntent();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            startActivityForResult(intent, REQUEST_SELECT_FILE);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ActivityNotFoundException e) &#123;</span><br><span class="line">            uploadMessage = <span class="keyword">null</span>;</span><br><span class="line">            Toast.makeText(getContext(), <span class="string">"Cannot Open File Chooser"</span>, Toast.LENGTH_LONG).show();</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//For Android 4.1 only</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">openFileChooser</span><span class="params">(ValueCallback&lt;Uri&gt; uploadMsg, String acceptType, String capture)</span> </span>&#123;</span><br><span class="line">        mUploadMessage = uploadMsg;</span><br><span class="line">        Intent intent = <span class="keyword">new</span> Intent(Intent.ACTION_GET_CONTENT);</span><br><span class="line">        intent.addCategory(Intent.CATEGORY_OPENABLE);</span><br><span class="line">        intent.setType(<span class="string">"image/*"</span>);</span><br><span class="line">        startActivityForResult(Intent.createChooser(intent, <span class="string">"File Browser"</span>), FILE_CHOOSER_RESULT_CODE);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">openFileChooser</span><span class="params">(ValueCallback&lt;Uri&gt; uploadMsg)</span> </span>&#123;</span><br><span class="line">        mUploadMessage = uploadMsg;</span><br><span class="line">        Intent i = <span class="keyword">new</span> Intent(Intent.ACTION_GET_CONTENT);</span><br><span class="line">        i.addCategory(Intent.CATEGORY_OPENABLE);</span><br><span class="line">        i.setType(<span class="string">"image/*"</span>);</span><br><span class="line">        startActivityForResult(Intent.createChooser(i, <span class="string">"File Chooser"</span>), FILE_CHOOSER_RESULT_CODE);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="选择结果的回调"><a href="#选择结果的回调" class="headerlink" title="选择结果的回调"></a>选择结果的回调</h2><p>在 onActivityResult 中获取对应的选取文件的返回结果</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onActivityResult</span><span class="params">(<span class="keyword">int</span> requestCode, <span class="keyword">int</span> resultCode, Intent data)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.LOLLIPOP) &#123;</span><br><span class="line">        <span class="keyword">if</span> (requestCode == REQUEST_SELECT_FILE) &#123;</span><br><span class="line">            <span class="keyword">if</span> (uploadMessage == <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            uploadMessage.onReceiveValue(WebChromeClient.FileChooserParams.parseResult(resultCode, data));</span><br><span class="line">            uploadMessage = <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (requestCode == FILE_CHOOSER_RESULT_CODE) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">null</span> == mUploadMessage) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// Use MainActivity.RESULT_OK if you're implementing WebView inside Fragment</span></span><br><span class="line">        <span class="comment">// Use RESULT_OK only if you're implementing WebView inside an Activity</span></span><br><span class="line">        Uri result = data == <span class="keyword">null</span> || resultCode != WebActivity.RESULT_OK ? <span class="keyword">null</span> : data.getData();</span><br><span class="line">        mUploadMessage.onReceiveValue(result);</span><br><span class="line">        mUploadMessage = <span class="keyword">null</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        Toast.makeText(getContext(), <span class="string">"选择图片失败"</span>, Toast.LENGTH_LONG).show();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以解决 3.1、4.1、5.0 以上的版本的问题。</p>
 
       
     </div>
@@ -436,9 +411,9 @@
           
             <a href="/tags/Android/" rel="tag"><i class="fa fa-tag"></i> Android</a>
           
-            <a href="/tags/GitHub/" rel="tag"><i class="fa fa-tag"></i> GitHub</a>
+            <a href="/tags/RecyclerView/" rel="tag"><i class="fa fa-tag"></i> RecyclerView</a>
           
-            <a href="/tags/JitPack/" rel="tag"><i class="fa fa-tag"></i> JitPack</a>
+            <a href="/tags/ConstraintLayout/" rel="tag"><i class="fa fa-tag"></i> ConstraintLayout</a>
           
         </div>
       
@@ -451,8 +426,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/02/28/Git-upload-project-repo/" rel="next" title="Git-将本地项目上传到GitHub">
-                <i class="fa fa-chevron-left"></i> Git-将本地项目上传到GitHub
+              <a href="/2019/06/07/My-Feelings-201906/" rel="next" title="2019年6月随想">
+                <i class="fa fa-chevron-left"></i> 2019年6月随想
               </a>
             
           </div>
@@ -460,10 +435,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/03/10/android-Fragment-hide-show/" rel="prev" title="Fragment 使用 hide/show 时的生命周期">
-                Fragment 使用 hide/show 时的生命周期 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -668,7 +639,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-前言"><span class="nav-number">1.</span> <span class="nav-text">1. 前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-步骤"><span class="nav-number">2.</span> <span class="nav-text">2. 步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-在-Android-Studio-里面配置-Jitpack-插件"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 在 Android Studio 里面配置 Jitpack 插件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-配置-Library-Module-的-build-gradle"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 配置 Library Module 的 build.gradle</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-将项目提交到-GitHub-上"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 将项目提交到 GitHub 上</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-登录-GitHub-发布一个发行版本"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 登录 GitHub 发布一个发行版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-5-获取引用方式"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 获取引用方式</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#解决-Android-的-webview-不支持-input-type-file-标签"><span class="nav-number">1.</span> <span class="nav-text">解决 Android 的 webview 不支持 input type=file 标签</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#WebView设置WebChromeClient"><span class="nav-number">1.1.</span> <span class="nav-text">WebView设置WebChromeClient</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#选择结果的回调"><span class="nav-number">1.2.</span> <span class="nav-text">选择结果的回调</span></a></li></ol></li></ol></div>
             
 
           </div>
