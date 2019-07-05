@@ -116,7 +116,7 @@
 <meta property="og:site_name" content="李世德的博客">
 <meta property="og:description" content="RxJava2 学习笔记。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-07-05T13:28:36.952Z">
+<meta property="og:updated_time" content="2019-07-05T14:45:07.078Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RxJava2 学习">
 <meta name="twitter:description" content="RxJava2 学习笔记。">
@@ -327,7 +327,7 @@
                 
               
 
-              <time title="创建时间：2019-07-05 19:54:19 / 修改时间：21:28:36" itemprop="dateCreated datePublished" datetime="2019-07-05T19:54:19+08:00">2019-07-05</time>
+              <time title="创建时间：2019-07-05 19:54:19 / 修改时间：22:45:07" itemprop="dateCreated datePublished" datetime="2019-07-05T19:54:19+08:00">2019-07-05</time>
             
 
             
@@ -358,7 +358,7 @@
               <span class="post-meta-divider">|</span>
               <i class="fa fa-file-word-o"></i>
               <span>
-                  1,169 字
+                  1,193 字
               </span>
               <span class="post-meta-divider">|</span>
               <i class="fa fa-clock-o"></i>
@@ -384,8 +384,7 @@
         <p>RxJava2 学习笔记。<br><a id="more"></a></p>
 <h1 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h1><p>RxJava —— 一个在 Java VM 上使用可观察序列来组成异步的、基于事件的程序库。</p>
 <h1 id="2-知识点"><a href="#2-知识点" class="headerlink" title="2. 知识点"></a>2. 知识点</h1><p>资源1：<a href="https://www.jianshu.com/c/299d0a51fdd4" target="_blank" rel="noopener">简书——RxJava2.x 专题</a><br>资源1：<a href="https://www.e-learn.cn/content/java/1947154" target="_blank" rel="noopener">RxJava2 基本概念大全</a></p>
-<h2 id="2-1-RxJava2教程（一）"><a href="#2-1-RxJava2教程（一）" class="headerlink" title="2.1 RxJava2教程（一）"></a>2.1 RxJava2教程（一）</h2><p>RxJava2 基础</p>
-<ul>
+<h2 id="2-1-RxJava2-教程（一）"><a href="#2-1-RxJava2-教程（一）" class="headerlink" title="2.1 RxJava2 教程（一）"></a>2.1 RxJava2 教程（一）</h2><h3 id="RxJava2-基础"><a href="#RxJava2-基础" class="headerlink" title="RxJava2 基础"></a>RxJava2 基础</h3><ul>
 <li>观察者模式的四大要素<ol>
 <li><code>Observable</code> 被观察者</li>
 <li><code>Observer</code> 观察者</li>
@@ -415,8 +414,7 @@
 </ul>
 </li>
 </ul>
-<h2 id="2-2-RxJava2教程（二）"><a href="#2-2-RxJava2教程（二）" class="headerlink" title="2.2 RxJava2教程（二）"></a>2.2 RxJava2教程（二）</h2><p>线程调度</p>
-<h3 id="调度方法"><a href="#调度方法" class="headerlink" title="调度方法"></a>调度方法</h3><ul>
+<h2 id="2-2-RxJava2-教程（二）"><a href="#2-2-RxJava2-教程（二）" class="headerlink" title="2.2 RxJava2 教程（二）"></a>2.2 RxJava2 教程（二）</h2><h3 id="线程调度"><a href="#线程调度" class="headerlink" title="线程调度"></a>线程调度</h3><h4 id="调度方法"><a href="#调度方法" class="headerlink" title="调度方法"></a>调度方法</h4><ul>
 <li><p><code>subscribeOn()</code> 指定的是上游发送事件的线程（调度被观察者运行的线程）</p>
 </li>
 <li><p><code>observeOn()</code> 指定的是下游接收事件的线程（调度观察者运行的线程）</p>
@@ -424,13 +422,13 @@
 </ul>
 <p>多次指定上游的线程只有第一次指定的有效，也就是说多次调用<code>subscribeOn()</code> 只有第一次的有效，其余的会被忽略。</p>
 <p>多次指定下游的线程是可以的，也就是说每调用一次<code>observeOn()</code>，下游的线程就会切换一次。</p>
-<h3 id="线程选项（结合-RxAndroid）"><a href="#线程选项（结合-RxAndroid）" class="headerlink" title="线程选项（结合 RxAndroid）"></a>线程选项（结合 RxAndroid）</h3><ul>
+<h4 id="线程选项（结合-RxAndroid）"><a href="#线程选项（结合-RxAndroid）" class="headerlink" title="线程选项（结合 RxAndroid）"></a>线程选项（结合 RxAndroid）</h4><ul>
 <li><code>Schedulers.io()</code> 代表 io 操作的线程，执行耗时操作。通常用于网络、读写文件等 io 密集型的操作</li>
 <li><code>Schedulers.computation()</code> 代表 CPU 计算密集型的操作，例如需要大量计算的操作</li>
 <li><code>Schedulers.newThread()</code> 代表一个常规的新线程</li>
 <li><code>AndroidSchedulers.mainThread()</code>  代表 Android 的主线程</li>
 </ul>
-<h2 id="2-3-RxJava2教程（三）"><a href="#2-3-RxJava2教程（三）" class="headerlink" title="2.3 RxJava2教程（三）"></a>2.3 RxJava2教程（三）</h2><h3 id="变换操作符"><a href="#变换操作符" class="headerlink" title="变换操作符"></a>变换操作符</h3><ul>
+<h2 id="2-3-RxJava2-教程（三）"><a href="#2-3-RxJava2-教程（三）" class="headerlink" title="2.3 RxJava2 教程（三）"></a>2.3 RxJava2 教程（三）</h2><h3 id="变换操作符"><a href="#变换操作符" class="headerlink" title="变换操作符"></a>变换操作符</h3><ul>
 <li><p>map</p>
 <p><code>map</code> 是 RxJava 中最简单的一个变换操作符了，它的作用就是对上游发送的每一个事件应用一个函数，使得每一个事件都按照指定的函数去变化。</p>
 </li>
@@ -438,7 +436,7 @@
 <p><code>flatMap</code> 将一个发送事件的上游 Observable 变换为多个发送事件的 Observables，然后将它们发射的事件合并后放进一个单独的 Observable 里。</p>
 </li>
 <li><p>concatMap</p>
-<p><code>concatMap</code> 和 flatMap 几乎一样，并保证顺序。</p>
+<p><code>concatMap</code> 和 flatMap 的作用几乎一样，只是它的结果是严格按照上游发送的顺序来发送的（保证顺序）。</p>
 </li>
 </ul>
 <h3 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h3><p>需求：如果是一个新用户，必须先注册，等注册成功之后再自动登录该怎么做呢？</p>
@@ -447,9 +445,8 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Api</span> </span>&#123;</span><br><span class="line">    <span class="meta">@GET</span></span><br><span class="line">    <span class="function">Observable&lt;LoginResponse&gt; <span class="title">login</span><span class="params">(@Body LoginRequest request)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GET</span></span><br><span class="line">    <span class="function">Observable&lt;RegisterResponse&gt; <span class="title">register</span><span class="params">(@Body RegisterRequest request)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>注册和登录返回的都是 Observable，使用 <code>flatMap</code> 操作符转换为另一个 Observable：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">api.register(<span class="keyword">new</span> RegisterRequest())            <span class="comment">//发起注册请求</span></span><br><span class="line">    .subscribeOn(Schedulers.io())               <span class="comment">//在IO线程进行网络请求</span></span><br><span class="line">    .observeOn(AndroidSchedulers.mainThread())  <span class="comment">//回到主线程去处理请求注册结果</span></span><br><span class="line">    .doOnNext(<span class="keyword">new</span> Consumer&lt;RegisterResponse&gt;() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">accept</span><span class="params">(RegisterResponse registerResponse)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">          <span class="comment">//先根据注册的响应结果去做一些操作</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    .observeOn(Schedulers.io())                 <span class="comment">//回到IO线程去发起登录请求</span></span><br><span class="line">    .flatMap(<span class="keyword">new</span> Function&lt;RegisterResponse, ObservableSource&lt;LoginResponse&gt;&gt;() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> ObservableSource&lt;LoginResponse&gt; <span class="title">apply</span><span class="params">(RegisterResponse registerResponse)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">          <span class="keyword">return</span> api.login(<span class="keyword">new</span> LoginRequest());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    .observeOn(AndroidSchedulers.mainThread())  <span class="comment">//回到主线程去处理请求登录的结果</span></span><br><span class="line">    .subscribe(<span class="keyword">new</span> Consumer&lt;LoginResponse&gt;() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">accept</span><span class="params">(LoginResponse loginResponse)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">          Toast.makeText(MainActivity.<span class="keyword">this</span>, <span class="string">"登录成功"</span>, Toast.LENGTH_SHORT).show();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;, <span class="keyword">new</span> Consumer&lt;Throwable&gt;() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">accept</span><span class="params">(Throwable throwable)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">          Toast.makeText(MainActivity.<span class="keyword">this</span>, <span class="string">"登录失败"</span>, Toast.LENGTH_SHORT).show();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
-<h2 id="2-4-RxJava2教程（四）"><a href="#2-4-RxJava2教程（四）" class="headerlink" title="2.4 RxJava2教程（四）"></a>2.4 RxJava2教程（四）</h2><p>zip</p>
-<h2 id="2-5-RxJava2教程（五）"><a href="#2-5-RxJava2教程（五）" class="headerlink" title="2.5 RxJava2教程（五）"></a>2.5 RxJava2教程（五）</h2><p>Backpressure；上下游流速不均衡的源头，线程同步/异步情况</p>
-<h2 id="2-6-RxJava2教程（六）"><a href="#2-6-RxJava2教程（六）" class="headerlink" title="2.6 RxJava2教程（六）"></a>2.6 RxJava2教程（六）</h2><p>解决上下游流速不均衡的问题（使用 <code>Observable</code>）：</p>
+<h2 id="2-4-RxJava2-教程（四）"><a href="#2-4-RxJava2-教程（四）" class="headerlink" title="2.4 RxJava2 教程（四）"></a>2.4 RxJava2 教程（四）</h2><h3 id="zip"><a href="#zip" class="headerlink" title="zip"></a>zip</h3><h2 id="2-5-RxJava2-教程（五）"><a href="#2-5-RxJava2-教程（五）" class="headerlink" title="2.5 RxJava2 教程（五）"></a>2.5 RxJava2 教程（五）</h2><p>Backpressure；上下游流速不均衡的源头，线程同步/异步情况</p>
+<h2 id="2-6-RxJava2-教程（六）"><a href="#2-6-RxJava2-教程（六）" class="headerlink" title="2.6 RxJava2 教程（六）"></a>2.6 RxJava2 教程（六）</h2><p>解决上下游流速不均衡的问题（使用 <code>Observable</code>）：</p>
 <ul>
 <li><p>一是从数量上进行治理, 减少发送进水缸里的事件</p>
 <ul>
@@ -464,11 +461,10 @@
 </ul>
 </li>
 </ul>
-<h2 id="2-7-RxJava2教程（七）"><a href="#2-7-RxJava2教程（七）" class="headerlink" title="2.7 RxJava2教程（七）"></a>2.7 RxJava2教程（七）</h2><p>Flowable</p>
-<h2 id="2-8-RxJava2教程（八）"><a href="#2-8-RxJava2教程（八）" class="headerlink" title="2.8 RxJava2教程（八）"></a>2.8 RxJava2教程（八）</h2><p>Flowable；</p>
+<h2 id="2-7-RxJava2-教程（七）"><a href="#2-7-RxJava2-教程（七）" class="headerlink" title="2.7 RxJava2 教程（七）"></a>2.7 RxJava2 教程（七）</h2><h3 id="Flowable"><a href="#Flowable" class="headerlink" title="Flowable"></a>Flowable</h3><h2 id="2-8-RxJava2-教程（八）"><a href="#2-8-RxJava2-教程（八）" class="headerlink" title="2.8 RxJava2 教程（八）"></a>2.8 RxJava2 教程（八）</h2><p>Flowable；</p>
 <p>BackpressureStrategy</p>
-<h2 id="2-9-RxJava2教程（九）"><a href="#2-9-RxJava2教程（九）" class="headerlink" title="2.9 RxJava2教程（九）"></a>2.9 RxJava2教程（九）</h2><p>Flowable，如何正确的去实现一个完整的响应式拉取</p>
-<h2 id="2-10-RxJava2教程（十）"><a href="#2-10-RxJava2教程（十）" class="headerlink" title="2.10 RxJava2教程（十）"></a>2.10 RxJava2教程（十）</h2><p>RxJavaPlugins、Retrofit 自定义异常处理</p>
+<h2 id="2-9-RxJava2-教程（九）"><a href="#2-9-RxJava2-教程（九）" class="headerlink" title="2.9 RxJava2 教程（九）"></a>2.9 RxJava2 教程（九）</h2><p>Flowable，如何正确的去实现一个完整的响应式拉取</p>
+<h2 id="2-10-RxJava2-教程（十）"><a href="#2-10-RxJava2-教程（十）" class="headerlink" title="2.10 RxJava2 教程（十）"></a>2.10 RxJava2 教程（十）</h2><p>RxJavaPlugins、Retrofit 自定义异常处理</p>
 
       
     </div>
@@ -719,7 +715,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-概述"><span class="nav-number">1.</span> <span class="nav-text">1. 概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-知识点"><span class="nav-number">2.</span> <span class="nav-text">2. 知识点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-RxJava2教程（一）"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 RxJava2教程（一）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-RxJava2教程（二）"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 RxJava2教程（二）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#调度方法"><span class="nav-number">2.2.1.</span> <span class="nav-text">调度方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程选项（结合-RxAndroid）"><span class="nav-number">2.2.2.</span> <span class="nav-text">线程选项（结合 RxAndroid）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-RxJava2教程（三）"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 RxJava2教程（三）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#变换操作符"><span class="nav-number">2.3.1.</span> <span class="nav-text">变换操作符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实践"><span class="nav-number">2.3.2.</span> <span class="nav-text">实践</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-RxJava2教程（四）"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 RxJava2教程（四）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-5-RxJava2教程（五）"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 RxJava2教程（五）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-6-RxJava2教程（六）"><span class="nav-number">2.6.</span> <span class="nav-text">2.6 RxJava2教程（六）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-7-RxJava2教程（七）"><span class="nav-number">2.7.</span> <span class="nav-text">2.7 RxJava2教程（七）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-8-RxJava2教程（八）"><span class="nav-number">2.8.</span> <span class="nav-text">2.8 RxJava2教程（八）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-9-RxJava2教程（九）"><span class="nav-number">2.9.</span> <span class="nav-text">2.9 RxJava2教程（九）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-10-RxJava2教程（十）"><span class="nav-number">2.10.</span> <span class="nav-text">2.10 RxJava2教程（十）</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-概述"><span class="nav-number">1.</span> <span class="nav-text">1. 概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-知识点"><span class="nav-number">2.</span> <span class="nav-text">2. 知识点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-RxJava2-教程（一）"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 RxJava2 教程（一）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RxJava2-基础"><span class="nav-number">2.1.1.</span> <span class="nav-text">RxJava2 基础</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-RxJava2-教程（二）"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 RxJava2 教程（二）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#线程调度"><span class="nav-number">2.2.1.</span> <span class="nav-text">线程调度</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#调度方法"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">调度方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线程选项（结合-RxAndroid）"><span class="nav-number">2.2.1.2.</span> <span class="nav-text">线程选项（结合 RxAndroid）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-RxJava2-教程（三）"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 RxJava2 教程（三）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#变换操作符"><span class="nav-number">2.3.1.</span> <span class="nav-text">变换操作符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实践"><span class="nav-number">2.3.2.</span> <span class="nav-text">实践</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-RxJava2-教程（四）"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 RxJava2 教程（四）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#zip"><span class="nav-number">2.4.1.</span> <span class="nav-text">zip</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-5-RxJava2-教程（五）"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 RxJava2 教程（五）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-6-RxJava2-教程（六）"><span class="nav-number">2.6.</span> <span class="nav-text">2.6 RxJava2 教程（六）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-7-RxJava2-教程（七）"><span class="nav-number">2.7.</span> <span class="nav-text">2.7 RxJava2 教程（七）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Flowable"><span class="nav-number">2.7.1.</span> <span class="nav-text">Flowable</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-8-RxJava2-教程（八）"><span class="nav-number">2.8.</span> <span class="nav-text">2.8 RxJava2 教程（八）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-9-RxJava2-教程（九）"><span class="nav-number">2.9.</span> <span class="nav-text">2.9 RxJava2 教程（九）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-10-RxJava2-教程（十）"><span class="nav-number">2.10.</span> <span class="nav-text">2.10 RxJava2 教程（十）</span></a></li></ol></li></ol></div>
             
 
           </div>
