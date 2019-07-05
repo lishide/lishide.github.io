@@ -108,18 +108,18 @@
 
 
 
-  <meta name="description" content="RxJava —— 一个在 Java VM 上使用可观察序列来组成异步的、基于事件的程序库。">
+  <meta name="description" content="RxJava2 学习笔记。">
 <meta name="keywords" content="RxJava2">
 <meta property="og:type" content="article">
 <meta property="og:title" content="RxJava2 学习">
 <meta property="og:url" content="https://lishide.github.io/2019/07/05/RxJava2-study-notes1/index.html">
 <meta property="og:site_name" content="李世德的博客">
-<meta property="og:description" content="RxJava —— 一个在 Java VM 上使用可观察序列来组成异步的、基于事件的程序库。">
+<meta property="og:description" content="RxJava2 学习笔记。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-07-05T13:18:49.196Z">
+<meta property="og:updated_time" content="2019-07-05T13:28:36.952Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RxJava2 学习">
-<meta name="twitter:description" content="RxJava —— 一个在 Java VM 上使用可观察序列来组成异步的、基于事件的程序库。">
+<meta name="twitter:description" content="RxJava2 学习笔记。">
 
 
 
@@ -327,7 +327,7 @@
                 
               
 
-              <time title="创建时间：2019-07-05 19:54:19 / 修改时间：21:18:49" itemprop="dateCreated datePublished" datetime="2019-07-05T19:54:19+08:00">2019-07-05</time>
+              <time title="创建时间：2019-07-05 19:54:19 / 修改时间：21:28:36" itemprop="dateCreated datePublished" datetime="2019-07-05T19:54:19+08:00">2019-07-05</time>
             
 
             
@@ -358,7 +358,7 @@
               <span class="post-meta-divider">|</span>
               <i class="fa fa-file-word-o"></i>
               <span>
-                  1,192 字
+                  1,169 字
               </span>
               <span class="post-meta-divider">|</span>
               <i class="fa fa-clock-o"></i>
@@ -381,7 +381,7 @@
       
 
       
-        <p>RxJava —— 一个在 Java VM 上使用可观察序列来组成异步的、基于事件的程序库。<br><a id="more"></a></p>
+        <p>RxJava2 学习笔记。<br><a id="more"></a></p>
 <h1 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h1><p>RxJava —— 一个在 Java VM 上使用可观察序列来组成异步的、基于事件的程序库。</p>
 <h1 id="2-知识点"><a href="#2-知识点" class="headerlink" title="2. 知识点"></a>2. 知识点</h1><p>资源1：<a href="https://www.jianshu.com/c/299d0a51fdd4" target="_blank" rel="noopener">简书——RxJava2.x 专题</a><br>资源1：<a href="https://www.e-learn.cn/content/java/1947154" target="_blank" rel="noopener">RxJava2 基本概念大全</a></p>
 <h2 id="2-1-RxJava2教程（一）"><a href="#2-1-RxJava2教程（一）" class="headerlink" title="2.1 RxJava2教程（一）"></a>2.1 RxJava2教程（一）</h2><p>RxJava2 基础</p>
@@ -400,11 +400,13 @@
 <ul>
 <li><p>ObservableEmitter<br>Emitter 是发射器的意思，就是用来发出事件的，它可以发出三种类型的事件：</p>
 <ul>
-<li><code>onNext(T value)</code>发出 next 事件</li>
-<li><code>onComplete()</code>发出 complete 事件</li>
-<li><code>onError(Throwable error)</code>发出 error 事件</li>
+<li><code>onNext(T value)</code> 发出 next 事件</li>
+<li><code>onComplete()</code> 发出 complete 事件</li>
+<li><code>onError(Throwable error)</code> 发出 error 事件</li>
 </ul>
 </li>
+</ul>
+<ul>
 <li><p>Disposable</p>
 <ul>
 <li>一次性，用完即可丢弃的</li>
@@ -436,14 +438,14 @@
 <p><code>flatMap</code> 将一个发送事件的上游 Observable 变换为多个发送事件的 Observables，然后将它们发射的事件合并后放进一个单独的 Observable 里。</p>
 </li>
 <li><p>concatMap</p>
-<p><code>concatMap</code>和 flatMap 几乎一样，并保证顺序</p>
+<p><code>concatMap</code> 和 flatMap 几乎一样，并保证顺序。</p>
 </li>
 </ul>
 <h3 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h3><p>需求：如果是一个新用户，必须先注册，等注册成功之后再自动登录该怎么做呢？</p>
 <p>分析：这是一个嵌套的网络请求，首先需要去请求注册，待注册成功回调了再去请求登录的接口。</p>
-<p>解决：优雅的解决嵌套请求，用 flatMap 转换</p>
+<p>解决：优雅的解决嵌套请求，用 <code>flatMap</code> 转换</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Api</span> </span>&#123;</span><br><span class="line">    <span class="meta">@GET</span></span><br><span class="line">    <span class="function">Observable&lt;LoginResponse&gt; <span class="title">login</span><span class="params">(@Body LoginRequest request)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GET</span></span><br><span class="line">    <span class="function">Observable&lt;RegisterResponse&gt; <span class="title">register</span><span class="params">(@Body RegisterRequest request)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>注册和登录返回的都是 Observable，使用flatMap操作符转换为另一个 Observable：</p>
+<p>注册和登录返回的都是 Observable，使用 <code>flatMap</code> 操作符转换为另一个 Observable：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">api.register(<span class="keyword">new</span> RegisterRequest())            <span class="comment">//发起注册请求</span></span><br><span class="line">    .subscribeOn(Schedulers.io())               <span class="comment">//在IO线程进行网络请求</span></span><br><span class="line">    .observeOn(AndroidSchedulers.mainThread())  <span class="comment">//回到主线程去处理请求注册结果</span></span><br><span class="line">    .doOnNext(<span class="keyword">new</span> Consumer&lt;RegisterResponse&gt;() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">accept</span><span class="params">(RegisterResponse registerResponse)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">          <span class="comment">//先根据注册的响应结果去做一些操作</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    .observeOn(Schedulers.io())                 <span class="comment">//回到IO线程去发起登录请求</span></span><br><span class="line">    .flatMap(<span class="keyword">new</span> Function&lt;RegisterResponse, ObservableSource&lt;LoginResponse&gt;&gt;() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> ObservableSource&lt;LoginResponse&gt; <span class="title">apply</span><span class="params">(RegisterResponse registerResponse)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">          <span class="keyword">return</span> api.login(<span class="keyword">new</span> LoginRequest());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    .observeOn(AndroidSchedulers.mainThread())  <span class="comment">//回到主线程去处理请求登录的结果</span></span><br><span class="line">    .subscribe(<span class="keyword">new</span> Consumer&lt;LoginResponse&gt;() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">accept</span><span class="params">(LoginResponse loginResponse)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">          Toast.makeText(MainActivity.<span class="keyword">this</span>, <span class="string">"登录成功"</span>, Toast.LENGTH_SHORT).show();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;, <span class="keyword">new</span> Consumer&lt;Throwable&gt;() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">accept</span><span class="params">(Throwable throwable)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">          Toast.makeText(MainActivity.<span class="keyword">this</span>, <span class="string">"登录失败"</span>, Toast.LENGTH_SHORT).show();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
 <h2 id="2-4-RxJava2教程（四）"><a href="#2-4-RxJava2教程（四）" class="headerlink" title="2.4 RxJava2教程（四）"></a>2.4 RxJava2教程（四）</h2><p>zip</p>
 <h2 id="2-5-RxJava2教程（五）"><a href="#2-5-RxJava2教程（五）" class="headerlink" title="2.5 RxJava2教程（五）"></a>2.5 RxJava2教程（五）</h2><p>Backpressure；上下游流速不均衡的源头，线程同步/异步情况</p>
@@ -451,14 +453,14 @@
 <ul>
 <li><p>一是从数量上进行治理, 减少发送进水缸里的事件</p>
 <ul>
-<li>.sample(2, TimeUnit.SECONDS); //进行sample采样</li>
+<li><code>.sample(2, TimeUnit.SECONDS);</code> // 进行 sample 采样</li>
 </ul>
 </li>
 </ul>
 <ul>
 <li><p>二是从速度上进行治理, 减缓事件发送进水缸的速度</p>
 <ul>
-<li>Thread.sleep(2000); //发送事件之后延时2秒</li>
+<li><code>Thread.sleep(2000);</code> // 发送事件之后延时 2 秒</li>
 </ul>
 </li>
 </ul>
