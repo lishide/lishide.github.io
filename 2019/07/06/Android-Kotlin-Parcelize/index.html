@@ -116,7 +116,7 @@
 <meta property="og:site_name" content="李世德的博客">
 <meta property="og:description" content="Parcelize 是 Kotlin 在 1.1.4 中新增加的功能。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-07-06T06:04:55.497Z">
+<meta property="og:updated_time" content="2019-07-06T06:10:20.091Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kotlin 使用 Parcelize 注解简化 Parcelable 的书写">
 <meta name="twitter:description" content="Parcelize 是 Kotlin 在 1.1.4 中新增加的功能。">
@@ -327,7 +327,7 @@
                 
               
 
-              <time title="创建时间：2019-07-06 12:21:26 / 修改时间：14:04:55" itemprop="dateCreated datePublished" datetime="2019-07-06T12:21:26+08:00">2019-07-06</time>
+              <time title="创建时间：2019-07-06 12:21:26 / 修改时间：14:10:20" itemprop="dateCreated datePublished" datetime="2019-07-06T12:21:26+08:00">2019-07-06</time>
             
 
             
@@ -358,7 +358,7 @@
               <span class="post-meta-divider">|</span>
               <i class="fa fa-file-word-o"></i>
               <span>
-                  247 字
+                  240 字
               </span>
               <span class="post-meta-divider">|</span>
               <i class="fa fa-clock-o"></i>
@@ -383,10 +383,10 @@
       
         <p>Parcelize 是 Kotlin 在 1.1.4 中新增加的功能。</p>
 <a id="more"></a>
-<h1 id="Parcelize-注解"><a href="#Parcelize-注解" class="headerlink" title="Parcelize 注解"></a>Parcelize 注解</h1><p>在新版的 Kotlin 插件中，已经自动包含了一个自动 <code>Parcelable</code> 实现生成器。简单来说，只需要在主函数中，声明序列化的属性并添加一个 <code>@Parcelize</code> 注解，它将自动为我们创建 <code>writeToParcel()</code> 和 <code>createFromParcel()</code> 等模板代码。</p>
+<h1 id="Parcelize-注解"><a href="#Parcelize-注解" class="headerlink" title="Parcelize 注解"></a>Parcelize 注解</h1><p>在新版的 Kotlin 插件中，包含了一个自动 <code>Parcelable</code> 实现生成器。只需要在主函数中，声明序列化的属性并添加一个 <code>@Parcelize</code> 注解，它将自动为我们创建 <code>writeToParcel()</code> 和 <code>createFromParcel()</code> 等模板代码。</p>
 <p>编译完以后，实际上是跟以前实现方式的结果是一致的。</p>
 <p>其实并没有什么高深的地方，但是这一点可以节约我们的代码量，而且提高开发效率。</p>
-<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><h2 id="Kotlin-版本"><a href="#Kotlin-版本" class="headerlink" title="Kotlin 版本"></a>Kotlin 版本</h2><p><code>1.1.4</code> 以上</p>
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><h2 id="Kotlin-版本"><a href="#Kotlin-版本" class="headerlink" title="Kotlin 版本"></a>Kotlin 版本</h2><p><code>1.1.4</code> 及以上</p>
 <h2 id="Gradle-配置"><a href="#Gradle-配置" class="headerlink" title="Gradle 配置"></a>Gradle 配置</h2><p><code>@Parcelize</code> 是一个实验室功能，所以还需要在 <code>Gradle</code> 中，增加 <code>experimental</code> 配置。</p>
 <figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">androidExtensions &#123;</span><br><span class="line">    experimental = <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="解决-Lint-错误"><a href="#解决-Lint-错误" class="headerlink" title="解决 Lint 错误"></a>解决 Lint 错误</h2><p>直接使用 <code>@Parcelize</code> 你将面临一个 Lint 的错误提示，只需要增加 <code>@SuppressLint(&quot;ParcelCreator&quot;)</code> 忽略它就可以了。</p>
