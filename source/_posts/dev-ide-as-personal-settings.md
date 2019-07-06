@@ -55,6 +55,9 @@ Android Logcat 默认主题（或导入的其他 Color Scheme）的配色只有�
 13. **Exynap**：一个帮助开发者自动生成样板代码的 AndroidStudio 插件。
 14. **Lombok**：在项目中使用 Lombok 可以减少很多重复代码的书写。比如说 getter/setter/toString 等方法的编写。
 15. **TinyPic**：压缩图片资源
+16. **AndroidProguard Pro**：一键生成项目混淆代码插件
+17. **adb idea**：适用于 Android Studio 和 Intellij IDEA 的 ADB 命令插件
+18. **gradle view**：查看 gradle 依赖树
 
 # 问题解决
 ## AS 3.x 版本的 Terminal 中文乱码
