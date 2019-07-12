@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.4.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="本讲的 Kotlin 知识部分记录区间/范围、类型检查和转换的简要笔记。">
+<meta name="keywords" content="Android,Kotlin,Design Patterns">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kotlin 及设计模式实践（五）">
+<meta property="og:url" content="https://lishide.github.io/2019/07/12/Android-Kotlin-dp5/index.html">
+<meta property="og:site_name" content="李世德的博客">
+<meta property="og:description" content="本讲的 Kotlin 知识部分记录区间/范围、类型检查和转换的简要笔记。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-07-12T13:07:18.414Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Kotlin 及设计模式实践（五）">
+<meta name="twitter:description" content="本讲的 Kotlin 知识部分记录区间/范围、类型检查和转换的简要笔记。">
+
+
+
+
+
+
+  <link rel="canonical" href="https://lishide.github.io/2019/07/12/Android-Kotlin-dp5/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Kotlin 及设计模式实践（五） | 李世德的博客</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">李世德的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">我有故事，你有酒吗？</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://lishide.github.io/2019/07/12/Android-Kotlin-dp5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="李世德">
+      <meta itemprop="description" content="爱生活，爱学习，一个不羁的编码界小学生。">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李世德的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Kotlin 及设计模式实践（五）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-12 20:54:26 / 修改时间：21:07:18" itemprop="dateCreated datePublished" datetime="2019-07-12T20:54:26+08:00">2019-07-12</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+          <!--/wordcount-->
+          
+            <span class="post-letters-count">
+              <span class="post-meta-divider">|</span>
+              <i class="fa fa-file-word-o"></i>
+              <span>
+                  1,009 字
+              </span>
+              <span class="post-meta-divider">|</span>
+              <i class="fa fa-clock-o"></i>
+              <span>
+                  5 分钟
+              </span>
+            </span>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本讲的 Kotlin 知识部分记录区间/范围、类型检查和转换的简要笔记。</p>
+<a id="more"></a>
+<h1 id="Kotlin"><a href="#Kotlin" class="headerlink" title="Kotlin"></a>Kotlin</h1><h2 id="区间-范围（Ranges）"><a href="#区间-范围（Ranges）" class="headerlink" title="区间/范围（Ranges）"></a>区间/范围（Ranges）</h2><p>range 表达式是通过 rangeTo 函数形成的。rangeTo 函数拥有形如 <code>..</code> 的操作符，该操作符是用 <code>in</code> 和 <code>!in</code> 实现的。 Range 可以对任何可比较的类型做操作，但对整数基本类型是优化过的。</p>
+<h3 id="基本写法"><a href="#基本写法" class="headerlink" title="基本写法"></a>基本写法</h3><ul>
+<li><code>0..100</code> 表示 [0,100]</li>
+<li><code>1 until 100</code> 表示 [0,100)</li>
+<li><code>i in 0..100</code> 判断 i 是否在区间 [0,100] 中</li>
+</ul>
+<h3 id="一些实用的函数"><a href="#一些实用的函数" class="headerlink" title="一些实用的函数"></a>一些实用的函数</h3><ul>
+<li><p><strong>rangeTo()</strong></p>
+<p><code>rangeTo()</code> 函数仅仅是调用 *Range 的构造函数</p>
+</li>
+<li><p><strong>downTo()</strong></p>
+<p>倒序迭代</p>
+</li>
+<li><p><strong>reversed()</strong></p>
+<p>返回反向的级数</p>
+</li>
+<li><p><strong>step()</strong></p>
+<p>使用指定步数的迭代</p>
+</li>
+<li><p><strong>until</strong></p>
+<p>不包括其结束元素的区间</p>
+</li>
+</ul>
+<h3 id="使用例子"><a href="#使用例子" class="headerlink" title="使用例子"></a>使用例子</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Checking if value of comparable is in range. Optimized for number primitives.</span></span><br><span class="line"><span class="keyword">if</span> (i <span class="keyword">in</span> <span class="number">1.</span><span class="number">.10</span>) println(i)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (x <span class="keyword">in</span> <span class="number">1.0</span>.<span class="number">.3</span><span class="number">.0</span>) println(x)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (str <span class="keyword">in</span> <span class="string">"island"</span>..<span class="string">"isle"</span>) println(str)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Iterating over arithmetical progression of numbers. Optimized for number primitives (as indexed for-loop in Java).</span></span><br><span class="line"><span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">1.</span><span class="number">.4</span>) print(i) <span class="comment">// prints "1234"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">4.</span><span class="number">.1</span>) print(i) <span class="comment">// prints nothing</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">4</span> downTo <span class="number">1</span>) print(i) <span class="comment">// prints "4321"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">1.</span><span class="number">.4</span> step <span class="number">2</span>) print(i) <span class="comment">// prints "13"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (i <span class="keyword">in</span> (<span class="number">1.</span><span class="number">.4</span>).reversed()) print(i) <span class="comment">// prints "4321"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (i <span class="keyword">in</span> (<span class="number">1.</span><span class="number">.4</span>).reversed() step <span class="number">2</span>) print(i) <span class="comment">// prints "42"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">4</span> downTo <span class="number">1</span> step <span class="number">2</span>) print(i) <span class="comment">// prints "42"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (x <span class="keyword">in</span> <span class="number">1.0</span>.<span class="number">.2</span><span class="number">.0</span>) print(<span class="string">"<span class="variable">$x</span> "</span>) <span class="comment">// prints "1.0 2.0 "</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (x <span class="keyword">in</span> <span class="number">1.0</span>.<span class="number">.2</span><span class="number">.0</span> step <span class="number">0.3</span>) print(<span class="string">"<span class="variable">$x</span> "</span>) <span class="comment">// prints "1.0 1.3 1.6 1.9 "</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (x <span class="keyword">in</span> <span class="number">2.0</span> downTo <span class="number">1.0</span> step <span class="number">0.3</span>) print(<span class="string">"<span class="variable">$x</span> "</span>) <span class="comment">// prints "2.0 1.7 1.4 1.1 "</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (str <span class="keyword">in</span> <span class="string">"island"</span>..<span class="string">"isle"</span>) println(str) <span class="comment">// error: string range cannot be iterated over</span></span><br></pre></td></tr></table></figure>
+<h2 id="类型检查和转换"><a href="#类型检查和转换" class="headerlink" title="类型检查和转换"></a>类型检查和转换</h2><h3 id="is-与-is-操作符"><a href="#is-与-is-操作符" class="headerlink" title="is 与 !is 操作符"></a><code>is</code> 与 <code>!is</code> 操作符</h3><p>Kotlin 在运行时通过使用 <code>is</code> 操作符或其否定形式 <code>!is</code> 来检查对象是否符合给定类型。</p>
+<p><code>is</code> 运算符类似 Java 中的 <code>instanceof</code>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"abc"</span> <span class="keyword">instanceof</span> String</span><br></pre></td></tr></table></figure>
+<p><code>is</code> 运算符可以检查对象 A 是否与特定的类型 X 兼容（此对象 A 是 X 类型或者派生于 X 类型），还可以用来检查一个对象（变量）是否属于某数据类型。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (obj <span class="keyword">is</span> String) &#123;</span><br><span class="line">    print(obj.length)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (obj !<span class="keyword">is</span> String) &#123; <span class="comment">// same as !(obj is String)</span></span><br><span class="line">    print(<span class="string">"Not a String"</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> &#123;</span><br><span class="line">    print(obj.length)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="智能转换"><a href="#智能转换" class="headerlink" title="智能转换"></a>智能转换</h3><p>在大多数情况下，不需要在 Kotlin 中使用显式转换操作符，因为编译器跟踪不可变值的 <code>is</code> 检查，并在需要时自动插入（安全的）转换：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (x <span class="keyword">is</span> String) &#123;</span><br><span class="line">  print(x.length) <span class="comment">// x 自动转换为字符串</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译器足够聪明，能够知道如果反向检查导致返回，那么该转换是安全的：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (x !<span class="keyword">is</span> String) <span class="keyword">return</span></span><br><span class="line">print(x.length) <span class="comment">// x 自动转换为 String</span></span><br></pre></td></tr></table></figure>
+<p>或者在 <code>||</code> 和 <code>&amp;&amp;</code> 的右侧：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// `||` 右侧的 x 自动转换为字符串</span></span><br><span class="line"><span class="keyword">if</span> (x !<span class="keyword">is</span> String || x.length == <span class="number">0</span>) <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// `&amp;&amp;` 右侧的 x 自动转换为字符串</span></span><br><span class="line"><span class="keyword">if</span> (x <span class="keyword">is</span> String &amp;&amp; x.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    print(x.length) <span class="comment">// x 自动转换为字符串</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样的转换用于 <code>when 表达式</code> 和 <code>whie 循环</code> 中也一样：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">when</span> (x) &#123;</span><br><span class="line">    <span class="keyword">is</span> <span class="built_in">Int</span> -&gt; print(x + <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">is</span> String -&gt; print(x.length + <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">is</span> Array&lt;<span class="built_in">Int</span>&gt; -&gt; print(x.sum())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="“不安全的”转换操作符"><a href="#“不安全的”转换操作符" class="headerlink" title="“不安全的”转换操作符"></a>“不安全的”转换操作符</h3><p>如果转换是不可能的，转换操作符会抛出一个异常。因此，我们称之为<em>不安全的</em>。 Kotlin 中的不安全转换由中缀操作符 <strong><em>as</em></strong> 完成：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> x: String = y <span class="keyword">as</span> String</span><br></pre></td></tr></table></figure>
+<p>注意，<strong><em>null</em></strong> 不能转换为 <code>String</code> 因该类型不是可空的， 即如果 <code>y</code> 为空，上面的代码会抛出一个异常。 为了匹配 Java 转换语义，我们必须在转换右边有可空类型，就像：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> x: String? = y <span class="keyword">as</span> String?</span><br></pre></td></tr></table></figure>
+<h3 id="“安全的”（可空）转换操作符"><a href="#“安全的”（可空）转换操作符" class="headerlink" title="“安全的”（可空）转换操作符"></a>“安全的”（可空）转换操作符</h3><p>为了避免抛出异常，可以使用<em>安全</em>转换操作符 <strong><em>as?</em></strong>，它可以在失败时返回 <strong><em>null</em></strong>：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> x: String? = y <span class="keyword">as</span>? String</span><br></pre></td></tr></table></figure>
+<p>请注意，尽管事实上 <strong><em>as?</em></strong> 的右边是一个非空类型的 <code>String</code>，但是其转换的结果是可空的。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"><i class="fa fa-tag"></i> Android</a>
+          
+            <a href="/tags/Kotlin/" rel="tag"><i class="fa fa-tag"></i> Kotlin</a>
+          
+            <a href="/tags/Design-Patterns/" rel="tag"><i class="fa fa-tag"></i> Design Patterns</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/06/Android-Kotlin-Parcelize/" rel="next" title="Kotlin 使用 Parcelize 注解简化 Parcelable 的书写">
+                <i class="fa fa-chevron-left"></i> Kotlin 使用 Parcelize 注解简化 Parcelable 的书写
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">李世德</p>
+              <p class="site-description motion-element" itemprop="description">爱生活，爱学习，一个不羁的编码界小学生。</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">36</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">38</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lishide" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/u/3235831430" target="_blank" title="Weibo"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Kotlin"><span class="nav-number">1.</span> <span class="nav-text">Kotlin</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#区间-范围（Ranges）"><span class="nav-number">1.1.</span> <span class="nav-text">区间/范围（Ranges）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本写法"><span class="nav-number">1.1.1.</span> <span class="nav-text">基本写法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一些实用的函数"><span class="nav-number">1.1.2.</span> <span class="nav-text">一些实用的函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用例子"><span class="nav-number">1.1.3.</span> <span class="nav-text">使用例子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类型检查和转换"><span class="nav-number">1.2.</span> <span class="nav-text">类型检查和转换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#is-与-is-操作符"><span class="nav-number">1.2.1.</span> <span class="nav-text">is 与 !is 操作符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#智能转换"><span class="nav-number">1.2.2.</span> <span class="nav-text">智能转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#“不安全的”转换操作符"><span class="nav-number">1.2.3.</span> <span class="nav-text">“不安全的”转换操作符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#“安全的”（可空）转换操作符"><span class="nav-number">1.2.4.</span> <span class="nav-text">“安全的”（可空）转换操作符</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李世德</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">
+    <i class="fa fa-eye"></i>
+    <span id="busuanzi_container_site_pv">
+      访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <i class="fa fa-user-md"></i>
+    <span id="busuanzi_container_site_uv">
+      访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+  </div>
+  <span class="post-meta-divider">|</span>
+  <i class="fa fa-pencil"></i>
+  <div class="theme-info">
+    <div class="powered-by"></div>
+    <span class="post-count">博客全站共 38.5k 字</span>
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.6.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Gemini</a> v6.4.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.4.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://lishide.github.io/2019/07/12/Android-Kotlin-dp5/</loc>
+    
+    <lastmod>2019-07-12T13:07:18.414Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://lishide.github.io/2019/07/06/Android-Kotlin-Parcelize/</loc>
     
     <lastmod>2019-07-06T06:10:20.091Z</lastmod>
