@@ -3,13 +3,15 @@ title: 使用 hexo 搭建部署 GitHub 博客
 date: 2018-02-12 11:37:27
 tags: hexo
 ---
+使用 hexo 搭建一个自己的独立博客/个人网站。
+
+<!--more-->
+
 # 环境配置
 
 - Node.js
 - Git
 - Hexo
-
-<!--more-->
 
 ## 安装 Node.js
 进入[Node.js 官网](https://nodejs.org/en/)，下载对应版本，一路安装即可。
