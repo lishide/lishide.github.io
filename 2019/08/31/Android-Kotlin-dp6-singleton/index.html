@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.4.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="单例模式(Singleton Pattern)单例模式确保某一个类只有一个实例，而且自行实例化并向整个系统提供这个实例，这个类称为单例类，它提供全局访问的方法。单例模式是一种对象创建型模式。 单例模式的要点 一是某个类只能有一个实例； 二是它必须自行创建这个实例； 三是它必须自行向整个系统提供这个实例。  单例的几种实现方式 饿汉式单例 懒汉式单例 线程安全的懒汉式单例 DCL（double ch">
+<meta name="keywords" content="Kotlin,Design Patterns">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kotlin-单例模式（Singleton Pattern）">
+<meta property="og:url" content="https://lishide.github.io/2019/08/31/Android-Kotlin-dp6-singleton/index.html">
+<meta property="og:site_name" content="李世德的博客">
+<meta property="og:description" content="单例模式(Singleton Pattern)单例模式确保某一个类只有一个实例，而且自行实例化并向整个系统提供这个实例，这个类称为单例类，它提供全局访问的方法。单例模式是一种对象创建型模式。 单例模式的要点 一是某个类只能有一个实例； 二是它必须自行创建这个实例； 三是它必须自行向整个系统提供这个实例。  单例的几种实现方式 饿汉式单例 懒汉式单例 线程安全的懒汉式单例 DCL（double ch">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-08-31T14:31:29.845Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Kotlin-单例模式（Singleton Pattern）">
+<meta name="twitter:description" content="单例模式(Singleton Pattern)单例模式确保某一个类只有一个实例，而且自行实例化并向整个系统提供这个实例，这个类称为单例类，它提供全局访问的方法。单例模式是一种对象创建型模式。 单例模式的要点 一是某个类只能有一个实例； 二是它必须自行创建这个实例； 三是它必须自行向整个系统提供这个实例。  单例的几种实现方式 饿汉式单例 懒汉式单例 线程安全的懒汉式单例 DCL（double ch">
+
+
+
+
+
+
+  <link rel="canonical" href="https://lishide.github.io/2019/08/31/Android-Kotlin-dp6-singleton/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Kotlin-单例模式（Singleton Pattern） | 李世德的博客</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">李世德的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">我有故事，你有酒吗？</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://lishide.github.io/2019/08/31/Android-Kotlin-dp6-singleton/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="李世德">
+      <meta itemprop="description" content="爱生活，爱学习，一个不羁的编码界小学生。">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李世德的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Kotlin-单例模式（Singleton Pattern）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-08-31 19:56:57 / 修改时间：22:31:29" itemprop="dateCreated datePublished" datetime="2019-08-31T19:56:57+08:00">2019-08-31</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+          <!--/wordcount-->
+          
+            <span class="post-letters-count">
+              <span class="post-meta-divider">|</span>
+              <i class="fa fa-file-word-o"></i>
+              <span>
+                  1,729 字
+              </span>
+              <span class="post-meta-divider">|</span>
+              <i class="fa fa-clock-o"></i>
+              <span>
+                  7 分钟
+              </span>
+            </span>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="单例模式-Singleton-Pattern"><a href="#单例模式-Singleton-Pattern" class="headerlink" title="单例模式(Singleton Pattern)"></a>单例模式(Singleton Pattern)</h1><p>单例模式确保某一个类只有一个实例，而且自行实例化并向整个系统提供这个实例，这个类称为单例类，它提供全局访问的方法。单例模式是一种对象创建型模式。</p>
+<h2 id="单例模式的要点"><a href="#单例模式的要点" class="headerlink" title="单例模式的要点"></a>单例模式的要点</h2><ul>
+<li>一是某个类只能有一个实例；</li>
+<li>二是它必须自行创建这个实例；</li>
+<li>三是它必须自行向整个系统提供这个实例。</li>
+</ul>
+<h2 id="单例的几种实现方式"><a href="#单例的几种实现方式" class="headerlink" title="单例的几种实现方式"></a>单例的几种实现方式</h2><ul>
+<li>饿汉式单例</li>
+<li>懒汉式单例</li>
+<li>线程安全的懒汉式单例</li>
+<li>DCL（double check lock）双重校验锁式单例</li>
+<li>静态内部类单例</li>
+<li>枚举单例</li>
+</ul>
+<h2 id="饿汉式单例"><a href="#饿汉式单例" class="headerlink" title="饿汉式单例"></a>饿汉式单例</h2><p>饿汉式单例模式是实现单例模式比较简单的一种方式，它有个特点就是不管需不需要该单例实例，该实例对象都会被实例化。</p>
+<h3 id="Kotlin-实现"><a href="#Kotlin-实现" class="headerlink" title="Kotlin 实现"></a>Kotlin 实现</h3><p>kotlin 中的饿汉式实现比较简单，只需要定义一个 <code>object 对象表达式</code> 即可，无需手动去设置构造器私有化和提供全局访问点，这一点 Kotlin 编译器全给你做好了。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">object</span> Singleton</span><br></pre></td></tr></table></figure>
+<h2 id="懒汉式单例"><a href="#懒汉式单例" class="headerlink" title="懒汉式单例"></a>懒汉式单例</h2><p>这种方式实现了懒加载，但是不是线程安全的，可能在多个线程中创建多个不同的实例。</p>
+<h3 id="Kotlin-实现-1"><a href="#Kotlin-实现-1" class="headerlink" title="Kotlin 实现"></a>Kotlin 实现</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">KLazilySingleton</span> <span class="keyword">private</span> <span class="keyword">constructor</span></span>() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">doSomething</span><span class="params">()</span></span> &#123;</span><br><span class="line">        println(<span class="string">"do some thing"</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">companion</span> <span class="keyword">object</span> &#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">var</span> mInstance: KLazilySingleton? = <span class="literal">null</span></span><br><span class="line">            <span class="keyword">get</span>() &#123;</span><br><span class="line">                <span class="keyword">return</span> field ?: KLazilySingleton()</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">fun</span> <span class="title">getInstance</span><span class="params">()</span></span>: KLazilySingleton &#123;</span><br><span class="line">            <span class="keyword">return</span> requireNotNull(mInstance)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在 Kotlin 中调用</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">(args: <span class="type">Array</span>&lt;<span class="type">String</span>&gt;)</span></span> &#123;</span><br><span class="line">    KLazilySingleton.getInstance().doSomething()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="线程安全的懒汉式单例"><a href="#线程安全的懒汉式单例" class="headerlink" title="线程安全的懒汉式单例"></a>线程安全的懒汉式单例</h2><p>这种方式具备很好的懒加载，能够在多线程中很好的工作，但是，效率很低，99% 情况下不需要同步。</p>
+<h3 id="Kotlin-实现-2"><a href="#Kotlin-实现-2" class="headerlink" title="Kotlin 实现"></a>Kotlin 实现</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">KLazilySingleton</span> <span class="keyword">private</span> <span class="keyword">constructor</span></span>() : Serializable &#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">doSomething</span><span class="params">()</span></span> &#123;</span><br><span class="line">        println(<span class="string">"do some thing"</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">companion</span> <span class="keyword">object</span> &#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">var</span> mInstance: KLazilySingleton? = <span class="literal">null</span></span><br><span class="line">            <span class="keyword">get</span>() &#123;</span><br><span class="line">                <span class="keyword">return</span> field ?: KLazilySingleton()</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@JvmStatic</span></span><br><span class="line">        <span class="meta">@Synchronized</span>  <span class="comment">// 添加 synchronized 同步锁</span></span><br><span class="line">        <span class="function"><span class="keyword">fun</span> <span class="title">getInstance</span><span class="params">()</span></span>: KLazilySingleton &#123;</span><br><span class="line">            <span class="keyword">return</span> requireNotNull(mInstance)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 防止单例对象在反序列化时重新生成对象</span></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="title">readResolve</span><span class="params">()</span></span>: Any &#123;</span><br><span class="line">        <span class="keyword">return</span> KLazilySingleton.getInstance()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在 Kotlin 中调用</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">(args: <span class="type">Array</span>&lt;<span class="type">String</span>&gt;)</span></span> &#123;</span><br><span class="line">    KLazilySingleton.getInstance().doSomething()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="DCL（double-check-lock）双重校验锁式单例"><a href="#DCL（double-check-lock）双重校验锁式单例" class="headerlink" title="DCL（double check lock）双重校验锁式单例"></a>DCL（double check lock）双重校验锁式单例</h2><p>我们知道线程安全的单例模式直接是使用 <code>synchronized</code> 同步锁，锁住 <code>getInstance</code> 方法，每一次调用该方法的时候都得获取锁，但是如果这个单例已经被初始化了，其实按道理就不需要申请同步锁了，直接返回这个单例类实例即可。于是就有了 DCL 实现单例方式。这种方式采用双锁机制，安全且在多线程情况下能保持高性能。</p>
+<h3 id="Kotlin-实现-3"><a href="#Kotlin-实现-3" class="headerlink" title="Kotlin 实现"></a>Kotlin 实现</h3><p>在 Kotlin 中有个天然特性可以支持线程安全 DCL 的单例，可以说也是非常非常简单，就仅仅 3 行代码左右，那就是 <code>Companion Object + lazy 属性代理</code>，一起来看下吧。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">KLazilyDCLSingleton</span> <span class="keyword">private</span> <span class="keyword">constructor</span></span>() : Serializable &#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">doSomething</span><span class="params">()</span></span> &#123;</span><br><span class="line">        println(<span class="string">"do some thing"</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="title">readResolve</span><span class="params">()</span></span>: Any &#123;  <span class="comment">// 防止单例对象在反序列化时重新生成对象</span></span><br><span class="line">        <span class="keyword">return</span> instance</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">companion</span> <span class="keyword">object</span> &#123;</span><br><span class="line">        <span class="comment">// 通过 @JvmStatic 注解，使得在 Java 中调用 instance 直接是像调用静态函数一样，</span></span><br><span class="line">        <span class="comment">// 类似 KLazilyDCLSingleton.getInstance()，</span></span><br><span class="line">        <span class="comment">// 如果不加注解，在 Java 中必须这样调用: KLazilyDCLSingleton.Companion.getInstance().</span></span><br><span class="line">        <span class="meta">@JvmStatic</span></span><br><span class="line">        <span class="comment">// 使用 lazy 属性代理，并指定 LazyThreadSafetyMode 为SYNCHRONIZED 模式保证线程安全</span></span><br><span class="line">        <span class="keyword">val</span> instance: KLazilyDCLSingleton <span class="keyword">by</span> lazy(LazyThreadSafetyMode.SYNCHRONIZED) &#123; KLazilyDCLSingleton() &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//在 Kotlin 中调用，直接通过 KLazilyDCLSingleton 类名调用 instance</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">(args: <span class="type">Array</span>&lt;<span class="type">String</span>&gt;)</span></span> &#123;</span><br><span class="line">    KLazilyDCLSingleton.instance.doSomething()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="静态内部类单例"><a href="#静态内部类单例" class="headerlink" title="静态内部类单例"></a>静态内部类单例</h2><p>DCL 虽然在一定程度上能解决资源消耗、多余 <code>synchronized</code> 同步、线程安全等问题，但是某些情况下还会存在 DCL 失效问题，尽管在 JDK1.5 之后通过具体化 volatile 原语来解决 DCL 失效问题，但是它始终并不是优雅一种解决方式，在多线程环境下一般不推荐 DCL 的单例模式。所以引出静态内部类单例实现，这种方式能达到双检锁方式一样的功效，但实现更简单。对静态域使用延迟初始化，应使用这种方式而不是双检锁方式。这种方式只适用于静态域的情况，双检锁方式可在实例域需要延迟初始化时使用。</p>
+<h3 id="Kotlin-实现-4"><a href="#Kotlin-实现-4" class="headerlink" title="Kotlin 实现"></a>Kotlin 实现</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">KOptimizeSingleton</span> <span class="keyword">private</span> <span class="keyword">constructor</span></span>() : Serializable &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">companion</span> <span class="keyword">object</span> &#123;</span><br><span class="line">        <span class="meta">@JvmStatic</span></span><br><span class="line">        <span class="function"><span class="keyword">fun</span> <span class="title">getInstance</span><span class="params">()</span></span>: KOptimizeSingleton &#123;  <span class="comment">// 全局访问点</span></span><br><span class="line">            <span class="keyword">return</span> SingletonHolder.mInstance</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">doSomething</span><span class="params">()</span></span> &#123;</span><br><span class="line">        println(<span class="string">"do some thing"</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">object</span> SingletonHolder &#123;</span><br><span class="line">        <span class="keyword">val</span> mInstance: KOptimizeSingleton = KOptimizeSingleton()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="title">readResolve</span><span class="params">()</span></span>: Any &#123;  <span class="comment">// 防止单例对象在反序列化时重新生成对象</span></span><br><span class="line">        <span class="keyword">return</span> SingletonHolder.mInstance</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在 Kotlin 中调用</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">(args: <span class="type">Array</span>&lt;<span class="type">String</span>&gt;)</span></span> &#123;</span><br><span class="line">    KOptimizeSingleton.getInstance().doSomething()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="枚举单例"><a href="#枚举单例" class="headerlink" title="枚举单例"></a>枚举单例</h2><p>其实细心的小伙伴就会观察到上面例子中我都会去实现 <code>Serializable</code> 接口，并且会去实现 <code>readResolve</code> 方法。这是为了反序列化会重新创建对象而使得原来的单例对象不再唯一。通过序列化一个单例对象将它写入到磁盘中，然后再从磁盘中读取出来，从而可以获得一个新的实例对象，即使构造器是私有的，反序列化会通过其他特殊途径创建单例类的新实例。然而为了让开发者能够控制反序列化，提供一个特殊的钩子方法那就是 <code>readResolve</code> 方法，这样一来我们只需要在 <code>readResolve</code> 直接返回原来的实例即可，就不会创建新的对象。<br>枚举单例实现，就是为了防止反序列化，因为我们都知道枚举类反序列化是不会创建新的对象实例的。 Java的序列化机制对枚举类型做了特殊处理，一般来说在序列枚举类型时，只会存储枚举类的引用和枚举常量名称，反序列化的过程中，这些信息被用来在运行时环境中查找存在的枚举类型对象，枚举类型的序列化机制保证只会查找已经存在的枚举类型实例，而不是创建新的实例。</p>
+<h3 id="Kotlin-实现-5"><a href="#Kotlin-实现-5" class="headerlink" title="Kotlin 实现"></a>Kotlin 实现</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> <span class="class"><span class="keyword">class</span> <span class="title">KEnumSingleton</span> </span>&#123;</span><br><span class="line">    INSTANCE;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">doSomeThing</span><span class="params">()</span></span> &#123;</span><br><span class="line">        println(<span class="string">"do some thing"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在 Kotlin 中调用</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">(args: <span class="type">Array</span>&lt;<span class="type">String</span>&gt;)</span></span> &#123;</span><br><span class="line">    KEnumSingleton.INSTANCE.doSomeThing()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>最后补充一点，关于在 Kotlin 中使用单例模式的建议：一般大多数情况情况下直接使用 <code>object对象表达式</code> 即可，因为它比较简单，生成的字节码也相比于静态内部类那种方式要少得多；如果需要懒汉式加载的话还是比较建议使用 Kotlin 中的 <code>by lazy + Compaion Object</code> 那种方式。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Kotlin/" rel="tag"><i class="fa fa-tag"></i> Kotlin</a>
+          
+            <a href="/tags/Design-Patterns/" rel="tag"><i class="fa fa-tag"></i> Design Patterns</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/12/Android-Kotlin-dp5/" rel="next" title="Kotlin 及设计模式实践（五）">
+                <i class="fa fa-chevron-left"></i> Kotlin 及设计模式实践（五）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">李世德</p>
+              <p class="site-description motion-element" itemprop="description">爱生活，爱学习，一个不羁的编码界小学生。</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">37</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">38</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lishide" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/u/3235831430" target="_blank" title="Weibo"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#单例模式-Singleton-Pattern"><span class="nav-number">1.</span> <span class="nav-text">单例模式(Singleton Pattern)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#单例模式的要点"><span class="nav-number">1.1.</span> <span class="nav-text">单例模式的要点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单例的几种实现方式"><span class="nav-number">1.2.</span> <span class="nav-text">单例的几种实现方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#饿汉式单例"><span class="nav-number">1.3.</span> <span class="nav-text">饿汉式单例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Kotlin-实现"><span class="nav-number">1.3.1.</span> <span class="nav-text">Kotlin 实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#懒汉式单例"><span class="nav-number">1.4.</span> <span class="nav-text">懒汉式单例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Kotlin-实现-1"><span class="nav-number">1.4.1.</span> <span class="nav-text">Kotlin 实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程安全的懒汉式单例"><span class="nav-number">1.5.</span> <span class="nav-text">线程安全的懒汉式单例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Kotlin-实现-2"><span class="nav-number">1.5.1.</span> <span class="nav-text">Kotlin 实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DCL（double-check-lock）双重校验锁式单例"><span class="nav-number">1.6.</span> <span class="nav-text">DCL（double check lock）双重校验锁式单例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Kotlin-实现-3"><span class="nav-number">1.6.1.</span> <span class="nav-text">Kotlin 实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#静态内部类单例"><span class="nav-number">1.7.</span> <span class="nav-text">静态内部类单例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Kotlin-实现-4"><span class="nav-number">1.7.1.</span> <span class="nav-text">Kotlin 实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#枚举单例"><span class="nav-number">1.8.</span> <span class="nav-text">枚举单例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Kotlin-实现-5"><span class="nav-number">1.8.1.</span> <span class="nav-text">Kotlin 实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.9.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李世德</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">
+    <i class="fa fa-eye"></i>
+    <span id="busuanzi_container_site_pv">
+      访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <i class="fa fa-user-md"></i>
+    <span id="busuanzi_container_site_uv">
+      访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+  </div>
+  <span class="post-meta-divider">|</span>
+  <i class="fa fa-pencil"></i>
+  <div class="theme-info">
+    <div class="powered-by"></div>
+    <span class="post-count">博客全站共 40.3k 字</span>
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.6.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Gemini</a> v6.4.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.4.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
