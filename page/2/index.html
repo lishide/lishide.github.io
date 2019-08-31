@@ -4,109 +4,56 @@
 
 
 
-
-
-
-
-
-
-
-  
-
-
-<html class="theme-next gemini use-motion" lang="zh-CN">
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
 
 
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
 
 
-
-
-
-
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=6.4.0" rel="stylesheet" type="text/css" />
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.0">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.0">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.0">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=6.4.0" color="#222">
-
-
-
-
-
-
-
-
-
-<script type="text/javascript" id="hexo.configurations">
+<script id="hexo-configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Gemini',
-    version: '6.4.0',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    scheme: 'Muse',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
-    fastclick: false,
+    mediumzoom: false,
     lazyload: false,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    pangu: false,
     algolia: {
-      applicationID: '',
+      appID: '',
       apiKey: '',
       indexName: '',
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
   };
 </script>
-
-
-  
-
-
-
 
   <meta name="description" content="爱生活，爱学习，一个不羁的编码界小学生。">
 <meta property="og:type" content="website">
@@ -118,25 +65,23 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="李世德的博客">
 <meta name="twitter:description" content="爱生活，爱学习，一个不羁的编码界小学生。">
+  <link rel="canonical" href="https://lishide.github.io/page/2/">
 
 
-
-
-
-
-  <link rel="canonical" href="https://lishide.github.io/page/2/"/>
-
-
-
-<script type="text/javascript" id="page.configurations">
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
+    isHome: true,
+    isPost: false,
+    isPage: false,
+    isArchive: false
   };
 </script>
 
   <title>李世德的博客</title>
+  <meta name="generator" content="Hexo 3.6.0">
   
-
 
 
 
@@ -146,62 +91,48 @@
 
 
   <noscript>
-  <style type="text/css">
-    .use-motion .motion-element,
-    .use-motion .brand,
-    .use-motion .menu-item,
-    .sidebar-inner,
-    .use-motion .post-block,
-    .use-motion .pagination,
-    .use-motion .comments,
-    .use-motion .post-header,
-    .use-motion .post-body,
-    .use-motion .collection-title { opacity: initial; }
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
 
-    .use-motion .logo,
-    .use-motion .site-title,
-    .use-motion .site-subtitle {
-      opacity: initial;
-      top: initial;
-    }
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
 
-    .use-motion {
-      .logo-line-before i { left: initial; }
-      .logo-line-after i { right: initial; }
-    }
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
   </style>
 </noscript>
 
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container use-motion">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
 
-    <div class="custom-logo-site-title">
+    <div>
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">李世德的博客</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
-    
-      
         <p class="site-subtitle">我有故事，你有酒吗？</p>
       
-    
   </div>
 
   <div class="site-nav-toggle">
@@ -214,76 +145,57 @@
 </div>
 
 
-
 <nav class="site-nav">
   
-    <ul id="menu" class="menu">
+  <ul id="menu" class="menu">
+      
+      
       
         
-        
-        
-          
-          <li class="menu-item menu-item-home">
-    <a href="/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
   </li>
+      
+      
+      
         
-        
-        
-          
-          <li class="menu-item menu-item-archives">
-    <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
   </li>
+  </ul>
 
-      
-      
-    </ul>
-  
+    
 
-  
-
-  
 </nav>
-
-
-
-  
-
-
-
 </div>
     </header>
 
     
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
 
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          
-            
-
-          
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
-    
-      
-
-  
-
+  <div id="posts" class="posts-expand">
+        <article itemscope itemtype="http://schema.org/Article">
   
   
   
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <div class="post-block home">
     <link itemprop="mainEntityOfPage" href="https://lishide.github.io/2018/09/05/dev-ide-as-personal-settings/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -295,97 +207,44 @@
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="李世德的博客">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/05/dev-ide-as-personal-settings/" itemprop="url">
-                  个人 IDEA（Android Studio）生产工具个性化配置
-                </a>
-              
+        <h1 class="post-title" itemprop="name headline">
             
-          </h1>
-        
+            <a href="/2018/09/05/dev-ide-as-personal-settings/" class="post-title-link" itemprop="url">个人 IDEA（Android Studio）生产工具个性化配置</a>
+          
+        </h1>
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
+              <span class="post-meta-item-text">发表于</span>
 
               
                 
               
 
               <time title="创建时间：2018-09-05 11:51:29" itemprop="dateCreated datePublished" datetime="2018-09-05T11:51:29+08:00">2018-09-05</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
+                <span class="post-meta-item-text">更新于</span>
                 <time title="修改时间：2019-06-22 14:14:42" itemprop="dateModified" datetime="2019-06-22T14:14:42+08:00">2019-06-22</time>
-              
-            
-          </span>
-
-          
-
-          
+              </span>
             
           
 
-          
-          
-
-          
-
-          
-
-          
-
-          <!--/wordcount-->
-          
-            <span class="post-letters-count">
-              <span class="post-meta-divider">|</span>
-              <i class="fa fa-file-word-o"></i>
-              <span>
-                  786 字
-              </span>
-              <span class="post-meta-divider">|</span>
-              <i class="fa fa-clock-o"></i>
-              <span>
-                  3 分钟
-              </span>
-            </span>
           
 
         </div>
       </header>
-    
 
     
     
@@ -393,69 +252,39 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <p>记录个人 IDEA（Android Studio）生产工具个性化配置，常用插件等。<br>
           <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/09/05/dev-ide-as-personal-settings/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2018/09/05/dev-ide-as-personal-settings/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
           <!--/noindex-->
         
       
     </div>
 
     
-
     
     
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
   </div>
   
   
   
   </article>
 
-
     
-      
-
-  
-
+        <article itemscope itemtype="http://schema.org/Article">
   
   
   
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <div class="post-block home">
     <link itemprop="mainEntityOfPage" href="https://lishide.github.io/2018/08/23/hello-world/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -467,81 +296,32 @@
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="李世德的博客">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/23/hello-world/" itemprop="url">
-                  Hello World
-                </a>
-              
+        <h1 class="post-title" itemprop="name headline">
             
-          </h1>
-        
+            <a href="/2018/08/23/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
+          
+        </h1>
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
+              <span class="post-meta-item-text">发表于</span>
 
               
                 
               
 
               <time title="创建时间：2018-08-23 20:19:27" itemprop="dateCreated datePublished" datetime="2018-08-23T20:19:27+08:00">2018-08-23</time>
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-          <!--/wordcount-->
-          
-            <span class="post-letters-count">
-              <span class="post-meta-divider">|</span>
-              <i class="fa fa-file-word-o"></i>
-              <span>
-                  78 字
-              </span>
-              <span class="post-meta-divider">|</span>
-              <i class="fa fa-clock-o"></i>
-              <span>
-                  1 分钟
-              </span>
             </span>
+          
+
           
 
         </div>
       </header>
-    
 
     
     
@@ -549,69 +329,39 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
           <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/08/23/hello-world/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2018/08/23/hello-world/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
           <!--/noindex-->
         
       
     </div>
 
     
-
     
     
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
   </div>
   
   
   
   </article>
 
-
     
-      
-
-  
-
+        <article itemscope itemtype="http://schema.org/Article">
   
   
   
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <div class="post-block home">
     <link itemprop="mainEntityOfPage" href="https://lishide.github.io/2018/08/18/Android-interview-201808/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -623,97 +373,44 @@
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="李世德的博客">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/18/Android-interview-201808/" itemprop="url">
-                  2018 年 8 月 Android 面试总结（亲历）
-                </a>
-              
+        <h1 class="post-title" itemprop="name headline">
             
-          </h1>
-        
+            <a href="/2018/08/18/Android-interview-201808/" class="post-title-link" itemprop="url">2018 年 8 月 Android 面试总结（亲历）</a>
+          
+        </h1>
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
+              <span class="post-meta-item-text">发表于</span>
 
               
                 
               
 
               <time title="创建时间：2018-08-18 10:36:12" itemprop="dateCreated datePublished" datetime="2018-08-18T10:36:12+08:00">2018-08-18</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
+                <span class="post-meta-item-text">更新于</span>
                 <time title="修改时间：2018-08-23 20:35:02" itemprop="dateModified" datetime="2018-08-23T20:35:02+08:00">2018-08-23</time>
-              
-            
-          </span>
-
-          
-
-          
+              </span>
             
           
 
-          
-          
-
-          
-
-          
-
-          
-
-          <!--/wordcount-->
-          
-            <span class="post-letters-count">
-              <span class="post-meta-divider">|</span>
-              <i class="fa fa-file-word-o"></i>
-              <span>
-                  2,277 字
-              </span>
-              <span class="post-meta-divider">|</span>
-              <i class="fa fa-clock-o"></i>
-              <span>
-                  8 分钟
-              </span>
-            </span>
           
 
         </div>
       </header>
-    
 
     
     
@@ -721,72 +418,42 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在这个酷热的 8 月，笔者经历了一次找工作。整理一下遇到的一些面试题，由于记忆比较零散，有一些也忘记了，这里记录其中的两家的面试题，各家问的有重复的问题，就不一一列举了。</p>
 <blockquote>
 <p>相关题目的答案会在后期逐渐完善</p>
 </blockquote>
           <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/08/18/Android-interview-201808/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2018/08/18/Android-interview-201808/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
           <!--/noindex-->
         
       
     </div>
 
     
-
     
     
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
   </div>
   
   
   
   </article>
 
-
     
-      
-
-  
-
+        <article itemscope itemtype="http://schema.org/Article">
   
   
   
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <div class="post-block home">
     <link itemprop="mainEntityOfPage" href="https://lishide.github.io/2018/08/10/Android-solutions-list-item-dyna-transform-edit/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -798,97 +465,44 @@
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="李世德的博客">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/10/Android-solutions-list-item-dyna-transform-edit/" itemprop="url">
-                  列表动态增减并移动，以及 item 中使用 EditText 的问题扫坑
-                </a>
-              
+        <h1 class="post-title" itemprop="name headline">
             
-          </h1>
-        
+            <a href="/2018/08/10/Android-solutions-list-item-dyna-transform-edit/" class="post-title-link" itemprop="url">列表动态增减并移动，以及 item 中使用 EditText 的问题扫坑</a>
+          
+        </h1>
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
+              <span class="post-meta-item-text">发表于</span>
 
               
                 
               
 
               <time title="创建时间：2018-08-10 12:19:03" itemprop="dateCreated datePublished" datetime="2018-08-10T12:19:03+08:00">2018-08-10</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
+                <span class="post-meta-item-text">更新于</span>
                 <time title="修改时间：2018-08-23 20:19:27" itemprop="dateModified" datetime="2018-08-23T20:19:27+08:00">2018-08-23</time>
-              
-            
-          </span>
-
-          
-
-          
+              </span>
             
           
 
-          
-          
-
-          
-
-          
-
-          
-
-          <!--/wordcount-->
-          
-            <span class="post-letters-count">
-              <span class="post-meta-divider">|</span>
-              <i class="fa fa-file-word-o"></i>
-              <span>
-                  1,008 字
-              </span>
-              <span class="post-meta-divider">|</span>
-              <i class="fa fa-clock-o"></i>
-              <span>
-                  4 分钟
-              </span>
-            </span>
           
 
         </div>
       </header>
-    
 
     
     
@@ -896,69 +510,39 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>项目中需要一个图文混排的编辑功能，相关信息由用户动态地随意添加。于是使用 RecyclerView 的多布局来实现，记录一下遇到的一些问题的解决方法，主要有以下技术点：动态增加 Item、动态删除 Item、上移 Item、图片选择功能、EditText 复用问题的解决等。</p>
           <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/08/10/Android-solutions-list-item-dyna-transform-edit/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2018/08/10/Android-solutions-list-item-dyna-transform-edit/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
           <!--/noindex-->
         
       
     </div>
 
     
-
     
     
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
   </div>
   
   
   
   </article>
 
-
     
-      
-
-  
-
+        <article itemscope itemtype="http://schema.org/Article">
   
   
   
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <div class="post-block home">
     <link itemprop="mainEntityOfPage" href="https://lishide.github.io/2018/06/06/Android-proguard-cn-collection/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -970,97 +554,44 @@
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="李世德的博客">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/06/06/Android-proguard-cn-collection/" itemprop="url">
-                  Android 混淆规则整理
-                </a>
-              
+        <h1 class="post-title" itemprop="name headline">
             
-          </h1>
-        
+            <a href="/2018/06/06/Android-proguard-cn-collection/" class="post-title-link" itemprop="url">Android 混淆规则整理</a>
+          
+        </h1>
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
+              <span class="post-meta-item-text">发表于</span>
 
               
                 
               
 
               <time title="创建时间：2018-06-06 11:46:00" itemprop="dateCreated datePublished" datetime="2018-06-06T11:46:00+08:00">2018-06-06</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
+                <span class="post-meta-item-text">更新于</span>
                 <time title="修改时间：2018-08-23 20:19:27" itemprop="dateModified" datetime="2018-08-23T20:19:27+08:00">2018-08-23</time>
-              
-            
-          </span>
-
-          
-
-          
+              </span>
             
           
 
-          
-          
-
-          
-
-          
-
-          
-
-          <!--/wordcount-->
-          
-            <span class="post-letters-count">
-              <span class="post-meta-divider">|</span>
-              <i class="fa fa-file-word-o"></i>
-              <span>
-                  1,823 字
-              </span>
-              <span class="post-meta-divider">|</span>
-              <i class="fa fa-clock-o"></i>
-              <span>
-                  8 分钟
-              </span>
-            </span>
           
 
         </div>
       </header>
-    
 
     
     
@@ -1068,69 +599,39 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>某一个夜深人静的加班夜，也许你在做代码混淆……ProGuard 是一个比较枯燥且没有成就感的技术，但 Android 项目没有了 ProGuard 还真就不行。在 Android 中使用 ProGuard 可以起到压缩、优化、混淆、预检的作用，保证我们开发出的 APK 更健壮。</p>
           <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/06/06/Android-proguard-cn-collection/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2018/06/06/Android-proguard-cn-collection/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
           <!--/noindex-->
         
       
     </div>
 
     
-
     
     
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
   </div>
   
   
   
   </article>
 
-
     
-      
-
-  
-
+        <article itemscope itemtype="http://schema.org/Article">
   
   
   
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <div class="post-block home">
     <link itemprop="mainEntityOfPage" href="https://lishide.github.io/2018/05/30/Android-fix-rv-item-view-overlap/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1142,97 +643,44 @@
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="李世德的博客">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/30/Android-fix-rv-item-view-overlap/" itemprop="url">
-                  Android：解决 RecyclerView 的 item 复用引起的布局错乱问题
-                </a>
-              
+        <h1 class="post-title" itemprop="name headline">
             
-          </h1>
-        
+            <a href="/2018/05/30/Android-fix-rv-item-view-overlap/" class="post-title-link" itemprop="url">Android：解决 RecyclerView 的 item 复用引起的布局错乱问题</a>
+          
+        </h1>
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
+              <span class="post-meta-item-text">发表于</span>
 
               
                 
               
 
               <time title="创建时间：2018-05-30 15:56:51" itemprop="dateCreated datePublished" datetime="2018-05-30T15:56:51+08:00">2018-05-30</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
+                <span class="post-meta-item-text">更新于</span>
                 <time title="修改时间：2018-08-23 20:19:27" itemprop="dateModified" datetime="2018-08-23T20:19:27+08:00">2018-08-23</time>
-              
-            
-          </span>
-
-          
-
-          
+              </span>
             
           
 
-          
-          
-
-          
-
-          
-
-          
-
-          <!--/wordcount-->
-          
-            <span class="post-letters-count">
-              <span class="post-meta-divider">|</span>
-              <i class="fa fa-file-word-o"></i>
-              <span>
-                  591 字
-              </span>
-              <span class="post-meta-divider">|</span>
-              <i class="fa fa-clock-o"></i>
-              <span>
-                  2 分钟
-              </span>
-            </span>
           
 
         </div>
       </header>
-    
 
     
     
@@ -1240,69 +688,39 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>列表 item 中有个 View 是在某些情况下显示或隐藏的，在 <code>onBindViewHolder</code> 绑定的时候会根据数据对其处理，<code>View.VISIBLE</code> 和 <code>View.GONE</code> 都有写，看似没有问题。但是快速上下滑动的时候会发生 item 显示错乱：那个需要显示的控件会只显示一半，未完整撑开 item。item 的根布局是 <code>ConstraintLayout</code>。</p>
           <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/05/30/Android-fix-rv-item-view-overlap/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2018/05/30/Android-fix-rv-item-view-overlap/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
           <!--/noindex-->
         
       
     </div>
 
     
-
     
     
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
   </div>
   
   
   
   </article>
 
-
     
-      
-
-  
-
+        <article itemscope itemtype="http://schema.org/Article">
   
   
   
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <div class="post-block home">
     <link itemprop="mainEntityOfPage" href="https://lishide.github.io/2018/05/22/Android-improve-frame-album-permission/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1314,97 +732,44 @@
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="李世德的博客">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/22/Android-improve-frame-album-permission/" itemprop="url">
-                  Android 开发中常见的图片选择、裁剪及权限管理等第三方功能库的升级优化
-                </a>
-              
+        <h1 class="post-title" itemprop="name headline">
             
-          </h1>
-        
+            <a href="/2018/05/22/Android-improve-frame-album-permission/" class="post-title-link" itemprop="url">Android 开发中常见的图片选择、裁剪及权限管理等第三方功能库的升级优化</a>
+          
+        </h1>
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
+              <span class="post-meta-item-text">发表于</span>
 
               
                 
               
 
               <time title="创建时间：2018-05-22 16:38:37" itemprop="dateCreated datePublished" datetime="2018-05-22T16:38:37+08:00">2018-05-22</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
+                <span class="post-meta-item-text">更新于</span>
                 <time title="修改时间：2018-08-23 20:19:27" itemprop="dateModified" datetime="2018-08-23T20:19:27+08:00">2018-08-23</time>
-              
-            
-          </span>
-
-          
-
-          
+              </span>
             
           
 
-          
-          
-
-          
-
-          
-
-          
-
-          <!--/wordcount-->
-          
-            <span class="post-letters-count">
-              <span class="post-meta-divider">|</span>
-              <i class="fa fa-file-word-o"></i>
-              <span>
-                  1,224 字
-              </span>
-              <span class="post-meta-divider">|</span>
-              <i class="fa fa-clock-o"></i>
-              <span>
-                  5 分钟
-              </span>
-            </span>
           
 
         </div>
       </header>
-    
 
     
     
@@ -1412,69 +777,39 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <h1 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h1><p>近期开发中有个需求涉及到多张图片选择、裁剪及上传功能，原项目中有类似的库和第三方框架，花了很长时间把相关的大部分功能加入进来，并未完全实现需求，然而最后发现有问题，查找解决方法，发现该开源的 Issues 中很多人都提到了我遇到的几个问题，尚未解决，该库也停止维护；现有的第三方框架的裁剪样式也不符合 App 要求。在一系列问题寻求解决方案无果后，决定弃用以前使用的框架，使用实现此功能更优秀的框架。<br>后台同事有其他的工作，这块需求的 API 尚未开发，有时间留给我们做优（tian）化（keng），在跟另一位 Android 同事提议和沟通后，决定把图片选择、图片裁剪、权限管理的第三方工具进行优化和升级，一方面是为此项目做优化，避免以后问题越来越多；另一方面作为学习和知识储备，选择和会使用更加优秀的轮子。</p>
           <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/05/22/Android-improve-frame-album-permission/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2018/05/22/Android-improve-frame-album-permission/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
           <!--/noindex-->
         
       
     </div>
 
     
-
     
     
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
   </div>
   
   
   
   </article>
 
-
     
-      
-
-  
-
+        <article itemscope itemtype="http://schema.org/Article">
   
   
   
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <div class="post-block home">
     <link itemprop="mainEntityOfPage" href="https://lishide.github.io/2018/05/02/Android-Kotlin-dp4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1486,97 +821,44 @@
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="李世德的博客">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/02/Android-Kotlin-dp4/" itemprop="url">
-                  【团队分享】Kotlin 及设计模式实践（四）
-                </a>
-              
+        <h1 class="post-title" itemprop="name headline">
             
-          </h1>
-        
+            <a href="/2018/05/02/Android-Kotlin-dp4/" class="post-title-link" itemprop="url">【团队分享】Kotlin 及设计模式实践（四）</a>
+          
+        </h1>
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
+              <span class="post-meta-item-text">发表于</span>
 
               
                 
               
 
               <time title="创建时间：2018-05-02 13:20:00" itemprop="dateCreated datePublished" datetime="2018-05-02T13:20:00+08:00">2018-05-02</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
+                <span class="post-meta-item-text">更新于</span>
                 <time title="修改时间：2018-08-23 20:19:27" itemprop="dateModified" datetime="2018-08-23T20:19:27+08:00">2018-08-23</time>
-              
-            
-          </span>
-
-          
-
-          
+              </span>
             
           
 
-          
-          
-
-          
-
-          
-
-          
-
-          <!--/wordcount-->
-          
-            <span class="post-letters-count">
-              <span class="post-meta-divider">|</span>
-              <i class="fa fa-file-word-o"></i>
-              <span>
-                  221 字
-              </span>
-              <span class="post-meta-divider">|</span>
-              <i class="fa fa-clock-o"></i>
-              <span>
-                  1 分钟
-              </span>
-            </span>
           
 
         </div>
       </header>
-    
 
     
     
@@ -1584,69 +866,39 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <p>这篇文章搁置了太久，直到今天，还是没有完成。为了发布新文章，反复把这个文档移出，再还原。今天先发布出来，防止丢失，过几天再修改补全文章，不能再拖延啦。</p>
           <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/05/02/Android-Kotlin-dp4/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2018/05/02/Android-Kotlin-dp4/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
           <!--/noindex-->
         
       
     </div>
 
     
-
     
     
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
   </div>
   
   
   
   </article>
 
-
     
-      
-
-  
-
+        <article itemscope itemtype="http://schema.org/Article">
   
   
   
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <div class="post-block home">
     <link itemprop="mainEntityOfPage" href="https://lishide.github.io/2018/04/13/Android-Kotlin-dp3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1658,97 +910,44 @@
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="李世德的博客">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/13/Android-Kotlin-dp3/" itemprop="url">
-                  【团队分享】Kotlin 及设计模式实践（三）
-                </a>
-              
+        <h1 class="post-title" itemprop="name headline">
             
-          </h1>
-        
+            <a href="/2018/04/13/Android-Kotlin-dp3/" class="post-title-link" itemprop="url">【团队分享】Kotlin 及设计模式实践（三）</a>
+          
+        </h1>
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
+              <span class="post-meta-item-text">发表于</span>
 
               
                 
               
 
               <time title="创建时间：2018-04-13 15:40:35" itemprop="dateCreated datePublished" datetime="2018-04-13T15:40:35+08:00">2018-04-13</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
+                <span class="post-meta-item-text">更新于</span>
                 <time title="修改时间：2018-08-23 20:19:27" itemprop="dateModified" datetime="2018-08-23T20:19:27+08:00">2018-08-23</time>
-              
-            
-          </span>
-
-          
-
-          
+              </span>
             
           
 
-          
-          
-
-          
-
-          
-
-          
-
-          <!--/wordcount-->
-          
-            <span class="post-letters-count">
-              <span class="post-meta-divider">|</span>
-              <i class="fa fa-file-word-o"></i>
-              <span>
-                  2,303 字
-              </span>
-              <span class="post-meta-divider">|</span>
-              <i class="fa fa-clock-o"></i>
-              <span>
-                  10 分钟
-              </span>
-            </span>
           
 
         </div>
       </header>
-    
 
     
     
@@ -1756,69 +955,39 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <p>本讲的 Kotlin 知识部分主要讲解接口、数据类及常见函数的使用，第二部分讲解抽象工厂模式的简单实现。</p>
           <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/04/13/Android-Kotlin-dp3/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2018/04/13/Android-Kotlin-dp3/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
           <!--/noindex-->
         
       
     </div>
 
     
-
     
     
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
   </div>
   
   
   
   </article>
 
-
     
-      
-
-  
-
+        <article itemscope itemtype="http://schema.org/Article">
   
   
   
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <div class="post-block home">
     <link itemprop="mainEntityOfPage" href="https://lishide.github.io/2018/04/08/ubuntu-install-config-soft-2017/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1830,97 +999,44 @@
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="李世德的博客">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/08/ubuntu-install-config-soft-2017/" itemprop="url">
-                  一只小白的 Linux 之旅|Ubuntu 安装配置及软件安装（持续更新）
-                </a>
-              
+        <h1 class="post-title" itemprop="name headline">
             
-          </h1>
-        
+            <a href="/2018/04/08/ubuntu-install-config-soft-2017/" class="post-title-link" itemprop="url">一只小白的 Linux 之旅|Ubuntu 安装配置及软件安装（持续更新）</a>
+          
+        </h1>
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
+              <span class="post-meta-item-text">发表于</span>
 
               
                 
               
 
               <time title="创建时间：2018-04-08 09:36:05" itemprop="dateCreated datePublished" datetime="2018-04-08T09:36:05+08:00">2018-04-08</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
+                <span class="post-meta-item-text">更新于</span>
                 <time title="修改时间：2019-03-13 21:15:54" itemprop="dateModified" datetime="2019-03-13T21:15:54+08:00">2019-03-13</time>
-              
-            
-          </span>
-
-          
-
-          
+              </span>
             
           
 
-          
-          
-
-          
-
-          
-
-          
-
-          <!--/wordcount-->
-          
-            <span class="post-letters-count">
-              <span class="post-meta-divider">|</span>
-              <i class="fa fa-file-word-o"></i>
-              <span>
-                  4,306 字
-              </span>
-              <span class="post-meta-divider">|</span>
-              <i class="fa fa-clock-o"></i>
-              <span>
-                  17 分钟
-              </span>
-            </span>
           
 
         </div>
       </header>
-    
 
     
     
@@ -1928,56 +1044,36 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <p>记录 Ubuntu 系统安装配置及其软件安装的整个过程，同时分享给有需要的人。</p>
 <p><img src="https://s2.ax1x.com/2019/03/13/Akw9DU.png" alt="Ubuntu"><br>
           <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/04/08/ubuntu-install-config-soft-2017/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2018/04/08/ubuntu-install-config-soft-2017/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
           <!--/noindex-->
         
       
     </div>
 
     
-
     
     
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
   </div>
   
   
   
   </article>
 
-
     
-  </section>
+  </div>
 
   
   <nav class="pagination">
@@ -1985,12 +1081,10 @@
   </nav>
 
 
-
           </div>
           
 
         </div>
-        
           
   
   <div class="sidebar-toggle">
@@ -2001,221 +1095,156 @@
     </div>
   </div>
 
-  <aside id="sidebar" class="sidebar">
-    
+  <aside class="sidebar">
     <div class="sidebar-inner">
 
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">李世德</p>
+  <div class="site-description" itemprop="description">爱生活，爱学习，一个不羁的编码界小学生。</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
       
-
       
-
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <p class="site-author-name" itemprop="name">李世德</p>
-              <p class="site-description motion-element" itemprop="description">爱生活，爱学习，一个不羁的编码界小学生。</p>
-          </div>
-
+      <div class="site-state-item site-state-tags">
+        
+        
+        
           
-            <nav class="site-state motion-element">
-              
-                <div class="site-state-item site-state-posts">
-                
-                  <a href="/archives/">
-                
-                    <span class="site-state-item-count">37</span>
-                    <span class="site-state-item-name">日志</span>
-                  </a>
-                </div>
-              
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-name">标签</span>
+        
+      </div>
+    
+  </nav>
 
-              
 
-              
-                
-                
-                <div class="site-state-item site-state-tags">
-                  
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">38</span>
-                    <span class="site-state-item-name">标签</span>
-                  
-                </div>
-              
-            </nav>
-          
 
-          
-
-          
-            <div class="links-of-author motion-element">
-              
-                <span class="links-of-author-item">
-                  <a href="https://github.com/lishide" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
-                  
-                </span>
-              
-                <span class="links-of-author-item">
-                  <a href="https://weibo.com/u/3235831430" target="_blank" title="Weibo"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
-                  
-                </span>
-              
-            </div>
-          
-
-          
-          
-
-          
-          
-
-          
-            
-          
-          
-
-        </div>
-      </section>
-
-      
-
-      
+      </div>
 
     </div>
   </aside>
+  <div id="sidebar-dimmer"></div>
 
 
-        
       </div>
     </main>
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">李世德</span>
-
-  
-
-  
 </div>
-
-
-
-
-  <div class="powered-by">
-    <i class="fa fa-eye"></i>
-    <span id="busuanzi_container_site_pv">
-      访问量：<span id="busuanzi_value_site_pv"></span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <i class="fa fa-user-md"></i>
-    <span id="busuanzi_container_site_uv">
-      访客数：<span id="busuanzi_value_site_uv"></span>
-    </span>
-  </div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.6.0</div>
   <span class="post-meta-divider">|</span>
-  <i class="fa fa-pencil"></i>
-  <div class="theme-info">
-    <div class="powered-by"></div>
-    <span class="post-count">博客全站共 40.3k 字</span>
-  </div>
-  <span class="post-meta-divider">|</span>
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.6.0</div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Gemini</a> v6.4.0</div>
-
-
-
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.3.0</div>
 
         
+
+
+
+
 
 
 
@@ -2227,99 +1256,17 @@
         
       </div>
     </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-	
-    
-
-    
   </div>
 
   
 
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=6.4.0"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=6.4.0"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=6.4.0"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.4.0"></script>
-
-
-
-  
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.0"></script>
-
-
-
-  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
+<script src="/js/schemes/muse.js?v=7.3.0"></script>
+<script src="/js/next-boot.js?v=7.3.0"></script>
 
 
 
@@ -2334,26 +1281,16 @@
 
 
 
-  
 
 
 
 
 
-  
 
-  
 
-  
 
-  
 
-  
-  
 
-  
-
-  
 
   
 

@@ -4,109 +4,56 @@
 
 
 
-
-
-
-
-
-
-
-  
-
-
-<html class="theme-next gemini use-motion" lang="zh-CN">
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
 
 
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
 
 
-
-
-
-
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=6.4.0" rel="stylesheet" type="text/css" />
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.0">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.0">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.0">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=6.4.0" color="#222">
-
-
-
-
-
-
-
-
-
-<script type="text/javascript" id="hexo.configurations">
+<script id="hexo-configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Gemini',
-    version: '6.4.0',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    scheme: 'Muse',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
-    fastclick: false,
+    mediumzoom: false,
     lazyload: false,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    pangu: false,
     algolia: {
-      applicationID: '',
+      appID: '',
       apiKey: '',
       indexName: '',
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
   };
 </script>
-
-
-  
-
-
-
 
   <meta name="description" content="今天给大家分享 Kotlin 入门的一些基本语法概念以及其独特的优秀特性和最近一段时间在实际开发中使用到的一些习惯用法。有 Java 开发基础，甚至说有某一种开发语言的基础，都是比较容易上手的。通过下面的几点分享，大家先领略一下 Kotlin 的简洁和优雅。结合一种较为常用且简单的设计模式——建造者模式进行本次的讲解。希望我们团队能够固定有这样的分享学习活动，激活团队的氛围，传递更多的知识与技能。">
 <meta name="keywords" content="Android,Kotlin,Design Patterns">
@@ -120,25 +67,23 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【团队分享】Kotlin 及设计模式实践（一）">
 <meta name="twitter:description" content="今天给大家分享 Kotlin 入门的一些基本语法概念以及其独特的优秀特性和最近一段时间在实际开发中使用到的一些习惯用法。有 Java 开发基础，甚至说有某一种开发语言的基础，都是比较容易上手的。通过下面的几点分享，大家先领略一下 Kotlin 的简洁和优雅。结合一种较为常用且简单的设计模式——建造者模式进行本次的讲解。希望我们团队能够固定有这样的分享学习活动，激活团队的氛围，传递更多的知识与技能。">
+  <link rel="canonical" href="https://lishide.github.io/2018/03/19/Android-Kotlin-dp1/">
 
 
-
-
-
-
-  <link rel="canonical" href="https://lishide.github.io/2018/03/19/Android-Kotlin-dp1/"/>
-
-
-
-<script type="text/javascript" id="page.configurations">
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
   };
 </script>
 
   <title>【团队分享】Kotlin 及设计模式实践（一） | 李世德的博客</title>
+  <meta name="generator" content="Hexo 3.6.0">
   
-
 
 
 
@@ -148,61 +93,48 @@
 
 
   <noscript>
-  <style type="text/css">
-    .use-motion .motion-element,
-    .use-motion .brand,
-    .use-motion .menu-item,
-    .sidebar-inner,
-    .use-motion .post-block,
-    .use-motion .pagination,
-    .use-motion .comments,
-    .use-motion .post-header,
-    .use-motion .post-body,
-    .use-motion .collection-title { opacity: initial; }
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
 
-    .use-motion .logo,
-    .use-motion .site-title,
-    .use-motion .site-subtitle {
-      opacity: initial;
-      top: initial;
-    }
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
 
-    .use-motion {
-      .logo-line-before i { left: initial; }
-      .logo-line-after i { right: initial; }
-    }
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
   </style>
 </noscript>
 
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
+  <div class="container use-motion">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
 
-    <div class="custom-logo-site-title">
+    <div>
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">李世德的博客</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
-    
-      
         <p class="site-subtitle">我有故事，你有酒吗？</p>
       
-    
   </div>
 
   <div class="site-nav-toggle">
@@ -215,76 +147,58 @@
 </div>
 
 
-
 <nav class="site-nav">
   
-    <ul id="menu" class="menu">
+  <ul id="menu" class="menu">
+      
+      
       
         
-        
-        
-          
-          <li class="menu-item menu-item-home">
-    <a href="/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
   </li>
+      
+      
+      
         
-        
-        
-          
-          <li class="menu-item menu-item-archives">
-    <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
   </li>
+  </ul>
 
-      
-      
-    </ul>
-  
+    
 
-  
-
-  
 </nav>
-
-
-
-  
-
-
-
 </div>
     </header>
 
     
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
 
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          
-            
-
-          
           <div id="content" class="content">
             
 
   <div id="posts" class="posts-expand">
-    
-
-  
-
+      <article itemscope itemtype="http://schema.org/Article">
   
   
   
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <div class="post-block post">
     <link itemprop="mainEntityOfPage" href="https://lishide.github.io/2018/03/19/Android-Kotlin-dp1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -296,101 +210,48 @@
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="李世德的博客">
     </span>
-
-    
       <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">【团队分享】Kotlin 及设计模式实践（一）
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">【团队分享】Kotlin 及设计模式实践（一）
-              
-            
-          </h1>
-        
+          
+        </h1>
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
+              <span class="post-meta-item-text">发表于</span>
 
               
                 
               
 
               <time title="创建时间：2018-03-19 11:13:38" itemprop="dateCreated datePublished" datetime="2018-03-19T11:13:38+08:00">2018-03-19</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
+                <span class="post-meta-item-text">更新于</span>
                 <time title="修改时间：2018-11-26 21:56:39" itemprop="dateModified" datetime="2018-11-26T21:56:39+08:00">2018-11-26</time>
-              
-            
-          </span>
-
-          
-
-          
+              </span>
             
           
 
-          
-          
-
-          
-
-          
-
-          
-
-          <!--/wordcount-->
-          
-            <span class="post-letters-count">
-              <span class="post-meta-divider">|</span>
-              <i class="fa fa-file-word-o"></i>
-              <span>
-                  2,240 字
-              </span>
-              <span class="post-meta-divider">|</span>
-              <i class="fa fa-clock-o"></i>
-              <span>
-                  10 分钟
-              </span>
-            </span>
           
 
         </div>
       </header>
-    
 
     
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
-      
 
       
         <p>今天给大家分享 Kotlin 入门的一些基本语法概念以及其独特的优秀特性和最近一段时间在实际开发中使用到的一些习惯用法。有 Java 开发基础，甚至说有某一种开发语言的基础，都是比较容易上手的。通过下面的几点分享，大家先领略一下 Kotlin 的简洁和优雅。结合一种较为常用且简单的设计模式——建造者模式进行本次的讲解。<br>希望我们团队能够固定有这样的分享学习活动，激活团队的氛围，传递更多的知识与技能。</p>
@@ -449,82 +310,66 @@
 <li>有计划地小结与分享</li>
 </ul>
 
-      
     </div>
 
     
-
     
     
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
+        
       
-        <div class="post-tags">
+
+      <footer class="post-footer">
           
-            <a href="/tags/Android/" rel="tag"><i class="fa fa-tag"></i> Android</a>
-          
-            <a href="/tags/Kotlin/" rel="tag"><i class="fa fa-tag"></i> Kotlin</a>
-          
-            <a href="/tags/Design-Patterns/" rel="tag"><i class="fa fa-tag"></i> Design Patterns</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/03/19/hexo-blog-customize/" rel="next" title="hexo 博客搭建后的几点实用技巧和修改">
-                <i class="fa fa-chevron-left"></i> hexo 博客搭建后的几点实用技巧和修改
-              </a>
+          
+          <div class="post-tags">
+            
+              <a href="/tags/Android/" rel="tag"># Android</a>
+            
+              <a href="/tags/Kotlin/" rel="tag"># Kotlin</a>
+            
+              <a href="/tags/Design-Patterns/" rel="tag"># Design Patterns</a>
             
           </div>
+        
 
-          <span class="post-nav-divider"></span>
+        
 
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/03/23/android-view-ScrollRecyclerView/" rel="prev" title="ScrollRecyclerView——RecyclerView 横向 / 纵向滚动网格布局">
-                ScrollRecyclerView——RecyclerView 横向 / 纵向滚动网格布局 <i class="fa fa-chevron-right"></i>
-              </a>
-            
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2018/03/19/hexo-blog-customize/" rel="next" title="hexo 博客搭建后的几点实用技巧和修改">
+                  <i class="fa fa-chevron-left"></i> hexo 博客搭建后的几点实用技巧和修改
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2018/03/23/android-view-ScrollRecyclerView/" rel="prev" title="ScrollRecyclerView——RecyclerView 横向 / 纵向滚动网格布局">
+                  ScrollRecyclerView——RecyclerView 横向 / 纵向滚动网格布局 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
           </div>
-        </div>
-      
-
-      
-      
-    </footer>
+        
+      </footer>
+    
   </div>
   
   
   
   </article>
 
-
   </div>
 
 
           </div>
           
 
-  
-
-
-
         </div>
-        
           
   
   <div class="sidebar-toggle">
@@ -535,246 +380,163 @@
     </div>
   </div>
 
-  <aside id="sidebar" class="sidebar">
-    
+  <aside class="sidebar">
     <div class="sidebar-inner">
-
+        
+        
+        
+        
       
 
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
 
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <p class="site-author-name" itemprop="name">李世德</p>
-              <p class="site-description motion-element" itemprop="description">爱生活，爱学习，一个不羁的编码界小学生。</p>
-          </div>
-
-          
-            <nav class="site-state motion-element">
-              
-                <div class="site-state-item site-state-posts">
-                
-                  <a href="/archives/">
-                
-                    <span class="site-state-item-count">37</span>
-                    <span class="site-state-item-name">日志</span>
-                  </a>
-                </div>
-              
-
-              
-
-              
-                
-                
-                <div class="site-state-item site-state-tags">
-                  
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">38</span>
-                    <span class="site-state-item-name">标签</span>
-                  
-                </div>
-              
-            </nav>
-          
-
-          
-
-          
-            <div class="links-of-author motion-element">
-              
-                <span class="links-of-author-item">
-                  <a href="https://github.com/lishide" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
-                  
-                </span>
-              
-                <span class="links-of-author-item">
-                  <a href="https://weibo.com/u/3235831430" target="_blank" title="Weibo"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
-                  
-                </span>
-              
-            </div>
-          
-
-          
-          
-
-          
-          
-
-          
-            
-          
-          
-
-        </div>
-      </section>
-
-      
       <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Kotlin"><span class="nav-number">1.</span> <span class="nav-text">1. Kotlin</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-定义变量"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 定义变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-if-表达式"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 if 表达式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-1-用法"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.2.1 用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-if-的分支可以是代码块，最后的表达式作为该块的值："><span class="nav-number">1.2.2.</span> <span class="nav-text">1.2.2 if 的分支可以是代码块，最后的表达式作为该块的值：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-when-表达式"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 when 表达式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-1-简单形式"><span class="nav-number">1.3.1.</span> <span class="nav-text">1.3.1 简单形式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-2-多分支用相同的方式处理"><span class="nav-number">1.3.2.</span> <span class="nav-text">1.3.2 多分支用相同的方式处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-3-任意表达式（而不只是常量）-作为分支条件"><span class="nav-number">1.3.3.</span> <span class="nav-text">1.3.3 任意表达式（而不只是常量） 作为分支条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-4-when-也可以用来取代-if-else-if-链"><span class="nav-number">1.3.4.</span> <span class="nav-text">1.3.4 when 也可以用来取代 if - else if 链</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-for-循环"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 for 循环</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-1-语法"><span class="nav-number">1.4.1.</span> <span class="nav-text">1.4.1 语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-2-区间上迭代"><span class="nav-number">1.4.2.</span> <span class="nav-text">1.4.2 区间上迭代</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-3-通过索引遍历一个数组或者一个-list"><span class="nav-number">1.4.3.</span> <span class="nav-text">1.4.3 通过索引遍历一个数组或者一个 list</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-5-While-循环"><span class="nav-number">1.5.</span> <span class="nav-text">1.5 While 循环</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-6-空安全"><span class="nav-number">1.6.</span> <span class="nav-text">1.6 空安全</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-1-可空类型与非空类型"><span class="nav-number">1.6.1.</span> <span class="nav-text">1.6.1 可空类型与非空类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-2-安全调用"><span class="nav-number">1.6.2.</span> <span class="nav-text">1.6.2 安全调用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-6-2-1-在条件中检查-null"><span class="nav-number">1.6.2.1.</span> <span class="nav-text">1.6.2.1 在条件中检查 null</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-6-2-2-安全的调用"><span class="nav-number">1.6.2.2.</span> <span class="nav-text">1.6.2.2 安全的调用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-6-2-3-Elvis-操作符，写作"><span class="nav-number">1.6.2.3.</span> <span class="nav-text">1.6.2.3 Elvis 操作符，写作 ?:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-6-2-4-操作符（非空断言运算符）"><span class="nav-number">1.6.2.4.</span> <span class="nav-text">1.6.2.4 !! 操作符（非空断言运算符）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-7-（对-Android-开发而言）不用-findViewById，提高开发效率"><span class="nav-number">1.7.</span> <span class="nav-text">1.7 （对 Android 开发而言）不用 findViewById，提高开发效率</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-建造者模式"><span class="nav-number">2.</span> <span class="nav-text">2. 建造者模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-定义"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-结构"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-Builder-模式的简单实现"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 Builder 模式的简单实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-1-手机抽象类，即-Product-角色"><span class="nav-number">2.3.1.</span> <span class="nav-text">2.3.1 手机抽象类，即 Product 角色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-2-具体的-Mobile-类，Honor"><span class="nav-number">2.3.2.</span> <span class="nav-text">2.3.2 具体的 Mobile 类，Honor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-3-抽象-Builder-类"><span class="nav-number">2.3.3.</span> <span class="nav-text">2.3.3 抽象 Builder 类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-4-具体的-Builder-类"><span class="nav-number">2.3.4.</span> <span class="nav-text">2.3.4 具体的 Builder 类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-5-Director-类"><span class="nav-number">2.3.5.</span> <span class="nav-text">2.3.5 Director 类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-6-具体建造者"><span class="nav-number">2.3.6.</span> <span class="nav-text">2.3.6 具体建造者</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-总结"><span class="nav-number">3.</span> <span class="nav-text">3. 总结</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Kotlin"><span class="nav-number">1.</span> <span class="nav-text">1. Kotlin</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-定义变量"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 定义变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-if-表达式"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 if 表达式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-1-用法"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.2.1 用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-if-的分支可以是代码块，最后的表达式作为该块的值："><span class="nav-number">1.2.2.</span> <span class="nav-text">1.2.2 if 的分支可以是代码块，最后的表达式作为该块的值：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-when-表达式"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 when 表达式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-1-简单形式"><span class="nav-number">1.3.1.</span> <span class="nav-text">1.3.1 简单形式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-2-多分支用相同的方式处理"><span class="nav-number">1.3.2.</span> <span class="nav-text">1.3.2 多分支用相同的方式处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-3-任意表达式（而不只是常量）-作为分支条件"><span class="nav-number">1.3.3.</span> <span class="nav-text">1.3.3 任意表达式（而不只是常量） 作为分支条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-4-when-也可以用来取代-if-else-if-链"><span class="nav-number">1.3.4.</span> <span class="nav-text">1.3.4 when 也可以用来取代 if - else if 链</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-for-循环"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 for 循环</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-1-语法"><span class="nav-number">1.4.1.</span> <span class="nav-text">1.4.1 语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-2-区间上迭代"><span class="nav-number">1.4.2.</span> <span class="nav-text">1.4.2 区间上迭代</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-3-通过索引遍历一个数组或者一个-list"><span class="nav-number">1.4.3.</span> <span class="nav-text">1.4.3 通过索引遍历一个数组或者一个 list</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-5-While-循环"><span class="nav-number">1.5.</span> <span class="nav-text">1.5 While 循环</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-6-空安全"><span class="nav-number">1.6.</span> <span class="nav-text">1.6 空安全</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-1-可空类型与非空类型"><span class="nav-number">1.6.1.</span> <span class="nav-text">1.6.1 可空类型与非空类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-2-安全调用"><span class="nav-number">1.6.2.</span> <span class="nav-text">1.6.2 安全调用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-6-2-1-在条件中检查-null"><span class="nav-number">1.6.2.1.</span> <span class="nav-text">1.6.2.1 在条件中检查 null</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-6-2-2-安全的调用"><span class="nav-number">1.6.2.2.</span> <span class="nav-text">1.6.2.2 安全的调用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-6-2-3-Elvis-操作符，写作"><span class="nav-number">1.6.2.3.</span> <span class="nav-text">1.6.2.3 Elvis 操作符，写作 ?:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-6-2-4-操作符（非空断言运算符）"><span class="nav-number">1.6.2.4.</span> <span class="nav-text">1.6.2.4 !! 操作符（非空断言运算符）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-7-（对-Android-开发而言）不用-findViewById，提高开发效率"><span class="nav-number">1.7.</span> <span class="nav-text">1.7 （对 Android 开发而言）不用 findViewById，提高开发效率</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-建造者模式"><span class="nav-number">2.</span> <span class="nav-text">2. 建造者模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-定义"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-结构"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-Builder-模式的简单实现"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 Builder 模式的简单实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-1-手机抽象类，即-Product-角色"><span class="nav-number">2.3.1.</span> <span class="nav-text">2.3.1 手机抽象类，即 Product 角色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-2-具体的-Mobile-类，Honor"><span class="nav-number">2.3.2.</span> <span class="nav-text">2.3.2 具体的 Mobile 类，Honor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-3-抽象-Builder-类"><span class="nav-number">2.3.3.</span> <span class="nav-text">2.3.3 抽象 Builder 类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-4-具体的-Builder-类"><span class="nav-number">2.3.4.</span> <span class="nav-text">2.3.4 具体的 Builder 类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-5-Director-类"><span class="nav-number">2.3.5.</span> <span class="nav-text">2.3.5 Director 类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-6-具体建造者"><span class="nav-number">2.3.6.</span> <span class="nav-text">2.3.6 具体建造者</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-总结"><span class="nav-number">3.</span> <span class="nav-text">3. 总结</span></a></li></ol></div>
+        
+      </div>
       <!--/noindex-->
-      
 
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">李世德</p>
+  <div class="site-description" itemprop="description">爱生活，爱学习，一个不羁的编码界小学生。</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
       
+      
+      <div class="site-state-item site-state-tags">
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-name">标签</span>
+        
+      </div>
+    
+  </nav>
+
+
+
+      </div>
 
     </div>
   </aside>
+  <div id="sidebar-dimmer"></div>
 
 
-        
       </div>
     </main>
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">李世德</span>
-
-  
-
-  
 </div>
-
-
-
-
-  <div class="powered-by">
-    <i class="fa fa-eye"></i>
-    <span id="busuanzi_container_site_pv">
-      访问量：<span id="busuanzi_value_site_pv"></span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <i class="fa fa-user-md"></i>
-    <span id="busuanzi_container_site_uv">
-      访客数：<span id="busuanzi_value_site_uv"></span>
-    </span>
-  </div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.6.0</div>
   <span class="post-meta-divider">|</span>
-  <i class="fa fa-pencil"></i>
-  <div class="theme-info">
-    <div class="powered-by"></div>
-    <span class="post-count">博客全站共 40.3k 字</span>
-  </div>
-  <span class="post-meta-divider">|</span>
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.6.0</div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Gemini</a> v6.4.0</div>
-
-
-
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.3.0</div>
 
         
+
+
+
+
 
 
 
@@ -786,103 +548,17 @@
         
       </div>
     </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-	
-    
-
-    
   </div>
 
   
 
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=6.4.0"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=6.4.0"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=6.4.0"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.4.0"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=6.4.0"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.0"></script>
-
-
-
-  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
+<script src="/js/schemes/muse.js?v=7.3.0"></script>
+<script src="/js/next-boot.js?v=7.3.0"></script>
 
 
 
@@ -897,26 +573,16 @@
 
 
 
-  
 
 
 
 
 
-  
 
-  
 
-  
 
-  
 
-  
-  
 
-  
-
-  
 
   
 
