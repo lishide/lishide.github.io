@@ -197,9 +197,8 @@ site_state: true
 # Value after `||` delimiter is the name of Font Awesome icon. If icon (with or without delimiter) is not specified, globe icon will be loaded.
 social:
   GitHub: https://github.com/lishide || github
-  Weibo: https://weibo.com/u/3235831430 || weibo
   #E-Mail: mailto:yourname@gmail.com || envelope
-  #Weibo: https://weibo.com/yourname || weibo
+  Weibo: https://weibo.com/u/3235831430 || weibo
   #Google: https://plus.google.com/yourname || google
   #Twitter: https://twitter.com/yourname || twitter
   #FB Page: https://www.facebook.com/yourname || facebook
@@ -317,13 +316,6 @@ symbols_count_time:
   item_text_total: false
   awl: 4
   wpm: 275
-
-# Post wordcount display settings
-# Dependencies: https://github.com/willin/hexo-wordcount
-post_wordcount:
-  item_text: true
-  wordcount: true
-  min2read: true
 
 # Use icon instead of the symbol # to indicate the tag at the bottom of the post
 tag_icon: true
