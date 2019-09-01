@@ -318,6 +318,13 @@ symbols_count_time:
   awl: 4
   wpm: 275
 
+# Post wordcount display settings
+# Dependencies: https://github.com/willin/hexo-wordcount
+post_wordcount:
+  item_text: true
+  wordcount: true
+  min2read: true
+
 # Use icon instead of the symbol # to indicate the tag at the bottom of the post
 tag_icon: true
 
