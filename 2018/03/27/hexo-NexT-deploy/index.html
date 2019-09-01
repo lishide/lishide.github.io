@@ -63,7 +63,7 @@
 <meta property="og:site_name" content="李世德的博客">
 <meta property="og:description" content="刚使用 hexo 搭建个人博客的时候，看到推荐使用相对较多的主题是 yilia，便安装了，讲真，yilia 主题是一个简洁优雅的主题，后期也做了一些个人配置，体验上还算不错。用过一段时间后，个人对代码块的黑色背景配色有点不喜欢，而且无法自己定制，另外不支持某些鼠标手势……于是想换一款更适合自己的主题，昨天换上了 NexT，很清新简洁，风格是我喜欢的，哈哈~。网上有很多大佬分享了针对 NexT 主题">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-09-01T04:58:32.085Z">
+<meta property="og:updated_time" content="2019-09-01T07:31:41.280Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hexo 的主题切换为 NexT 后的若干个性化配置">
 <meta name="twitter:description" content="刚使用 hexo 搭建个人博客的时候，看到推荐使用相对较多的主题是 yilia，便安装了，讲真，yilia 主题是一个简洁优雅的主题，后期也做了一些个人配置，体验上还算不错。用过一段时间后，个人对代码块的黑色背景配色有点不喜欢，而且无法自己定制，另外不支持某些鼠标手势……于是想换一款更适合自己的主题，昨天换上了 NexT，很清新简洁，风格是我喜欢的，哈哈~。网上有很多大佬分享了针对 NexT 主题">
@@ -264,7 +264,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-09-01 04:58:32" itemprop="dateModified" datetime="2019-09-01T04:58:32Z">2019-09-01</time>
+                <time title="修改时间：2019-09-01 07:31:41" itemprop="dateModified" datetime="2019-09-01T07:31:41Z">2019-09-01</time>
               </span>
             
           
@@ -278,7 +278,7 @@
               
                 <span class="post-meta-item-text">本文字数：</span>
               
-              <span>1.2k</span>
+              <span>1.5k</span>
             </span>
           
             <span class="post-meta-item" title="阅读时长">
@@ -338,6 +338,33 @@
 <p><strong>站点配置文件</strong> 中，设置：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">symbols_count_time:</span><br><span class="line">  symbols: <span class="literal">true</span></span><br><span class="line">  time: <span class="literal">true</span></span><br><span class="line">  total_symbols: <span class="literal">true</span></span><br><span class="line">  total_time: <span class="literal">true</span></span><br><span class="line">  exclude_codeblock: <span class="literal">true</span></span><br></pre></td></tr></table></figure></p>
 <p><strong>主题配置文件</strong> 中，设置：（默认已设置）<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">symbols_count_time:</span><br><span class="line">  separated_meta: <span class="literal">true</span></span><br><span class="line">  item_text_post: <span class="literal">true</span></span><br><span class="line">  item_text_total: <span class="literal">false</span></span><br><span class="line">  awl: <span class="number">4</span></span><br><span class="line">  wpm: <span class="number">275</span></span><br></pre></td></tr></table></figure></p>
 <p>打开 <strong>站点配置文件</strong> 中的统计功能即可，几项配置参数在项目介绍中有说明，根据需要进行调整。</p>
+<h2 id="添加本地搜索功能"><a href="#添加本地搜索功能" class="headerlink" title="添加本地搜索功能"></a>添加本地搜索功能</h2><ul>
+<li>安装本地搜索插件 hexo-generator-search<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-generator-search --save</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>安装之后，会在站点目录的 public 文件夹下创建一个 search.json 文件。</p>
+<ul>
+<li>修改站点配置文件<br><strong>站点配置文件</strong> 中添加搜索配置：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">search:</span><br><span class="line">    path: search.json</span><br><span class="line">    field: all</span><br><span class="line">    format: html</span><br><span class="line">    limit: <span class="number">10000</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<ul>
+<li>path：索引文件的路径，相对于站点根目录</li>
+<li>field：搜索范围，默认是 post，还可以选择 page、all，设置成 all 表示搜索所有页面</li>
+<li>limit：限制搜索的条目数</li>
+</ul>
+</blockquote>
+<ul>
+<li>打开搜索功能<br><strong>主题配置文件</strong> 中，设置：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">local_search:</span><br><span class="line">    enable: <span class="literal">true</span></span><br><span class="line">    trigger: auto</span><br><span class="line">    top_n_per_article: <span class="number">1</span></span><br><span class="line">    <span class="built_in">unescape</span>: <span class="literal">false</span></span><br><span class="line">    preload: <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>确保 enable 设成 true。</p>
+<blockquote>
+<ul>
+<li>top_n_per_article 字段表示在每篇文章中显示的搜索结果数量，设成 -1 会显示每篇文章的所有搜索结果数量。</li>
+</ul>
+</blockquote>
+<p>重新部署网站即可使用本地搜索功能了。</p>
 <h1 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h1><p>不断折腾中，不定期更新~</p>
 
     </div>
@@ -427,7 +454,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#使用主题"><span class="nav-number">1.</span> <span class="nav-text">使用主题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#个性化配置"><span class="nav-number">2.</span> <span class="nav-text">个性化配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#选择-scheme"><span class="nav-number">2.1.</span> <span class="nav-text">选择 scheme</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置语言"><span class="nav-number">2.2.</span> <span class="nav-text">设置语言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置社交账号"><span class="nav-number">2.3.</span> <span class="nav-text">设置社交账号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改文章内链接文本样式"><span class="nav-number">2.4.</span> <span class="nav-text">修改文章内链接文本样式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改文章底部的那个带-号的标签"><span class="nav-number">2.5.</span> <span class="nav-text">修改文章底部的那个带#号的标签</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在网站底部加上访问量"><span class="nav-number">2.6.</span> <span class="nav-text">在网站底部加上访问量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网站底部字数统计"><span class="nav-number">2.7.</span> <span class="nav-text">网站底部字数统计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加字数统计、阅读时长"><span class="nav-number">2.8.</span> <span class="nav-text">添加字数统计、阅读时长</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#后记"><span class="nav-number">3.</span> <span class="nav-text">后记</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#使用主题"><span class="nav-number">1.</span> <span class="nav-text">使用主题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#个性化配置"><span class="nav-number">2.</span> <span class="nav-text">个性化配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#选择-scheme"><span class="nav-number">2.1.</span> <span class="nav-text">选择 scheme</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置语言"><span class="nav-number">2.2.</span> <span class="nav-text">设置语言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置社交账号"><span class="nav-number">2.3.</span> <span class="nav-text">设置社交账号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改文章内链接文本样式"><span class="nav-number">2.4.</span> <span class="nav-text">修改文章内链接文本样式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改文章底部的那个带-号的标签"><span class="nav-number">2.5.</span> <span class="nav-text">修改文章底部的那个带#号的标签</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在网站底部加上访问量"><span class="nav-number">2.6.</span> <span class="nav-text">在网站底部加上访问量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网站底部字数统计"><span class="nav-number">2.7.</span> <span class="nav-text">网站底部字数统计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加字数统计、阅读时长"><span class="nav-number">2.8.</span> <span class="nav-text">添加字数统计、阅读时长</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加本地搜索功能"><span class="nav-number">2.9.</span> <span class="nav-text">添加本地搜索功能</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#后记"><span class="nav-number">3.</span> <span class="nav-text">后记</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->
@@ -505,7 +532,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">50k</span>
+    <span title="站点总字数">51k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
