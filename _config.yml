@@ -117,4 +117,9 @@ symbols_count_time:
   total_time: true
   exclude_codeblock: true
 
+search:
+  path: search.json
+  field: all
+  format: html
+  limit: 10000
 

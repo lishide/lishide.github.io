@@ -1,7 +1,9 @@
 ---
 title: hexo 的主题切换为 NexT 后的若干个性化配置
 date: 2018-03-27 13:31:02
-tags: [hexo, NexT]
+tags:
+- hexo
+- NexT
 ---
 刚使用 hexo 搭建个人博客的时候，看到推荐使用相对较多的主题是 yilia，便安装了，讲真，yilia 主题是一个简洁优雅的主题，后期也做了一些个人配置，体验上还算不错。用过一段时间后，个人对代码块的黑色背景配色有点不喜欢，而且无法自己定制，另外不支持某些鼠标手势……于是想换一款更适合自己的主题，昨天换上了 **NexT**，很清新简洁，风格是我喜欢的，哈哈~。网上有很多大佬分享了针对 **NexT** 主题的一些配置，根据个人需求，做了部分配置，本文记录将 hexo 的主题切换为 NexT 后的若干个性化配置，具体的操作就不详细描述了，主要参考了[hexo的next主题个性化教程:打造炫酷网站](https://www.jianshu.com/p/f054333ac9e6)，尊重原作，我把自己修改的地方只做序号记录即可（简称 N），以后在主题更新后方便找回自己的配置。
 
@@ -110,6 +112,44 @@ symbols_count_time:
   wpm: 275
 ```
 打开 **站点配置文件** 中的统计功能即可，几项配置参数在项目介绍中有说明，根据需要进行调整。
+
+
+## 添加本地搜索功能
+- 安装本地搜索插件 hexo-generator-search
+```bash
+npm install hexo-generator-search --save
+```
+安装之后，会在站点目录的 public 文件夹下创建一个 search.json 文件。
+
+- 修改站点配置文件
+**站点配置文件** 中添加搜索配置：
+```js
+search:
+    path: search.json
+    field: all
+    format: html
+    limit: 10000
+```
+
+>- path：索引文件的路径，相对于站点根目录
+>- field：搜索范围，默认是 post，还可以选择 page、all，设置成 all 表示搜索所有页面
+>- limit：限制搜索的条目数
+
+- 打开搜索功能
+**主题配置文件** 中，设置：
+```js
+local_search:
+    enable: true
+    trigger: auto
+    top_n_per_article: 1
+    unescape: false
+    preload: true
+```
+确保 enable 设成 true。
+
+>- top_n_per_article 字段表示在每篇文章中显示的搜索结果数量，设成 -1 会显示每篇文章的所有搜索结果数量。
+
+重新部署网站即可使用本地搜索功能了。
 
 # 后记
 不断折腾中，不定期更新~
