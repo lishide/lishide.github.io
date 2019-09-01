@@ -12,19 +12,22 @@ tags: [hexo, NexT]
 
 # 个性化配置
 ## 选择 scheme
-**主题配置文件**中，设置 `scheme: Gemini`。
+**主题配置文件** 中，设置 `scheme: Gemini`。
 
 ## 设置语言
-**站点配置文件**中，设置 `language: zh-CN`。
+**站点配置文件** 中，设置 `language: zh-CN`。
 
 ## 设置社交账号
-**主题配置文件**中，**social**节点下配置 GitHub、weibo 等账号，`||` 后面是其对应的图标。
+**主题配置文件** 中，**social** 节点下配置你的 GitHub、weibo 等账号，`||` 后面是其对应的图标。
 
 ## 修改文章内链接文本样式
 参考 N5
 
 ## 修改文章底部的那个带#号的标签
 参考 N6
+
+**更新-2019.09.01**
+NexT 新版本已加入了此功能，升级新版本，在 **主题配置文件** 中，设置 `tag_icon: true`。
 
 ## 在网站底部加上访问量
 参考 N13
@@ -83,6 +86,30 @@ tags: [hexo, NexT]
 {% endif %}
 ```
 > 设置了 `title` 但未显示，已移除。
+
+**更新-2019.09.01**
+NexT 新版本（v7.x）加入了字数统计插件——hexo-symbols-count-time，比 hexo-worcount 更快。GitHub 地址：[hexo-symbols-count-time](https://github.com/theme-next/hexo-symbols-count-time)
+
+**站点配置文件** 中，设置：
+```js
+symbols_count_time:
+  symbols: true
+  time: true
+  total_symbols: true
+  total_time: true
+  exclude_codeblock: true
+```
+
+**主题配置文件** 中，设置：（默认已设置）
+```js
+symbols_count_time:
+  separated_meta: true
+  item_text_post: true
+  item_text_total: false
+  awl: 4
+  wpm: 275
+```
+打开 **站点配置文件** 中的统计功能即可，几项配置参数在项目介绍中有说明，根据需要进行调整。
 
 # 后记
 不断折腾中，不定期更新~
