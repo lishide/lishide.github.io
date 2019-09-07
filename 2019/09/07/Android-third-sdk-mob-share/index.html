@@ -63,7 +63,7 @@
 <meta property="og:site_name" content="李世德的博客">
 <meta property="og:description" content="本文记录 Android 端使用 Mob 快速集成分享的步骤。前半部分主要同官方的集成文档，后半部分是自己进行的封装，降低侵入性，以及更方便地使用。 相关链接：  ShareSDK 集成文档">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-09-07T10:21:42.504Z">
+<meta property="og:updated_time" content="2019-09-07T10:30:01.558Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 端使用 Mob 快速集成分享">
 <meta name="twitter:description" content="本文记录 Android 端使用 Mob 快速集成分享的步骤。前半部分主要同官方的集成文档，后半部分是自己进行的封装，降低侵入性，以及更方便地使用。 相关链接：  ShareSDK 集成文档">
@@ -264,7 +264,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-09-07 10:21:42" itemprop="dateModified" datetime="2019-09-07T10:21:42Z">2019-09-07</time>
+                <time title="修改时间：2019-09-07 10:30:01" itemprop="dateModified" datetime="2019-09-07T10:30:01Z">2019-09-07</time>
               </span>
             
           
@@ -316,7 +316,7 @@
 <blockquote>
 <p>注：使用 ShareSDK Gradle 集成方式，不需要在 AndroidMainfest.xml 下面配置任何权限和 Activity。</p>
 </blockquote>
-<h1 id="集成配置"><a href="#集成配置" class="headerlink" title="集成配置"></a>集成配置</h1><p>1、打开项目根目录的 build.gradle，在 buildscrip–&gt;dependencies 模块下面添加 classpath ‘com.mob.sdk:MobSDK:2018.0319.1724’，如下所示：</p>
+<h1 id="集成配置"><a href="#集成配置" class="headerlink" title="集成配置"></a>集成配置</h1><p>1、打开项目根目录的 build.gradle，在 buildscrip–&gt;dependencies 模块下面添加<br><code>classpath ‘com.mob.sdk:MobSDK:2018.0319.1724’</code>，如下所示：</p>
 <figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">buildscript &#123;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    dependencies &#123;</span><br><span class="line">        ...</span><br><span class="line">        classpath <span class="string">"com.mob.sdk:MobSDK:2018.0319.1724"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>2、在使用到 Mob 产品的 module 下面的 build.gradle 文件里面添加引用</p>
 <figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apply <span class="string">plugin:</span> <span class="string">'com.mob.sdk'</span></span><br></pre></td></tr></table></figure>
@@ -348,7 +348,7 @@
 <h2 id="问题排查与解决"><a href="#问题排查与解决" class="headerlink" title="问题排查与解决"></a>问题排查与解决</h2><p>如果你按照文档接入了 SDK，运行程序，成功实现各个平台的分享，那么恭喜你，成功了。</p>
 <p>但是，如果在调试中发现分享失败，请检查集成步骤，参考官方问题说明进行解决。</p>
 <p>大多数分享的错误都出现参数上，可以将 Mob 的这些参数放在你的代码中测试：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">oks.setTitle(<span class="string">"分享标题--Title"</span>);</span><br><span class="line">oks.setTitleUrl(<span class="string">"http://mob.com"</span>);</span><br><span class="line">oks.setText(<span class="string">"分享测试文--Text"</span>);</span><br><span class="line">oks.setImageUrl(<span class="string">"http://f1.sharesdk.cn/imgs/2014/02/26/owWpLZo_638x960.jpg"</span>);</span><br></pre></td></tr></table></figure></p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Mob 的分享 SDK 的集成还是很简单的，开发的很多 App 中都使用到了，接入很简单，官方给的文档也很清晰（主要还是集成步骤少，很多它都帮我们做了，无需再配置权限、注册回调页面等）。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>Mob 的 ShareSDK 的集成还是很简单的，开发的很多 App 中都使用到了，接入很简单，官方给的文档也很清晰（主要还是集成步骤少，很多它都帮我们做了，无需再配置权限、注册回调页面等）。</p>
 <p>后面做的封装其实也是很基本的东西，但把这些 <strong>第三方库提供的方法包装一层</strong> 再使用是一个好习惯！写的多了，你就懂了~</p>
 
     </div>
@@ -434,7 +434,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#集成准备"><span class="nav-number">1.</span> <span class="nav-text">集成准备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#集成配置"><span class="nav-number">2.</span> <span class="nav-text">集成配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#添加代码"><span class="nav-number">3.</span> <span class="nav-text">添加代码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#通用分享工具的封装"><span class="nav-number">4.</span> <span class="nav-text">通用分享工具的封装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分享内容实体"><span class="nav-number">4.1.</span> <span class="nav-text">分享内容实体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分享接口"><span class="nav-number">4.2.</span> <span class="nav-text">分享接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分享器接口"><span class="nav-number">4.3.</span> <span class="nav-text">分享器接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通用分享工具类"><span class="nav-number">4.4.</span> <span class="nav-text">通用分享工具类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">4.5.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实例化-ShareContent"><span class="nav-number">4.5.1.</span> <span class="nav-text">实例化 ShareContent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#调用通用分享工具"><span class="nav-number">4.5.2.</span> <span class="nav-text">调用通用分享工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题排查与解决"><span class="nav-number">4.6.</span> <span class="nav-text">问题排查与解决</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.7.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#集成准备"><span class="nav-number">1.</span> <span class="nav-text">集成准备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#集成配置"><span class="nav-number">2.</span> <span class="nav-text">集成配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#添加代码"><span class="nav-number">3.</span> <span class="nav-text">添加代码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#通用分享工具的封装"><span class="nav-number">4.</span> <span class="nav-text">通用分享工具的封装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分享内容实体"><span class="nav-number">4.1.</span> <span class="nav-text">分享内容实体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分享接口"><span class="nav-number">4.2.</span> <span class="nav-text">分享接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分享器接口"><span class="nav-number">4.3.</span> <span class="nav-text">分享器接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通用分享工具类"><span class="nav-number">4.4.</span> <span class="nav-text">通用分享工具类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">4.5.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实例化-ShareContent"><span class="nav-number">4.5.1.</span> <span class="nav-text">实例化 ShareContent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#调用通用分享工具"><span class="nav-number">4.5.2.</span> <span class="nav-text">调用通用分享工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题排查与解决"><span class="nav-number">4.6.</span> <span class="nav-text">问题排查与解决</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->
