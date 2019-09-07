@@ -23,7 +23,8 @@ tags:
 
 # 集成配置
 
-1、打开项目根目录的 build.gradle，在 buildscrip–>dependencies 模块下面添加 classpath ‘com.mob.sdk:MobSDK:2018.0319.1724’，如下所示：
+1、打开项目根目录的 build.gradle，在 buildscrip–>dependencies 模块下面添加
+`classpath ‘com.mob.sdk:MobSDK:2018.0319.1724’`，如下所示：
 
 ```groovy
 buildscript {
@@ -388,9 +389,9 @@ oks.setText("分享测试文--Text");
 oks.setImageUrl("http://f1.sharesdk.cn/imgs/2014/02/26/owWpLZo_638x960.jpg");
 ```
 
-## 总结
+# 总结
 
-Mob 的分享 SDK 的集成还是很简单的，开发的很多 App 中都使用到了，接入很简单，官方给的文档也很清晰（主要还是集成步骤少，很多它都帮我们做了，无需再配置权限、注册回调页面等）。
+Mob 的 ShareSDK 的集成还是很简单的，开发的很多 App 中都使用到了，接入很简单，官方给的文档也很清晰（主要还是集成步骤少，很多它都帮我们做了，无需再配置权限、注册回调页面等）。
 
 后面做的封装其实也是很基本的东西，但把这些 **第三方库提供的方法包装一层** 再使用是一个好习惯！写的多了，你就懂了~
 
