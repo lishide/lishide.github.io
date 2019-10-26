@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://lishide.github.io/2019/10/26/Android-gradle-speedup-build/</loc>
+    
+    <lastmod>2019-10-26T06:52:53.035Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://lishide.github.io/2019/09/14/Android-jsbridge-app-vue-use-qa/</loc>
     
     <lastmod>2019-09-15T12:18:10.090Z</lastmod>
