@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://lishide.github.io/2019/12/12/Android-gradle-auto-multi-channel-packaging/</loc>
+    
+    <lastmod>2019-12-12T02:53:34.052Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://lishide.github.io/2019/10/26/Android-gradle-speedup-build/</loc>
     
     <lastmod>2019-10-26T06:59:27.213Z</lastmod>
