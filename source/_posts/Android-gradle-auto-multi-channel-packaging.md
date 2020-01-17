@@ -186,11 +186,7 @@ fun getChannelName(ctx: Activity): String {
 
 最终我们执行 `./gradlew assembleMultiChannelRelease`
 
-记得 clean：`./gradlew clean`，可组合使用。
-
-即，App 发布版多渠道打包命令（例子）为：
-
-`./gradlew clean assembleMultiChannelRelease`
+记得打包前 clean：`./gradlew clean`。
 
 查看结果，在目标文件夹下即可找到生成的多渠道包。
 
