@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://lishide.github.io/2018/09/05/dev-ide-as-personal-settings/</loc>
+    
+    <lastmod>2020-04-13T06:34:27.863Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://lishide.github.io/2019/12/12/Android-gradle-auto-multi-channel-packaging/</loc>
     
     <lastmod>2020-01-17T07:16:02.899Z</lastmod>
@@ -68,13 +75,6 @@
     <loc>https://lishide.github.io/2019/07/06/RxJava2-study-notes1/</loc>
     
     <lastmod>2019-07-06T02:05:52.201Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://lishide.github.io/2018/09/05/dev-ide-as-personal-settings/</loc>
-    
-    <lastmod>2019-06-22T06:14:42.048Z</lastmod>
     
   </url>
   
