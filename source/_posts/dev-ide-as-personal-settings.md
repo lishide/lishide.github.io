@@ -46,7 +46,7 @@ Android Logcat 默认主题（或导入的其他 Color Scheme）的配色只有�
 4. **Android WiFi ADB**：无线调试应用
 5. **WakaTime**：记录你在 IDE 上的工作时间（推荐）。
 6. **String Manipulation**：一个为文本操作提供操作的插件。
-7. **postfix**：此插件可以快速进行 Log、Toast、isEmpty 的代码书写。
+7. **Android Postfix Completion**：此插件可以快速进行 Log、Toast、isEmpty 的代码书写。
 8. **Alibaba Java Coding Guidelines**：《阿里巴巴Java开发规约》的扫描插件。
 9. **IconViewer**：图标预览
 10. **Statistic**：统计代码量
@@ -56,8 +56,10 @@ Android Logcat 默认主题（或导入的其他 Color Scheme）的配色只有�
 14. **Lombok**：在项目中使用 Lombok 可以减少很多重复代码的书写。比如说 getter/setter/toString 等方法的编写。
 15. **TinyPic**：压缩图片资源
 16. **AndroidProguard Pro**：一键生成项目混淆代码插件
-17. **adb idea**：适用于 Android Studio 和 Intellij IDEA 的 ADB 命令插件
-18. **gradle view**：查看 gradle 依赖树
+17. **ADB Idea**：适用于 Android Studio 和 Intellij IDEA 的 ADB 命令插件
+18. **Gradle View**：查看 gradle 依赖树
+19. **JSON To Kotlin Class**：将 Json String 快速转换为 Kotlin 数据类代码
+20. **ARouter Helper**：ARouter 导航到目标类
 
 # 问题解决
 ## AS 3.x 版本的 Terminal 中文乱码
