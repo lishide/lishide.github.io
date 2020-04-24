@@ -61,6 +61,9 @@ Android Logcat 默认主题（或导入的其他 Color Scheme）的配色只有�
 19. **JSON To Kotlin Class**：将 Json String 快速转换为 Kotlin 数据类代码
 20. **ARouter Helper**：ARouter 导航到目标类
 
+## 万能注释模板
+https://blog.csdn.net/simon_crystin/article/details/67638513
+
 # 问题解决
 ## AS 3.x 版本的 Terminal 中文乱码
 - （Windows）改变全局编码格式为C.UTF8，即修改系统环境变量。
