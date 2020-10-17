@@ -85,6 +85,20 @@ object Nav {
     private var exitAnim = -1
     private var requestCode = -1
 
+    init {
+        initialize()
+    }
+
+    private fun initialize() {
+        path = null
+        mContext = null
+        bundle = null
+        flag = -1
+        enterAnim = -1
+        exitAnim = -1
+        requestCode = -1
+    }
+
     /**
      * Set the path.
      *
@@ -184,13 +198,13 @@ object Nav {
             postcard.navigation()
         } else {
             if (requestCode != -1 && mContext is Activity) {
-                postcard.navigation(
-                    mContext as Activity?, requestCode, LoginNavigationCallbackImpl()
-                )
+                postcard.navigation(mContext as Activity?, requestCode, LoginNavigationCallbackImpl())
             } else {
                 postcard.navigation(mContext, LoginNavigationCallbackImpl())
             }
         }
+
+        initialize()
     }
 
 }
