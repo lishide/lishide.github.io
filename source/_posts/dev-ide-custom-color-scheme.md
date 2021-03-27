@@ -81,14 +81,14 @@ Color Scheme Font，选择合适的字体字号。
 		F：**272822 -> BBBBBB**
         B：**CFBFAD -> 450505**
 		Effects：**[ ] -> C3C3C3**
-	- Hyperlinks
-		- Reference
-			F：**0000FF -> 589DF6**
-			Effects：**0000FF -> 589DF6 （Underscored）**
-		- Followed
-			Effects：**同 F （Underscored）**
-		- Unfollowed
-			Effects：**同 F （Underscored）**
+- Hyperlinks
+	- Reference
+		F：**0000FF -> 589DF6**
+		Effects：**0000FF -> 589DF6 （Underscored）**
+	- Followed
+		Effects：**同 F （Underscored）**
+	- Unfollowed
+		Effects：**同 F （Underscored）**
 
 - Errors and Warnings
 	- Deprecated symbol
@@ -109,22 +109,21 @@ Color Scheme Font，选择合适的字体字号。
 		Effects：**[ ] -> AEAE80 （Underwaved）**
 
 - Search Results
-	- Search Results
-		- Search result
-			B：**000000 -> 155221**
-			E：**000000 -> 00530D**
-		- Search result(write access)
-			B：**000000 -> 532B2E**
-            E：**000000 -> 8D4457**
-		- Search result(write access)
-			B：**D8D8D8 -> 32593D**
-            E：**D8D8D8 -> 61936F**
-            Effects：**[ ] -> 3C704B**
+	- Search result
+		B：**000000 -> 155221**
+		E：**000000 -> 00530D**
+	- Search result(write access)
+		B：**000000 -> 532B2E**
+        E：**000000 -> 8D4457**
+	- Text search result
+		B：**D8D8D8 -> 32593D**
+        E：**D8D8D8 -> 61936F**
+        Effects：**[ ] -> 3C704B （Bordered）**
 - Code
 	- Identifier under caret
         B：**000000 -> 344134**
         E：**000000 -> 036B13**
-	- Identifier under caret
+	- Identifier under caret(write)
         B：**000000 -> 40332B**
         E：**000000 -> B56277**
 - Editor
@@ -140,7 +139,7 @@ Color Scheme Font，选择合适的字体字号。
 		F：**FFFFCC -> 5C5C42**
 
 #### Language Defaults
-- Inline Parameter hints
+- Inline hints->Parameters
 	- Default
 		F：**7A7A7A -> 787878**
         B：**EDEDED -> 3B3B3B**
@@ -174,9 +173,13 @@ Color Scheme Font，选择合适的字体字号。
 	- Constant(static final field)： **660E7A -> 9876AA**
 	- Instance field
 		F：**CFBFAD -> 9876AA**
+    - Static field
+        F：**CFBFAD->9876AA（Italic）**
 - Parameters
 	- Implicit anonymous class parameter
 		Effects：**[ ] -> 52E3F6 （Underscored）**
+    - Type parameter
+        F：**BFA4A4->507874**
 
 #### Kotlin
 - Smart-casts
@@ -188,8 +191,8 @@ Color Scheme Font，选择合适的字体字号。
 	- Type parameter： **BFA4A4 -> 20999D**
 - Properties and Variables
 	- Instance property： **FEFFFB -> 9876AA**
-	- Extension property： **CFBFAD -> 9876AA(Bold,Italic)**
-	- Package-level property： **CFBFAD -> 9876AA(Bold,Italic)**
+	- Extension property： **CFBFAD -> 9876AA(Italic)**
+	- Package-level property： **CFBFAD -> 9876AA(Italic)**
 	- Synthetic extension property： **CFBFAD -> 9876AA**
 	- Var(Effects)： **000000 -> BCA5C4**
 
@@ -204,13 +207,12 @@ Color Scheme Font，选择合适的字体字号。
 
 #### XML
 - Namespace prefix： **CFBFAD -> 9876AA**
-- Attribute name： **BFA4A4 -> BABABA**
+- Attribute name： **BFA4A4 -> 9876AA**
 - Attribute value： **ECE47E -> 4CD656**
 
 
 #### VCS
 - VCS Annotations
-	- F： **000080 -> 8B999F**
+	- Foreground(F)： **000080 -> 8B999F**
 
 > 备份很重要！！！记得把自己配置好的 Color Scheme 导出 jar，云盘备份保存。
-
