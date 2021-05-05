@@ -12,6 +12,8 @@ tags:
 # 使用主题
 使用的 版本是`v6.0.x`，GitHub 地址：[hexo-theme-next](https://github.com/theme-next/hexo-theme-next)。
 
+v6.x -> v7.x
+
 # 个性化配置
 ## 选择 scheme
 **主题配置文件** 中，设置 `scheme: Gemini`。
@@ -26,12 +28,12 @@ tags:
 参考 N5
 
 ## 修改文章底部的那个带#号的标签
-参考 N6
+~~参考 N6~~
 
 **更新-2019.09.01**
 NexT 新版本已加入了此功能，升级新版本，在 **主题配置文件** 中，设置 `tag_icon: true`。
 
-## 在网站底部加上访问量
+## ~~在网站底部加上访问量~~
 参考 N13
 
 步骤：
@@ -60,13 +62,13 @@ NexT 新版本已加入了此功能，升级新版本，在 **主题配置文件
 添加之后进行部署，成功后刷新页面就能看到效果了。
 
 ## 网站底部字数统计
-参考 N15
+~~参考 N15~~
 
 ## 添加字数统计、阅读时长
-参考 N18
-参考 [Hexo 添加字数统计、阅读时长](https://sessionch.com/hexo/hexo-common-plug.html)
-参考 [给hexo博客,next主题,文章添加字数和阅读时长](https://toxufe.github.io/posts/41943/)
-参考 [为Hexo NexT主题添加字数统计功能](https://eason-yang.com/2016/11/05/add-word-count-to-hexo-next/)
+~~参考 N18~~
+~~参考 [Hexo 添加字数统计、阅读时长](https://sessionch.com/hexo/hexo-common-plug.html)~~
+~~参考 [给hexo博客,next主题,文章添加字数和阅读时长](https://toxufe.github.io/posts/41943/)~~
+~~参考 [为Hexo NexT主题添加字数统计功能](https://eason-yang.com/2016/11/05/add-word-count-to-hexo-next/)~~
 
 步骤：
 - 打开`\themes\next\layout\_macro/post.swig`文件
@@ -150,6 +152,12 @@ local_search:
 >- top_n_per_article 字段表示在每篇文章中显示的搜索结果数量，设成 -1 会显示每篇文章的所有搜索结果数量。
 
 重新部署网站即可使用本地搜索功能了。
+
+
+## 添加百度统计
+http://theme-next.iissnan.com/getting-started.html
+
+
 
 # 后记
 不断折腾中，不定期更新~
