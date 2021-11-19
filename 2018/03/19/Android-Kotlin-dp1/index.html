@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lishide.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="今天给大家分享 Kotlin 入门的一些基本语法概念以及其独特的优秀特性和最近一段时间在实际开发中使用到的一些习惯用法。有 Java 开发基础，甚至说有某一种开发语言的基础，都是比较容易上手的。通过下面的几点分享，大家先领略一下 Kotlin 的简洁和优雅。结合一种较为常用且简单的设计模式——建造者模式进行本次的讲解。希望我们团队能够固定有这样的分享学习活动，激活团队的氛围，传递更多的知识与技能。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【团队分享】Kotlin 及设计模式实践（一）">
+<meta property="og:url" content="https://lishide.github.io/2018/03/19/Android-Kotlin-dp1/index.html">
+<meta property="og:site_name" content="李世德的博客">
+<meta property="og:description" content="今天给大家分享 Kotlin 入门的一些基本语法概念以及其独特的优秀特性和最近一段时间在实际开发中使用到的一些习惯用法。有 Java 开发基础，甚至说有某一种开发语言的基础，都是比较容易上手的。通过下面的几点分享，大家先领略一下 Kotlin 的简洁和优雅。结合一种较为常用且简单的设计模式——建造者模式进行本次的讲解。希望我们团队能够固定有这样的分享学习活动，激活团队的氛围，传递更多的知识与技能。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-03-19T11:13:38.000Z">
+<meta property="article:modified_time" content="2021-11-19T09:32:35.403Z">
+<meta property="article:author" content="李世德">
+<meta property="article:tag" content="Android">
+<meta property="article:tag" content="Kotlin">
+<meta property="article:tag" content="Design Patterns">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://lishide.github.io/2018/03/19/Android-Kotlin-dp1/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>【团队分享】Kotlin 及设计模式实践（一） | 李世德的博客</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?62dee491f23b92487e7821869f23f7f0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">李世德的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">我有故事，你有酒吗？</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/lishide" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://lishide.github.io/2018/03/19/Android-Kotlin-dp1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李世德">
+      <meta itemprop="description" content="爱生活，爱学习，一个不羁的编码界小学生。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李世德的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【团队分享】Kotlin 及设计模式实践（一）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-03-19 11:13:38" itemprop="dateCreated datePublished" datetime="2018-03-19T11:13:38Z">2018-03-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-11-19 09:32:35" itemprop="dateModified" datetime="2021-11-19T09:32:35Z">2021-11-19</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>今天给大家分享 Kotlin 入门的一些基本语法概念以及其独特的优秀特性和最近一段时间在实际开发中使用到的一些习惯用法。有 Java 开发基础，甚至说有某一种开发语言的基础，都是比较容易上手的。通过下面的几点分享，大家先领略一下 Kotlin 的简洁和优雅。结合一种较为常用且简单的设计模式——建造者模式进行本次的讲解。<br>希望我们团队能够固定有这样的分享学习活动，激活团队的氛围，传递更多的知识与技能。</p>
+<span id="more"></span>
+<h1 id="1-Kotlin"><a href="#1-Kotlin" class="headerlink" title="1. Kotlin"></a>1. Kotlin</h1><h2 id="1-1-定义变量"><a href="#1-1-定义变量" class="headerlink" title="1.1 定义变量"></a>1.1 定义变量</h2><p>只读局部变量使用关键字 <code>val</code> 定义。只能为其赋值一次。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">fun <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"><span class="comment">//sampleStart</span></span><br><span class="line">    val a: Int = <span class="number">1</span>  <span class="comment">// 立即赋值</span></span><br><span class="line">    val b = <span class="number">2</span>   <span class="comment">// 自动推断出 `Int` 类型</span></span><br><span class="line">    val c: Int  <span class="comment">// 如果没有初始值类型不能省略</span></span><br><span class="line">    c = <span class="number">3</span>       <span class="comment">// 明确赋值</span></span><br><span class="line"><span class="comment">//sampleEnd</span></span><br><span class="line">    println(<span class="string">&quot;a = $a, b = $b, c = $c&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>可重新赋值的变量使用 <code>var</code> 关键字：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">fun <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"><span class="comment">//sampleStart</span></span><br><span class="line">    <span class="keyword">var</span> x = <span class="number">5</span> <span class="comment">// 自动推断出 `Int` 类型</span></span><br><span class="line">    x += <span class="number">1</span></span><br><span class="line"><span class="comment">//sampleEnd</span></span><br><span class="line">    println(<span class="string">&quot;x = $x&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>顶层变量：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//sampleStart</span></span><br><span class="line">val PI = <span class="number">3.14</span></span><br><span class="line"><span class="keyword">var</span> x = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="function">fun <span class="title">incrementX</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    x += <span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//sampleEnd</span></span><br><span class="line"></span><br><span class="line"><span class="function">fun <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    println(<span class="string">&quot;x = $x; PI = $PI&quot;</span>)</span><br><span class="line">    incrementX()</span><br><span class="line">    println(<span class="string">&quot;incrementX()&quot;</span>)</span><br><span class="line">    println(<span class="string">&quot;x = $x; PI = $PI&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="1-2-if-表达式"><a href="#1-2-if-表达式" class="headerlink" title="1.2 if 表达式"></a>1.2 if 表达式</h2><p>在 Kotlin 中， <code>if</code> 是一个表达式，即它会返回一个值。 因此就不需要三元运算符（条件 ? 然后 : 否则） ，因为普通的 <code>if</code> 就能胜任这个角色。</p>
+<h3 id="1-2-1-用法"><a href="#1-2-1-用法" class="headerlink" title="1.2.1 用法"></a>1.2.1 用法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 传统用法</span></span><br><span class="line"><span class="keyword">var</span> max = a</span><br><span class="line"><span class="keyword">if</span> (a &lt; b) max = b</span><br><span class="line"></span><br><span class="line"><span class="comment">// 带 else</span></span><br><span class="line"><span class="keyword">var</span> max: Int</span><br><span class="line"><span class="keyword">if</span> (a &gt; b) &#123;</span><br><span class="line">	max = a</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">	max = b</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 作为表达式</span></span><br><span class="line">val max = <span class="keyword">if</span> (a &gt; b) a <span class="keyword">else</span> b</span><br></pre></td></tr></table></figure>
+<h3 id="1-2-2-if-的分支可以是代码块，最后的表达式作为该块的值："><a href="#1-2-2-if-的分支可以是代码块，最后的表达式作为该块的值：" class="headerlink" title="1.2.2 if 的分支可以是代码块，最后的表达式作为该块的值："></a>1.2.2 if 的分支可以是代码块，最后的表达式作为该块的值：</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">val max = <span class="keyword">if</span> (a &gt; b) &#123;</span><br><span class="line">	println(<span class="string">&quot;Choose a&quot;</span>)</span><br><span class="line">	a</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">	println(<span class="string">&quot;Choose b&quot;</span>)</span><br><span class="line">	b</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果你使用 <code>if</code> 作为表达式而不是语句（例如：返回它的值或者把它赋给变量） ，该表达式需要有 <code>else</code> 分支。</p>
+<h2 id="1-3-when-表达式"><a href="#1-3-when-表达式" class="headerlink" title="1.3 when 表达式"></a>1.3 when 表达式</h2><p><code>when</code> 取代了类 C 语言的 <code>switch</code> 操作符。</p>
+<h3 id="1-3-1-简单形式"><a href="#1-3-1-简单形式" class="headerlink" title="1.3.1 简单形式"></a>1.3.1 简单形式</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">when (x) &#123;</span><br><span class="line">    <span class="number">1</span> -&gt; println(<span class="string">&quot;x == 1&quot;</span>)</span><br><span class="line">    <span class="number">2</span> -&gt; println(<span class="string">&quot;x == 2&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span> -&gt; &#123; <span class="comment">// 注意这个块</span></span><br><span class="line">    	println(<span class="string">&quot;x is neither 1 nor 2&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="1-3-2-多分支用相同的方式处理"><a href="#1-3-2-多分支用相同的方式处理" class="headerlink" title="1.3.2 多分支用相同的方式处理"></a>1.3.2 多分支用相同的方式处理</h3><p>可以把多个分支条件放在一起，用逗号分隔：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">when (x) &#123;</span><br><span class="line">    <span class="number">0</span>, <span class="number">1</span> -&gt; println(<span class="string">&quot;x == 0 or x == 1&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span> -&gt; println(<span class="string">&quot;otherwise&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="1-3-3-任意表达式（而不只是常量）-作为分支条件"><a href="#1-3-3-任意表达式（而不只是常量）-作为分支条件" class="headerlink" title="1.3.3 任意表达式（而不只是常量） 作为分支条件"></a>1.3.3 任意表达式（而不只是常量） 作为分支条件</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//调用</span></span><br><span class="line">whenExpressionTest(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> fun <span class="title">whenExpressionTest</span><span class="params">(x: Int)</span> </span>&#123;</span><br><span class="line">    val s = <span class="string">&quot;2&quot;</span></span><br><span class="line">    when (x) &#123;</span><br><span class="line">        parseInt(s) -&gt; println(<span class="string">&quot;s encodes x&quot;</span>)</span><br><span class="line">        <span class="keyword">else</span> -&gt; println(<span class="string">&quot;s does not encode x&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="1-3-4-when-也可以用来取代-if-else-if-链"><a href="#1-3-4-when-也可以用来取代-if-else-if-链" class="headerlink" title="1.3.4 when 也可以用来取代 if - else if 链"></a>1.3.4 <code>when</code> 也可以用来取代 <code>if - else if</code> 链</h3><p>如果不提供参数，所有的分支条件都是简单的布尔表达式，而当一个分支的条件为真时则执行该分支：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> fun <span class="title">whenNoParamTest</span><span class="params">(x: String, y: Int)</span> </span>&#123;</span><br><span class="line">    when &#123;</span><br><span class="line">        x.isEmpty() -&gt; println(<span class="string">&quot;x is empty&quot;</span>)</span><br><span class="line">        <span class="comment">// Kotlin 中，使用 str1 == str2，比较的只是字符串的内容，此处返回的是 true</span></span><br><span class="line">        x == <span class="string">&quot;test&quot;</span> -&gt; println(<span class="string">&quot;x&#x27;s text is test&quot;</span>)</span><br><span class="line">        y == -<span class="number">1</span> -&gt; println(<span class="string">&quot;y is -1&quot;</span>)</span><br><span class="line">        <span class="keyword">else</span> -&gt; println(<span class="string">&quot;otherwise&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//调用</span></span><br><span class="line">whenNoParamTest(<span class="string">&quot;test&quot;</span>, <span class="number">1</span>)</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>Q：如果上述调用的方法中参数改为<code>whenNoParamTest(&quot;test&quot;, -1)</code>，满足了多项条件，运行结果如何？为什么？<br>A：会执行满足条件了第一个，其他的不被执行。</p>
+</blockquote>
+<h2 id="1-4-for-循环"><a href="#1-4-for-循环" class="headerlink" title="1.4 for 循环"></a>1.4 for 循环</h2><h3 id="1-4-1-语法"><a href="#1-4-1-语法" class="headerlink" title="1.4.1 语法"></a>1.4.1 语法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (item in collection) print(item)</span><br></pre></td></tr></table></figure>
+<h3 id="1-4-2-区间上迭代"><a href="#1-4-2-区间上迭代" class="headerlink" title="1.4.2 区间上迭代"></a>1.4.2 区间上迭代</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 整型区间</span></span><br><span class="line"><span class="keyword">for</span> (i in <span class="number">1.</span><span class="number">.4</span>) print(i) <span class="comment">// 输出“1234”</span></span><br><span class="line"><span class="comment">// 倒序迭代数字，步长为2</span></span><br><span class="line"><span class="keyword">for</span> (i in <span class="number">8</span> downTo <span class="number">1</span> step <span class="number">2</span>) &#123;</span><br><span class="line">    println(i)  <span class="comment">// 换行输出“8642”</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 不包括其结束元素的区间</span></span><br><span class="line"><span class="keyword">for</span> (i in <span class="number">1</span> until <span class="number">10</span>) &#123;   <span class="comment">// i in [1, 10) 排除了 10</span></span><br><span class="line">     println(i)  <span class="comment">// 换行输出“123456789”</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>区间表达式</strong>在后期分享中详细说明。</p>
+</blockquote>
+<h3 id="1-4-3-通过索引遍历一个数组或者一个-list"><a href="#1-4-3-通过索引遍历一个数组或者一个-list" class="headerlink" title="1.4.3 通过索引遍历一个数组或者一个 list"></a>1.4.3 通过索引遍历一个数组或者一个 list</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">val array = arrayOf(<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (i in array.indices) &#123;</span><br><span class="line">    println(array[i])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="1-5-While-循环"><a href="#1-5-While-循环" class="headerlink" title="1.5 While 循环"></a>1.5 While 循环</h2><p><code>while</code> 和 <code>do .. while</code> 和其它语言没什么区别</p>
+<h2 id="1-6-空安全"><a href="#1-6-空安全" class="headerlink" title="1.6 空安全"></a>1.6 空安全</h2><p>许多编程语言（包括 Java）中最常见的异常之一，就是访问空引用的成员会导致空引用异常（<code>NullPointerException</code>）。Kotlin 的类型系统旨在消除来自代码空引用的危险。</p>
+<h3 id="1-6-1-可空类型与非空类型"><a href="#1-6-1-可空类型与非空类型" class="headerlink" title="1.6.1 可空类型与非空类型"></a>1.6.1 可空类型与非空类型</h3><p>Kotlin 类型系统区分一个引用可以容纳 <code>null</code> 还是不能容纳，如：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// String 类型的常规变量不能容纳 null</span></span><br><span class="line"><span class="keyword">var</span> a: String = <span class="string">&quot;abc&quot;</span></span><br><span class="line">a = <span class="keyword">null</span> <span class="comment">// 编译错误</span></span><br><span class="line"><span class="comment">// 允许为空，写作 String?</span></span><br><span class="line"><span class="keyword">var</span> b: String? = <span class="string">&quot;abc&quot;</span></span><br><span class="line">b = <span class="keyword">null</span> <span class="comment">// ok</span></span><br></pre></td></tr></table></figure><br>调用它的方法或访问它的属性：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">val l = a.length <span class="comment">// OK，不会导致 NPE</span></span><br><span class="line">val l = b.length <span class="comment">// 错误：变量“b”可能为空</span></span><br></pre></td></tr></table></figure><br>但是我们还是需要访问该属性，对吧？有几种方式可以做到，请看<strong>1.6.2 安全调用</strong>。</p>
+<h3 id="1-6-2-安全调用"><a href="#1-6-2-安全调用" class="headerlink" title="1.6.2 安全调用"></a>1.6.2 安全调用</h3><h4 id="1-6-2-1-在条件中检查-null"><a href="#1-6-2-1-在条件中检查-null" class="headerlink" title="1.6.2.1 在条件中检查 null"></a>1.6.2.1 在条件中检查 null</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">val l = <span class="keyword">if</span> (b != <span class="keyword">null</span>) b.length <span class="keyword">else</span> -<span class="number">1</span></span><br></pre></td></tr></table></figure>
+<h4 id="1-6-2-2-安全的调用"><a href="#1-6-2-2-安全的调用" class="headerlink" title="1.6.2.2 安全的调用"></a>1.6.2.2 安全的调用</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">b?.length</span><br></pre></td></tr></table></figure>
+<h4 id="1-6-2-3-Elvis-操作符，写作"><a href="#1-6-2-3-Elvis-操作符，写作" class="headerlink" title="1.6.2.3 Elvis 操作符，写作 ?:"></a>1.6.2.3 Elvis 操作符，写作 <code>?:</code></h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">val l = b?.length ?: -<span class="number">1</span></span><br></pre></td></tr></table></figure>
+<h4 id="1-6-2-4-操作符（非空断言运算符）"><a href="#1-6-2-4-操作符（非空断言运算符）" class="headerlink" title="1.6.2.4 !! 操作符（非空断言运算符）"></a>1.6.2.4 <code>!!</code> 操作符（非空断言运算符）</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">val l = b!!.length</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p> 如果值为空，就会抛出一个 NPE 异常</p>
+</blockquote>
+<p>另外还有通过<strong>安全的类型转换</strong>或其他方式来避免这些异常的发生，涉及到 Kotlin 的扩展函数，本次暂不做讲解。</p>
+<h2 id="1-7-（对-Android-开发而言）不用-findViewById，提高开发效率"><a href="#1-7-（对-Android-开发而言）不用-findViewById，提高开发效率" class="headerlink" title="1.7 （对 Android 开发而言）不用 findViewById，提高开发效率"></a>1.7 （对 Android 开发而言）不用 <code>findViewById</code>，提高开发效率</h2><p>可以直接使用控件的 id 进行操作，减少原先在 Java 中大量的 <code>findViewById</code> 的代码。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;android.support.v7.widget.RecyclerView</span><br><span class="line">    android:id=&quot;@+id/recyclerView&quot;</span><br><span class="line">    android:layout_width=&quot;match_parent&quot;</span><br><span class="line">    android:layout_height=&quot;match_parent&quot; /&gt;</span><br></pre></td></tr></table></figure><br>IDE 提示导入类似这个包 <code>import kotlinx.android.synthetic.main.activity_main.*</code>，则可直接使用控件的 id 来操作。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">recyclerView.layoutManager = LinearLayoutManager(<span class="keyword">this</span>)</span><br><span class="line">recyclerView.adapter = mAdapter</span><br></pre></td></tr></table></figure></p>
+<h1 id="2-建造者模式"><a href="#2-建造者模式" class="headerlink" title="2. 建造者模式"></a>2. 建造者模式</h1><h2 id="2-1-定义"><a href="#2-1-定义" class="headerlink" title="2.1 定义"></a>2.1 定义</h2><p>建造者模式(Builder Pattern)：将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示。</p>
+<h2 id="2-2-结构"><a href="#2-2-结构" class="headerlink" title="2.2 结构"></a>2.2 结构</h2><p>Product：产品角色；<br>Director：指挥者，利用具体建造者创建产品；<br>AbstractBuilder：抽象建造者，定义抽象的建造方法；<br>ConcreteBuilder：具体建造者，实现建造方法；</p>
+<h2 id="2-3-Builder-模式的简单实现"><a href="#2-3-Builder-模式的简单实现" class="headerlink" title="2.3 Builder 模式的简单实现"></a>2.3 Builder 模式的简单实现</h2><p>以手机的组装为例，并把此过程简化为设置机型、设置操作系统、设置屏幕等几个部分，然后通过 Director 和具体的 Builder 来构建手机对象。示例如下：</p>
+<h3 id="2-3-1-手机抽象类，即-Product-角色"><a href="#2-3-1-手机抽象类，即-Product-角色" class="headerlink" title="2.3.1 手机抽象类，即 Product 角色"></a>2.3.1 手机抽象类，即 Product 角色</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Mobile</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">var</span> mBrand: String? = <span class="keyword">null</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">var</span> mMemory: Int = <span class="number">0</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">var</span> mScreen: Float = <span class="number">1f</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">var</span> mOS: String? = <span class="keyword">null</span></span><br><span class="line"></span><br><span class="line">    <span class="function">fun <span class="title">setBrand</span><span class="params">(brand: String)</span> </span>&#123;</span><br><span class="line">        mBrand = brand</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">fun <span class="title">setMemory</span><span class="params">(memory: Int)</span> </span>&#123;</span><br><span class="line">        mMemory = memory</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">fun <span class="title">setScreen</span><span class="params">(screen: Float)</span> </span>&#123;</span><br><span class="line">        mScreen = screen</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">abstract</span> fun <span class="title">setOS</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">    override fun <span class="title">toString</span><span class="params">()</span>: String </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Mobile(mBrand=$mBrand, mMemory=$mMemory, mScreen=$mScreen, mOS=$mOS)&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-3-2-具体的-Mobile-类，Honor"><a href="#2-3-2-具体的-Mobile-类，Honor" class="headerlink" title="2.3.2 具体的 Mobile 类，Honor"></a>2.3.2 具体的 Mobile 类，Honor</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">class HonorMobile : Mobile() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="function">override fun <span class="title">setOS</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        mOS = <span class="string">&quot;Android 8.0&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-3-3-抽象-Builder-类"><a href="#2-3-3-抽象-Builder-类" class="headerlink" title="2.3.3 抽象 Builder 类"></a>2.3.3 抽象 Builder 类</h3><p>定义了5个抽象方法，用于设置产品属性及获取实例<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Builder</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 设置品牌</span></span><br><span class="line">    <span class="function"><span class="keyword">abstract</span> fun <span class="title">buildBrand</span><span class="params">(brand: String)</span></span></span><br><span class="line"><span class="function">    <span class="comment">// 设置内存</span></span></span><br><span class="line"><span class="function">    <span class="keyword">abstract</span> fun <span class="title">buildMemory</span><span class="params">(memory: Int)</span></span></span><br><span class="line"><span class="function">    <span class="comment">// 设置屏幕</span></span></span><br><span class="line"><span class="function">    <span class="keyword">abstract</span> fun <span class="title">buildScreen</span><span class="params">(screen: Float)</span></span></span><br><span class="line"><span class="function">    <span class="comment">// 设置系统</span></span></span><br><span class="line"><span class="function">    <span class="keyword">abstract</span> fun <span class="title">buildOS</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    <span class="comment">// 创建 Mobile</span></span></span><br><span class="line"><span class="function">    <span class="keyword">abstract</span> fun <span class="title">create</span><span class="params">()</span>: Mobile</span></span><br><span class="line"><span class="function">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="2-3-4-具体的-Builder-类"><a href="#2-3-4-具体的-Builder-类" class="headerlink" title="2.3.4 具体的 Builder 类"></a>2.3.4 具体的 Builder 类</h3><p>HonorBuilder，实现产品的创建<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">class HonorBuilder : Builder() &#123;</span><br><span class="line">    <span class="keyword">private</span> val mMobile = HonorMobile()</span><br><span class="line">    <span class="function">override fun <span class="title">buildBrand</span><span class="params">(brand: String)</span> </span>&#123;</span><br><span class="line">        mMobile.setBrand(brand)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">override fun <span class="title">buildMemory</span><span class="params">(memory: Int)</span> </span>&#123;</span><br><span class="line">        mMobile.setMemory(memory)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">override fun <span class="title">buildScreen</span><span class="params">(screen: Float)</span> </span>&#123;</span><br><span class="line">        mMobile.setScreen(screen)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">override fun <span class="title">buildOS</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        mMobile.setOS()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">override fun <span class="title">create</span><span class="params">()</span>: Mobile </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mMobile</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="2-3-5-Director-类"><a href="#2-3-5-Director-类" class="headerlink" title="2.3.5 Director 类"></a>2.3.5 Director 类</h3><p>负责构造 Mobile，通过设置的建造者，创建产品实例<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class Director(builder: Builder) &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">var</span> mBuilder: Builder? = <span class="keyword">null</span></span><br><span class="line"></span><br><span class="line">    init &#123;</span><br><span class="line">        mBuilder = builder</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 构建对象</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function">fun <span class="title">construct</span><span class="params">(brand: String, memory: Int, screen: Float)</span> </span>&#123;</span><br><span class="line">        mBuilder?.buildBrand(brand)</span><br><span class="line">        mBuilder?.buildMemory(memory)</span><br><span class="line">        mBuilder?.buildScreen(screen)</span><br><span class="line">        mBuilder?.buildOS()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="2-3-6-具体建造者"><a href="#2-3-6-具体建造者" class="headerlink" title="2.3.6 具体建造者"></a>2.3.6 具体建造者</h3><p>build，实现产品的创建<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">val build = HonorBuilder()</span><br><span class="line">val aDirector: Director = Director(build)</span><br><span class="line">aDirector.construct(<span class="string">&quot;Honor 9&quot;</span>, <span class="number">4</span>, <span class="number">5.15f</span>)</span><br><span class="line"></span><br><span class="line">tvBuild2.setOnClickListener &#123;</span><br><span class="line">    tvRes.text = build.create().toString()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>注意：<br>现实开发中，Director 常会被省略，直接使用 Builder 来进行对象的组装（链式调用）,大致如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">build.buildBrand(<span class="string">&quot;Honor V10&quot;</span>)</span><br><span class="line">build.buildMemory(<span class="number">6</span>)</span><br><span class="line">build.buildScreen(<span class="number">5.99f</span>)</span><br><span class="line">build.buildOS()</span><br><span class="line"></span><br><span class="line">tvBuild2.setOnClickListener &#123;</span><br><span class="line">    tvRes.text = build.create().toString()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="3-总结"><a href="#3-总结" class="headerlink" title="3. 总结"></a>3. 总结</h1><p>此次分享中的部分内容可能出现的有些突然，不太理解某些类及变量的声明等等，我会汇总大家的意见，在以后的讲解中继续分享。下次讲解关于类、函数、对象相关的知识。</p>
+<p>几点感悟：</p>
+<ul>
+<li>持续学习</li>
+<li>有计划地小结与分享</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Android/" rel="tag"><i class="fa fa-tag"></i> Android</a>
+              <a href="/tags/Kotlin/" rel="tag"><i class="fa fa-tag"></i> Kotlin</a>
+              <a href="/tags/Design-Patterns/" rel="tag"><i class="fa fa-tag"></i> Design Patterns</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/03/19/hexo-blog-customize/" rel="prev" title="hexo 博客搭建后的几点实用技巧和修改">
+      <i class="fa fa-chevron-left"></i> hexo 博客搭建后的几点实用技巧和修改
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/03/23/android-view-ScrollRecyclerView/" rel="next" title="ScrollRecyclerView——RecyclerView 横向 / 纵向滚动网格布局">
+      ScrollRecyclerView——RecyclerView 横向 / 纵向滚动网格布局 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Kotlin"><span class="nav-number">1.</span> <span class="nav-text">1. Kotlin</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E5%AE%9A%E4%B9%89%E5%8F%98%E9%87%8F"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 定义变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-if-%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 if 表达式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-1-%E7%94%A8%E6%B3%95"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.2.1 用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-if-%E7%9A%84%E5%88%86%E6%94%AF%E5%8F%AF%E4%BB%A5%E6%98%AF%E4%BB%A3%E7%A0%81%E5%9D%97%EF%BC%8C%E6%9C%80%E5%90%8E%E7%9A%84%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%BD%9C%E4%B8%BA%E8%AF%A5%E5%9D%97%E7%9A%84%E5%80%BC%EF%BC%9A"><span class="nav-number">1.2.2.</span> <span class="nav-text">1.2.2 if 的分支可以是代码块，最后的表达式作为该块的值：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-when-%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 when 表达式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-1-%E7%AE%80%E5%8D%95%E5%BD%A2%E5%BC%8F"><span class="nav-number">1.3.1.</span> <span class="nav-text">1.3.1 简单形式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-2-%E5%A4%9A%E5%88%86%E6%94%AF%E7%94%A8%E7%9B%B8%E5%90%8C%E7%9A%84%E6%96%B9%E5%BC%8F%E5%A4%84%E7%90%86"><span class="nav-number">1.3.2.</span> <span class="nav-text">1.3.2 多分支用相同的方式处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-3-%E4%BB%BB%E6%84%8F%E8%A1%A8%E8%BE%BE%E5%BC%8F%EF%BC%88%E8%80%8C%E4%B8%8D%E5%8F%AA%E6%98%AF%E5%B8%B8%E9%87%8F%EF%BC%89-%E4%BD%9C%E4%B8%BA%E5%88%86%E6%94%AF%E6%9D%A1%E4%BB%B6"><span class="nav-number">1.3.3.</span> <span class="nav-text">1.3.3 任意表达式（而不只是常量） 作为分支条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-4-when-%E4%B9%9F%E5%8F%AF%E4%BB%A5%E7%94%A8%E6%9D%A5%E5%8F%96%E4%BB%A3-if-else-if-%E9%93%BE"><span class="nav-number">1.3.4.</span> <span class="nav-text">1.3.4 when 也可以用来取代 if - else if 链</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-for-%E5%BE%AA%E7%8E%AF"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 for 循环</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-1-%E8%AF%AD%E6%B3%95"><span class="nav-number">1.4.1.</span> <span class="nav-text">1.4.1 语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-2-%E5%8C%BA%E9%97%B4%E4%B8%8A%E8%BF%AD%E4%BB%A3"><span class="nav-number">1.4.2.</span> <span class="nav-text">1.4.2 区间上迭代</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-3-%E9%80%9A%E8%BF%87%E7%B4%A2%E5%BC%95%E9%81%8D%E5%8E%86%E4%B8%80%E4%B8%AA%E6%95%B0%E7%BB%84%E6%88%96%E8%80%85%E4%B8%80%E4%B8%AA-list"><span class="nav-number">1.4.3.</span> <span class="nav-text">1.4.3 通过索引遍历一个数组或者一个 list</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-5-While-%E5%BE%AA%E7%8E%AF"><span class="nav-number">1.5.</span> <span class="nav-text">1.5 While 循环</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-6-%E7%A9%BA%E5%AE%89%E5%85%A8"><span class="nav-number">1.6.</span> <span class="nav-text">1.6 空安全</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-1-%E5%8F%AF%E7%A9%BA%E7%B1%BB%E5%9E%8B%E4%B8%8E%E9%9D%9E%E7%A9%BA%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.6.1.</span> <span class="nav-text">1.6.1 可空类型与非空类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-2-%E5%AE%89%E5%85%A8%E8%B0%83%E7%94%A8"><span class="nav-number">1.6.2.</span> <span class="nav-text">1.6.2 安全调用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-6-2-1-%E5%9C%A8%E6%9D%A1%E4%BB%B6%E4%B8%AD%E6%A3%80%E6%9F%A5-null"><span class="nav-number">1.6.2.1.</span> <span class="nav-text">1.6.2.1 在条件中检查 null</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-6-2-2-%E5%AE%89%E5%85%A8%E7%9A%84%E8%B0%83%E7%94%A8"><span class="nav-number">1.6.2.2.</span> <span class="nav-text">1.6.2.2 安全的调用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-6-2-3-Elvis-%E6%93%8D%E4%BD%9C%E7%AC%A6%EF%BC%8C%E5%86%99%E4%BD%9C"><span class="nav-number">1.6.2.3.</span> <span class="nav-text">1.6.2.3 Elvis 操作符，写作 ?:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-6-2-4-%E6%93%8D%E4%BD%9C%E7%AC%A6%EF%BC%88%E9%9D%9E%E7%A9%BA%E6%96%AD%E8%A8%80%E8%BF%90%E7%AE%97%E7%AC%A6%EF%BC%89"><span class="nav-number">1.6.2.4.</span> <span class="nav-text">1.6.2.4 !! 操作符（非空断言运算符）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-7-%EF%BC%88%E5%AF%B9-Android-%E5%BC%80%E5%8F%91%E8%80%8C%E8%A8%80%EF%BC%89%E4%B8%8D%E7%94%A8-findViewById%EF%BC%8C%E6%8F%90%E9%AB%98%E5%BC%80%E5%8F%91%E6%95%88%E7%8E%87"><span class="nav-number">1.7.</span> <span class="nav-text">1.7 （对 Android 开发而言）不用 findViewById，提高开发效率</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">2. 建造者模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E5%AE%9A%E4%B9%89"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E7%BB%93%E6%9E%84"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-Builder-%E6%A8%A1%E5%BC%8F%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 Builder 模式的简单实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-1-%E6%89%8B%E6%9C%BA%E6%8A%BD%E8%B1%A1%E7%B1%BB%EF%BC%8C%E5%8D%B3-Product-%E8%A7%92%E8%89%B2"><span class="nav-number">2.3.1.</span> <span class="nav-text">2.3.1 手机抽象类，即 Product 角色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-2-%E5%85%B7%E4%BD%93%E7%9A%84-Mobile-%E7%B1%BB%EF%BC%8CHonor"><span class="nav-number">2.3.2.</span> <span class="nav-text">2.3.2 具体的 Mobile 类，Honor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-3-%E6%8A%BD%E8%B1%A1-Builder-%E7%B1%BB"><span class="nav-number">2.3.3.</span> <span class="nav-text">2.3.3 抽象 Builder 类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-4-%E5%85%B7%E4%BD%93%E7%9A%84-Builder-%E7%B1%BB"><span class="nav-number">2.3.4.</span> <span class="nav-text">2.3.4 具体的 Builder 类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-5-Director-%E7%B1%BB"><span class="nav-number">2.3.5.</span> <span class="nav-text">2.3.5 Director 类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-6-%E5%85%B7%E4%BD%93%E5%BB%BA%E9%80%A0%E8%80%85"><span class="nav-number">2.3.6.</span> <span class="nav-text">2.3.6 具体建造者</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E6%80%BB%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text">3. 总结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">李世德</p>
+  <div class="site-description" itemprop="description">爱生活，爱学习，一个不羁的编码界小学生。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/lishide" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lishide" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/3235831430" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;3235831430" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李世德</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">58k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">53 分钟</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

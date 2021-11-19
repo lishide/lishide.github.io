@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lishide.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="Android 自动化脚本多渠道打包相关的参考技术文档 Android 自动化脚本多渠道加固、打包 VasDolly VasDolly 命令行说明地址 VasDolly 实现原理  技术方案 使用 VasDolly 多渠道打包； 其他市场直接上架，需要加固的市场让运营的同事手动加固一下。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 自动化脚本多渠道打包">
+<meta property="og:url" content="https://lishide.github.io/2019/12/12/Android-gradle-auto-multi-channel-packaging/index.html">
+<meta property="og:site_name" content="李世德的博客">
+<meta property="og:description" content="Android 自动化脚本多渠道打包相关的参考技术文档 Android 自动化脚本多渠道加固、打包 VasDolly VasDolly 命令行说明地址 VasDolly 实现原理  技术方案 使用 VasDolly 多渠道打包； 其他市场直接上架，需要加固的市场让运营的同事手动加固一下。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-12-11T18:03:29.000Z">
+<meta property="article:modified_time" content="2021-11-19T09:32:35.462Z">
+<meta property="article:author" content="李世德">
+<meta property="article:tag" content="Android">
+<meta property="article:tag" content="gradle">
+<meta property="article:tag" content="VasDolly">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://lishide.github.io/2019/12/12/Android-gradle-auto-multi-channel-packaging/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Android 自动化脚本多渠道打包 | 李世德的博客</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?62dee491f23b92487e7821869f23f7f0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">李世德的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">我有故事，你有酒吗？</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/lishide" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://lishide.github.io/2019/12/12/Android-gradle-auto-multi-channel-packaging/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李世德">
+      <meta itemprop="description" content="爱生活，爱学习，一个不羁的编码界小学生。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李世德的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Android 自动化脚本多渠道打包
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-12-11 18:03:29" itemprop="dateCreated datePublished" datetime="2019-12-11T18:03:29Z">2019-12-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-11-19 09:32:35" itemprop="dateModified" datetime="2021-11-19T09:32:35Z">2021-11-19</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Android-自动化脚本多渠道打包"><a href="#Android-自动化脚本多渠道打包" class="headerlink" title="Android 自动化脚本多渠道打包"></a>Android 自动化脚本多渠道打包</h1><h2 id="相关的参考技术文档"><a href="#相关的参考技术文档" class="headerlink" title="相关的参考技术文档"></a>相关的参考技术文档</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://juejin.im/post/5db037d4f265da4d2b34f557?utm_source">Android 自动化脚本多渠道加固、打包</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Tencent/VasDolly">VasDolly</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Tencent/VasDolly/blob/master/command/README.md">VasDolly 命令行说明地址</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Tencent/VasDolly/wiki/VasDolly%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86">VasDolly 实现原理</a></li>
+</ul>
+<h2 id="技术方案"><a href="#技术方案" class="headerlink" title="技术方案"></a>技术方案</h2><ol>
+<li>使用 VasDolly 多渠道打包；</li>
+<li>其他市场直接上架，需要加固的市场让运营的同事手动加固一下。</li>
+</ol>
+<span id="more"></span>
+<h2 id="集成-VasDolly"><a href="#集成-VasDolly" class="headerlink" title="集成 VasDolly"></a>集成 VasDolly</h2><h3 id="添加对-VasDolly-Plugin-的依赖"><a href="#添加对-VasDolly-Plugin-的依赖" class="headerlink" title="添加对 VasDolly Plugin 的依赖"></a>添加对 VasDolly Plugin 的依赖</h3><p>在根工程的 <code>build.gradle</code> 中，添加对打包 Plugin 的依赖：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    classpath <span class="string">&#x27;com.leon.channel:plugin:2.0.3&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="引用-VasDolly-Plugin"><a href="#引用-VasDolly-Plugin" class="headerlink" title="引用 VasDolly Plugin"></a>引用 VasDolly Plugin</h3><p>在主 App 工程的 <code>build.gradle</code> 中，添加对 VasDolly Plugin 的引用：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apply <span class="attr">plugin:</span> <span class="string">&#x27;channel&#x27;</span></span><br></pre></td></tr></table></figure>
+<h3 id="添加对-VasDolly-helper-类库的依赖"><a href="#添加对-VasDolly-helper-类库的依赖" class="headerlink" title="添加对 VasDolly helper 类库的依赖"></a>添加对 VasDolly helper 类库的依赖</h3><p>在主 App 工程的 <code>build.gradle</code> 中，添加读取渠道信息的 helper 类库依赖：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    api <span class="string">&#x27;com.leon.channel:helper:2.0.3&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>以下流程可略过，在下面的<strong>自动化脚本多渠道打包</strong>流程中一起操作。</p>
+</blockquote>
+<h3 id="配置渠道列表"><a href="#配置渠道列表" class="headerlink" title="配置渠道列表"></a>配置渠道列表</h3><p>指定渠道文件 <code>channel.txt</code>，一行一个渠道信息。</p>
+<h3 id="通过-Gradle-生成多渠道包"><a href="#通过-Gradle-生成多渠道包" class="headerlink" title="通过 Gradle 生成多渠道包"></a>通过 Gradle 生成多渠道包</h3><p>（略）</p>
+<h3 id="通过命令行生成渠道包、读取渠道信息"><a href="#通过命令行生成渠道包、读取渠道信息" class="headerlink" title="通过命令行生成渠道包、读取渠道信息"></a>通过命令行生成渠道包、读取渠道信息</h3><p>从 <code>V1.0.5</code> 版本开始支持命令行，具体使用文档可参考 <code>command</code> 目录下的 <a target="_blank" rel="noopener" href="https://github.com/Tencent/VasDolly/blob/master/command/README.md">README</a>。</p>
+<h4 id="读取渠道信息"><a href="#读取渠道信息" class="headerlink" title="读取渠道信息"></a>读取渠道信息</h4><p>通过 helper 类库中的 <code>ChannelReaderUtil</code> 类读取渠道信息。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String channel = ChannelReaderUtil.getChannel(getApplicationContext());</span><br></pre></td></tr></table></figure>
+<p>如果没有渠道信息，那么这里返回 <code>null</code>，开发者需要自己判断。</p>
+<blockquote>
+<p>更详细的集成文档和参数说明请查看 VasDolly 文档。</p>
+</blockquote>
+<h2 id="自动化脚本多渠道打包"><a href="#自动化脚本多渠道打包" class="headerlink" title="自动化脚本多渠道打包"></a>自动化脚本多渠道打包</h2><h3 id="新增目录结构"><a href="#新增目录结构" class="headerlink" title="新增目录结构"></a>新增目录结构</h3><p>在项目根目录下新增一个 <code>vasdolly</code> 文件夹，里面包含一下几个文件：</p>
+<ul>
+<li>channel.txt：指定渠道文件，一行一个渠道信息。</li>
+<li>multi-channel.gradle：多渠道打包命令脚本</li>
+<li>VasDolly.jar：命令行工具，可在 VasDolly 仓库中获取。</li>
+<li>README.md：本说明文档，非必须。</li>
+</ul>
+<h3 id="编辑-channel-txt"><a href="#编辑-channel-txt" class="headerlink" title="编辑 channel.txt"></a>编辑 channel.txt</h3><p>添加渠道信息，一行一个，例如：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">official</span><br><span class="line">yingyongbao</span><br><span class="line">huawei</span><br><span class="line">xiaomi</span><br><span class="line">ali</span><br><span class="line">qihoo360</span><br><span class="line">oppo</span><br><span class="line">vivo</span><br></pre></td></tr></table></figure>
+<h3 id="multi-channel-gradle"><a href="#multi-channel-gradle" class="headerlink" title="multi-channel.gradle"></a>multi-channel.gradle</h3><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">ext &#123;</span><br><span class="line">    jarPath = <span class="string">&quot;$&#123;project.rootDir&#125;/vasdolly/VasDolly.jar&quot;</span></span><br><span class="line">    channelsPath = <span class="string">&quot;$&#123;project.rootDir&#125;/vasdolly/channel.txt&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 从 app/build 文件夹中找出 release 文件</span></span><br><span class="line"><span class="comment">     * 只能匹配出以 apk 结尾并且包含 release 字符串的 apk 文件</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    findReleaseApkPath = &#123; String appBuildOutputPath -&gt;</span><br><span class="line">        <span class="keyword">def</span> appBuildOutput = <span class="keyword">new</span> File(appBuildOutputPath)</span><br><span class="line">        <span class="keyword">def</span> apkFile = <span class="literal">null</span></span><br><span class="line">        appBuildOutput.eachFile &#123;</span><br><span class="line">            <span class="keyword">if</span> (it.name.endsWith(<span class="string">&quot;.apk&quot;</span>) &amp;&amp; it.name.contains(<span class="string">&quot;release&quot;</span>)) &#123;</span><br><span class="line">                apkFile = it</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> apkFile</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 多渠道打包</span></span><br><span class="line"><span class="comment">     * apk -&gt; 原有 release 包的文件</span></span><br><span class="line"><span class="comment">     * outputPath -&gt; 多渠道打包后文件输出路径</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    buildMultipleChannels = &#123; File apk, File outputPath -&gt;</span><br><span class="line">        println(outputPath)</span><br><span class="line">        <span class="keyword">if</span> (apk == <span class="literal">null</span> || !apk.exists()) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> FileNotFoundException(<span class="string">&quot;没有找到 APK 文件&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!outputPath.exists()) &#123;</span><br><span class="line">            outputPath.mkdirs()</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">def</span> cmd = <span class="string">&quot;java -jar $&#123;jarPath&#125; put -c $&#123;channelsPath&#125; $&#123;apk&#125; $&#123;outputPath&#125;&quot;</span></span><br><span class="line">        println cmd</span><br><span class="line">        cmd.execute().waitForProcessOutput(System.out, System.err)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="app-的-build-gradle-中添加"><a href="#app-的-build-gradle-中添加" class="headerlink" title="app 的 build.gradle 中添加"></a>app 的 build.gradle 中添加</h3><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">apply <span class="attr">from:</span> <span class="string">&quot;../vasdolly/multi-channel.gradle&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 开启多渠道打包的任务</span></span><br><span class="line"><span class="comment"> * 这个任务会依赖 assembleRelease 打出来的 apk 包</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">task assembleMultiChannelRelease() &#123;</span><br><span class="line">    group <span class="string">&#x27;multipleChannels&#x27;</span></span><br><span class="line">    dependsOn(<span class="string">&#x27;assembleRelease&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    doLast &#123;</span><br><span class="line">        <span class="comment">// 路径根据你的项目实际情况改变，不一定都是 app，比如多 module 的项目</span></span><br><span class="line">        <span class="keyword">def</span> appBuildOutputPath = <span class="string">&quot;$&#123;project.rootDir&#125;/app/build/outputs/apk/release/&quot;</span></span><br><span class="line">        <span class="keyword">def</span> outputChannelsFilePath = appBuildOutputPath + <span class="string">&quot;channels/&quot;</span></span><br><span class="line">        buildMultipleChannels(findReleaseApkPath(appBuildOutputPath), <span class="keyword">new</span> File(outputChannelsFilePath))</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>任务名 <code>assembleMultiChannelRelease</code> 和 apk 输出路径 <code>appBuildOutputPath</code> 可根据项目的实际情况改变，以避免在 <strong>多 module / 多 productFlavors</strong> 情况下出现的路径错误和冲突。</p>
+<h3 id="代码中获取渠道名称"><a href="#代码中获取渠道名称" class="headerlink" title="代码中获取渠道名称"></a>代码中获取渠道名称</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">getChannelName</span><span class="params">(ctx: <span class="type">Activity</span>)</span></span>: String &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">try</span> &#123;</span><br><span class="line">        ChannelReaderUtil.getChannel(ctx.application)</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e: Exception) &#123;</span><br><span class="line">        e.printStackTrace()</span><br><span class="line">        <span class="string">&quot;official&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="编译打包"><a href="#编译打包" class="headerlink" title="编译打包"></a>编译打包</h3><p>最终我们执行 <code>./gradlew assembleMultiChannelRelease</code></p>
+<p>记得打包前 clean：<code>./gradlew clean</code>。</p>
+<p>查看结果，在目标文件夹下即可找到生成的多渠道包。</p>
+<p>至此便完成了<strong>自动化脚本多渠道打包</strong>的功能，通过一个命令即可快速生成多渠道包。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Android/" rel="tag"><i class="fa fa-tag"></i> Android</a>
+              <a href="/tags/gradle/" rel="tag"><i class="fa fa-tag"></i> gradle</a>
+              <a href="/tags/VasDolly/" rel="tag"><i class="fa fa-tag"></i> VasDolly</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/10/26/Android-gradle-speedup-build/" rel="prev" title="Android 加快编译速度">
+      <i class="fa fa-chevron-left"></i> Android 加快编译速度
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/04/25/flutter-0-build-dev-env/" rel="next" title="Flutter 初尝：搭建 Flutter 开发环境">
+      Flutter 初尝：搭建 Flutter 开发环境 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Android-%E8%87%AA%E5%8A%A8%E5%8C%96%E8%84%9A%E6%9C%AC%E5%A4%9A%E6%B8%A0%E9%81%93%E6%89%93%E5%8C%85"><span class="nav-number">1.</span> <span class="nav-text">Android 自动化脚本多渠道打包</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E7%9A%84%E5%8F%82%E8%80%83%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3"><span class="nav-number">1.1.</span> <span class="nav-text">相关的参考技术文档</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E6%96%B9%E6%A1%88"><span class="nav-number">1.2.</span> <span class="nav-text">技术方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%86%E6%88%90-VasDolly"><span class="nav-number">1.3.</span> <span class="nav-text">集成 VasDolly</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E5%AF%B9-VasDolly-Plugin-%E7%9A%84%E4%BE%9D%E8%B5%96"><span class="nav-number">1.3.1.</span> <span class="nav-text">添加对 VasDolly Plugin 的依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E7%94%A8-VasDolly-Plugin"><span class="nav-number">1.3.2.</span> <span class="nav-text">引用 VasDolly Plugin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E5%AF%B9-VasDolly-helper-%E7%B1%BB%E5%BA%93%E7%9A%84%E4%BE%9D%E8%B5%96"><span class="nav-number">1.3.3.</span> <span class="nav-text">添加对 VasDolly helper 类库的依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%B8%A0%E9%81%93%E5%88%97%E8%A1%A8"><span class="nav-number">1.3.4.</span> <span class="nav-text">配置渠道列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87-Gradle-%E7%94%9F%E6%88%90%E5%A4%9A%E6%B8%A0%E9%81%93%E5%8C%85"><span class="nav-number">1.3.5.</span> <span class="nav-text">通过 Gradle 生成多渠道包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%94%9F%E6%88%90%E6%B8%A0%E9%81%93%E5%8C%85%E3%80%81%E8%AF%BB%E5%8F%96%E6%B8%A0%E9%81%93%E4%BF%A1%E6%81%AF"><span class="nav-number">1.3.6.</span> <span class="nav-text">通过命令行生成渠道包、读取渠道信息</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%BB%E5%8F%96%E6%B8%A0%E9%81%93%E4%BF%A1%E6%81%AF"><span class="nav-number">1.3.6.1.</span> <span class="nav-text">读取渠道信息</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E5%8C%96%E8%84%9A%E6%9C%AC%E5%A4%9A%E6%B8%A0%E9%81%93%E6%89%93%E5%8C%85"><span class="nav-number">1.4.</span> <span class="nav-text">自动化脚本多渠道打包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B0%E5%A2%9E%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="nav-number">1.4.1.</span> <span class="nav-text">新增目录结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%BE%91-channel-txt"><span class="nav-number">1.4.2.</span> <span class="nav-text">编辑 channel.txt</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#multi-channel-gradle"><span class="nav-number">1.4.3.</span> <span class="nav-text">multi-channel.gradle</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#app-%E7%9A%84-build-gradle-%E4%B8%AD%E6%B7%BB%E5%8A%A0"><span class="nav-number">1.4.4.</span> <span class="nav-text">app 的 build.gradle 中添加</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E4%B8%AD%E8%8E%B7%E5%8F%96%E6%B8%A0%E9%81%93%E5%90%8D%E7%A7%B0"><span class="nav-number">1.4.5.</span> <span class="nav-text">代码中获取渠道名称</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E6%89%93%E5%8C%85"><span class="nav-number">1.4.6.</span> <span class="nav-text">编译打包</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">李世德</p>
+  <div class="site-description" itemprop="description">爱生活，爱学习，一个不羁的编码界小学生。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/lishide" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lishide" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/3235831430" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;3235831430" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李世德</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">58k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">53 分钟</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

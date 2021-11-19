@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lishide.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="基于 NoHttp 的封装，主要包括字符串、Bitmap、JsonArray 等的 GET 和 POST 请求、文件上传下载方法的简单封装，以及五种缓存模式的使用。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NoHttpConnecter——基于 NoHttp 的封装">
+<meta property="og:url" content="https://lishide.github.io/2018/03/13/android-NoHttpConnecter-use/index.html">
+<meta property="og:site_name" content="李世德的博客">
+<meta property="og:description" content="基于 NoHttp 的封装，主要包括字符串、Bitmap、JsonArray 等的 GET 和 POST 请求、文件上传下载方法的简单封装，以及五种缓存模式的使用。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jitpack.io/v/lishide/NoHttpConnecter.svg">
+<meta property="article:published_time" content="2018-03-13T13:34:37.000Z">
+<meta property="article:modified_time" content="2021-11-19T09:32:35.507Z">
+<meta property="article:author" content="李世德">
+<meta property="article:tag" content="Android">
+<meta property="article:tag" content="NoHttp">
+<meta property="article:tag" content="Http">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jitpack.io/v/lishide/NoHttpConnecter.svg">
+
+<link rel="canonical" href="https://lishide.github.io/2018/03/13/android-NoHttpConnecter-use/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>NoHttpConnecter——基于 NoHttp 的封装 | 李世德的博客</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?62dee491f23b92487e7821869f23f7f0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">李世德的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">我有故事，你有酒吗？</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/lishide" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://lishide.github.io/2018/03/13/android-NoHttpConnecter-use/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李世德">
+      <meta itemprop="description" content="爱生活，爱学习，一个不羁的编码界小学生。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李世德的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          NoHttpConnecter——基于 NoHttp 的封装
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-03-13 13:34:37" itemprop="dateCreated datePublished" datetime="2018-03-13T13:34:37Z">2018-03-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-11-19 09:32:35" itemprop="dateModified" datetime="2021-11-19T09:32:35Z">2021-11-19</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>基于 NoHttp 的封装，主要包括字符串、Bitmap、JsonArray 等的 GET 和 POST 请求、文件上传下载方法的简单封装，以及五种缓存模式的使用。<br><span id="more"></span></p>
+<p>首先对 NoHttp 网络框架做一个简介</p>
+<blockquote>
+<p>Nohttp 是一个 Android Http 标准框架，底层可动态切换 OkHttp、URLConnection，与 RxJava 完美结合，支持缓存数据到数据库或 SD 卡（缓存数据自动加密），支持请求 Restful 风格的接口，比 Retrofit 更简单易用。</p>
+</blockquote>
+<p><strong>Nohttp</strong> 框架特性</p>
+<ul>
+<li>动态配置底层框架为 <strong>OkHttp</strong>、HttpURLConnection</li>
+<li>支持异步请求、支持同步请求</li>
+<li>多文件上传，支持大文件上传，表单提交数据</li>
+<li>文件下载、上传下载、上传和下载的进度回调、错误回调</li>
+<li>支持 Json、xml、Map、List 的提交</li>
+<li>完美的 Http 缓存模式，可指定缓存到数据库、SD 卡，缓存数据已安全加密</li>
+<li>自定义 Request，直接请求 JsonObject、JavaBean 等</li>
+<li>Cookie 的自动维持，App 重启、关开机后还持续维持</li>
+<li>http 301 302 303 304 307 重定向，支持多层嵌套重定向</li>
+<li>Https、自签名网站 Https 的访问、支持双向验证</li>
+<li>失败重试机制，支持请求优先级</li>
+<li>GET、POST、PUT、PATCH、HEAD、DELETE、OPTIONS、TRACE 等请求协议</li>
+<li>用队列保存请求，平均分配多线程的资源，支持多个请求并发</li>
+<li>支持取消某个请求、取消指定多个请求、取消所有请求</li>
+</ul>
+<p>这么多好用的功能，难道你不想试试？</p>
+<p>NoHttp 开源框架地址：<a target="_blank" rel="noopener" href="https://github.com/yanzhenjie/NoHttp">https://github.com/yanzhenjie/NoHttp</a></p>
+<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><h4 id="1-Gradle添加依赖（推荐）"><a href="#1-Gradle添加依赖（推荐）" class="headerlink" title="1. Gradle添加依赖（推荐）"></a>1. Gradle添加依赖（推荐）</h4><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compile <span class="string">&#x27;com.yanzhenjie.nohttp:okhttp:1.1.2&#x27;</span> (可能非最新版)</span><br></pre></td></tr></table></figure>
+<h4 id="2-需要的权限"><a href="#2-需要的权限" class="headerlink" title="2. 需要的权限"></a>2. 需要的权限</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">&quot;android.permission.READ_EXTERNAL_STORAGE&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">&quot;android.permission.WRITE_EXTERNAL_STORAGE&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">&quot;android.permission.INTERNET&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">&quot;android.permission.ACCESS_NETWORK_STATE&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">&quot;android.permission.ACCESS_WIFI_STATE&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="3-初始化"><a href="#3-初始化" class="headerlink" title="3. 初始化"></a>3. 初始化</h4><p>初始化 NoHttp，并设置 NoHttp 底层采用那种网络框架去请求，建议把初始化方法放到 <strong>Application</strong> 中 <em>onCreate</em> 生命周期方法里面。还有别忘了在<code>manifest.xml</code>中注册<code>Application</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//初始化 NoHttp</span></span><br><span class="line">NoHttp.initialize(<span class="keyword">this</span>, <span class="keyword">new</span> NoHttp.Config()</span><br><span class="line">        .setConnectTimeout(<span class="number">30</span> * <span class="number">1000</span>)  <span class="comment">// 设置全局连接超时时间，单位毫秒，默认10s。</span></span><br><span class="line">        .setReadTimeout(<span class="number">30</span> * <span class="number">1000</span>)  <span class="comment">// 设置全局服务器响应超时时间，单位毫秒，默认10s。</span></span><br><span class="line">        <span class="comment">// 配置缓存，默认保存数据库DBCacheStore，保存到SD卡使用DiskCacheStore。</span></span><br><span class="line">        .setCacheStore(</span><br><span class="line">                <span class="keyword">new</span> DBCacheStore(<span class="keyword">this</span>).setEnable(<span class="keyword">true</span>) <span class="comment">// 如果不使用缓存，设置setEnable(false)禁用。</span></span><br><span class="line">        )</span><br><span class="line">        <span class="comment">// 配置Cookie，默认保存数据库DBCookieStore，开发者可以自己实现。</span></span><br><span class="line">        .setCookieStore(</span><br><span class="line">                <span class="keyword">new</span> DBCookieStore(<span class="keyword">this</span>).setEnable(<span class="keyword">true</span>) <span class="comment">// 如果不维护cookie，设置false禁用。</span></span><br><span class="line">        )</span><br><span class="line">        <span class="comment">// 配置网络层，默认使用URLConnection，如果想用OkHttp：OkHttpNetworkExecutor。</span></span><br><span class="line">        .setNetworkExecutor(<span class="keyword">new</span> OkHttpNetworkExecutor())</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<h4 id="4-接下来，你就可以愉快的进行网络请求了："><a href="#4-接下来，你就可以愉快的进行网络请求了：" class="headerlink" title="4.接下来，你就可以愉快的进行网络请求了："></a>4.接下来，你就可以愉快的进行网络请求了：</h4><ul>
+<li><p>new 队列</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RequestQueue requestQueue = NoHttp.newRequestQueue();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>new 请求</p>
+<p>比如这样，</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Request&lt;String&gt; request = NoHttp.createStringRequest(url, RequestMethod.GET);</span><br></pre></td></tr></table></figure>
+<p>或者这样，</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Request&lt;JSONObject&gt; objRequest = NoHttp.createJsonObjectRequest(url, RequestMethod.POST);</span><br></pre></td></tr></table></figure>
+<p>…等等（支持更多，如 JsonArray、Bitmap、byte[] 或自定义请求类型）。然后把需要的请求参数添加进来：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">.add(<span class="string">&quot;name&quot;</span>, <span class="string">&quot;name&quot;</span>) <span class="comment">// String类型</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>把请求添加到队列，完成请求</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">requestQueue.add(what, request, responseListener);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>回调对象，接受请求结果</p>
+<p>处理成功、失败等方法的回调，实现当前界面的业务和逻辑。</p>
+<blockquote>
+<ul>
+<li>添加请求到队列时有一个what，这个what会在<code>responseLisetener</code>响应时回调回来，所以可以用一个<code>responseLisetener</code>接受多个请求的响应，用 what 来区分结果。</li>
+<li><strong>强烈建议</strong>把生成队列写成懒汉单例模式，因为每新建队列就会 new 出相应个数的线程来，同时只有线程数固定了，队列的作用才会发挥到最大。</li>
+</ul>
+</blockquote>
+</li>
+<li><p>取消请求</p>
+<p>在组件销毁的时候（<em>onDestroy()</em>）调用队列的按照 sign 取消的方法即可取消</p>
+</li>
+</ul>
+<p>这时我们发现有很多重复的操作，每个 Activity 和 Fragment 都这么写就显得有点麻烦了，再加上上面的两条重要提示，所以我们这里把队列进行单例模式封装，并把这些操作封装在 <code>BaseActivity</code>、<code>BaseFragment</code> 中。</p>
+<p><strong>以下是 NoHttp 简单的封装，方便在项目中使用。</strong></p>
+<h5 id="1-NoHttp-请求"><a href="#1-NoHttp-请求" class="headerlink" title="1. NoHttp 请求"></a>1. NoHttp 请求</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HttpResponseListener</span>&lt;<span class="title">T</span>&gt; <span class="keyword">implements</span> <span class="title">OnResponseListener</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Activity mActivity;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Dialog</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> WaitDialog mWaitDialog;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Request</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> Request&lt;?&gt; mRequest;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 结果回调</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> HttpListener&lt;T&gt; callback;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> activity     context用来实例化dialog</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> request      请求对象</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> httpCallback 回调对象</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> canCancel    是否允许用户取消请求</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> isLoading    是否显示dialog</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">HttpResponseListener</span><span class="params">(Activity activity, Request&lt;?&gt; request, HttpListener&lt;T&gt; httpCallback,</span></span></span><br><span class="line"><span class="function"><span class="params">                                <span class="keyword">boolean</span> canCancel, <span class="keyword">boolean</span> isLoading)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.mActivity = activity;</span><br><span class="line">        <span class="keyword">this</span>.mRequest = request;</span><br><span class="line">        <span class="keyword">if</span> (activity != <span class="keyword">null</span> &amp;&amp; isLoading) &#123;</span><br><span class="line">            mWaitDialog = <span class="keyword">new</span> WaitDialog(activity);</span><br><span class="line">            mWaitDialog.setCancelable(canCancel);</span><br><span class="line">            mWaitDialog.setOnCancelListener(dialog -&gt; mRequest.cancel());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">this</span>.callback = httpCallback;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 开始请求, 这里显示一个dialog</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStart</span><span class="params">(<span class="keyword">int</span> what)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (mWaitDialog != <span class="keyword">null</span> &amp;&amp; !mActivity.isFinishing() &amp;&amp; !mWaitDialog.isShowing())</span><br><span class="line">            mWaitDialog.show();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 结束请求, 这里关闭dialog</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFinish</span><span class="params">(<span class="keyword">int</span> what)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (mWaitDialog != <span class="keyword">null</span> &amp;&amp; mWaitDialog.isShowing())</span><br><span class="line">            mWaitDialog.dismiss();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 成功回调</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSucceed</span><span class="params">(<span class="keyword">int</span> what, Response&lt;T&gt; response)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (callback != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="comment">// 这里判断一下http响应码，这个响应码问下你们的服务端你们的状态有几种，一般是200成功。</span></span><br><span class="line">            <span class="comment">// w3c标准http响应码：http://www.w3school.com.cn/tags/html_ref_httpmessages.asp</span></span><br><span class="line"></span><br><span class="line">            callback.onSucceed(what, response);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 失败回调</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailed</span><span class="params">(<span class="keyword">int</span> what, Response&lt;T&gt; response)</span> </span>&#123;</span><br><span class="line">        Exception exception = response.getException();</span><br><span class="line">        <span class="keyword">if</span> (exception <span class="keyword">instanceof</span> NetworkError) &#123;<span class="comment">// 网络不好</span></span><br><span class="line">            Toast.show(mActivity, R.string.error_please_check_network);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (exception <span class="keyword">instanceof</span> TimeoutError) &#123;<span class="comment">// 请求超时</span></span><br><span class="line">            Toast.show(mActivity, R.string.error_timeout);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (exception <span class="keyword">instanceof</span> UnKnownHostError) &#123;<span class="comment">// 找不到服务器</span></span><br><span class="line">            Toast.show(mActivity, R.string.error_not_found_server);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (exception <span class="keyword">instanceof</span> URLError) &#123;<span class="comment">// URL是错的</span></span><br><span class="line">            Toast.show(mActivity, R.string.error_url_error);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (exception <span class="keyword">instanceof</span> NotFoundCacheError) &#123;</span><br><span class="line">            <span class="comment">// 这个异常只会在仅仅查找缓存时没有找到缓存时返回</span></span><br><span class="line">            Toast.show(mActivity, R.string.error_not_found_cache);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            Toast.show(mActivity, R.string.error_unknow);</span><br><span class="line">        &#125;</span><br><span class="line">        Logger.e(<span class="string">&quot;错误：&quot;</span> + exception.getMessage());</span><br><span class="line">        <span class="keyword">if</span> (callback != <span class="keyword">null</span>)</span><br><span class="line">            callback.onFailed(what, response);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="2-接受回调结果"><a href="#2-接受回调结果" class="headerlink" title="2. 接受回调结果"></a>2. 接受回调结果</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">HttpListener</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onSucceed</span><span class="params">(<span class="keyword">int</span> what, Response&lt;T&gt; response)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onFailed</span><span class="params">(<span class="keyword">int</span> what, Response&lt;T&gt; response)</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="3-队列的单例模式封装-–-提供外部调用进行网络请求"><a href="#3-队列的单例模式封装-–-提供外部调用进行网络请求" class="headerlink" title="3. 队列的单例模式封装 – 提供外部调用进行网络请求"></a>3. 队列的单例模式封装 – 提供外部调用进行网络请求</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CallServer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> CallServer instance;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 请求队列</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> RequestQueue requestQueue;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">CallServer</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 初始化请求队列，传入的参数是请求并发值</span></span><br><span class="line">        requestQueue = NoHttp.newRequestQueue(<span class="number">3</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 请求队列</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">static</span> CallServer <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (instance == <span class="keyword">null</span>)</span><br><span class="line">            <span class="keyword">synchronized</span> (CallServer.class) &#123;</span><br><span class="line">                <span class="keyword">if</span> (instance == <span class="keyword">null</span>)</span><br><span class="line">                    instance = <span class="keyword">new</span> CallServer();</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 添加一个请求到请求队列</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> activity     Context</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> what         用来标志请求, 当多个请求使用同一个Listener时, 在回调方法中会返回这个what。</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> request      请求对象</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> httpCallback 回调函数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> canCancel    是否能被用户取消</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> isLoading    是否显示加载框</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> &lt;T&gt;</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> &lt;T&gt; <span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(Activity activity, <span class="keyword">int</span> what, Request&lt;T&gt; request,</span></span></span><br><span class="line"><span class="function"><span class="params">                        HttpListener&lt;T&gt; httpCallback, <span class="keyword">boolean</span> canCancel, <span class="keyword">boolean</span> isLoading)</span> </span>&#123;</span><br><span class="line">        requestQueue.add(what, request, <span class="keyword">new</span> HttpResponseListener&lt;&gt;(activity, request, httpCallback,</span><br><span class="line">                canCancel, isLoading));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 取消这个sign标记的所有请求</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> sign 请求的取消标志</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">cancelBySign</span><span class="params">(Object sign)</span> </span>&#123;</span><br><span class="line">        requestQueue.cancelBySign(sign);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 取消队列中所有请求</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">cancelAll</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        requestQueue.cancelAll();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 停止队列</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">stop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        requestQueue.stop();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="4-在-BaseActivity、BaseFragment-中发起请求，并设置标记"><a href="#4-在-BaseActivity、BaseFragment-中发起请求，并设置标记" class="headerlink" title="4. 在 BaseActivity、BaseFragment 中发起请求，并设置标记"></a>4. 在 BaseActivity、BaseFragment 中发起请求，并设置标记</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 用来标记取消</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> Object object = <span class="keyword">new</span> Object();</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 发起请求</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> what      what.</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> request   请求对象。</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> callback  回调函数。</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> canCancel 是否能被用户取消。</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> isLoading 实现显示加载框。</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> &lt;T&gt;       想请求到的数据类型。</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> &lt;T&gt; <span class="function"><span class="keyword">void</span> <span class="title">request</span><span class="params">(<span class="keyword">int</span> what, Request&lt;T&gt; request, HttpListener&lt;T&gt; callback,</span></span></span><br><span class="line"><span class="function"><span class="params">                            <span class="keyword">boolean</span> canCancel, <span class="keyword">boolean</span> isLoading)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 这里设置一个sign给这个请求</span></span><br><span class="line">        request.setCancelSign(object);</span><br><span class="line">        CallServer.getInstance().add(context, what, request, callback, canCancel, isLoading);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 和声明周期绑定，退出时取消这个队列中的所有请求，当然可以在你想取消的时候取消也可以，不一定和声明周期绑定。</span></span><br><span class="line">        CallServer.getInstance().cancelBySign(object);</span><br><span class="line">        <span class="keyword">super</span>.onDestroy();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h5 id="5-其它界面继承-BaseActivity-或-BaseFragment，请求网络的方式跟上面的类似，多了几个参数而已。"><a href="#5-其它界面继承-BaseActivity-或-BaseFragment，请求网络的方式跟上面的类似，多了几个参数而已。" class="headerlink" title="5. 其它界面继承 BaseActivity 或 BaseFragment，请求网络的方式跟上面的类似，多了几个参数而已。"></a>5. 其它界面继承 BaseActivity 或 BaseFragment，请求网络的方式跟上面的类似，多了几个参数而已。</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">Request&lt;String&gt; request = NoHttp.createStringRequest(url, RequestMethod.GET);</span><br><span class="line">request.add(<span class="string">&quot;name&quot;</span>, <span class="string">&quot;name&quot;</span>)</span><br><span class="line">request(<span class="number">0</span>, request, httpListener, <span class="keyword">true</span>, <span class="keyword">true</span>);</span><br></pre></td></tr></table></figure>
+<h5 id="附-0-封装中使用到的自定义控件及引用文字"><a href="#附-0-封装中使用到的自定义控件及引用文字" class="headerlink" title="附 0. 封装中使用到的自定义控件及引用文字"></a>附 0. 封装中使用到的自定义控件及引用文字</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 加载框</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WaitDialog</span> <span class="keyword">extends</span> <span class="title">ProgressDialog</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">WaitDialog</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(context);</span><br><span class="line">        requestWindowFeature(Window.FEATURE_NO_TITLE);</span><br><span class="line">        setCanceledOnTouchOutside(<span class="keyword">false</span>);</span><br><span class="line">        setProgressStyle(STYLE_SPINNER);</span><br><span class="line">        setMessage(context.getText(R.string.wait_dialog_title));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">//代码中的引用字符串</span><br><span class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">&quot;wait_dialog_title&quot;</span>&gt;</span>正在请求，请稍候…<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- error --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">&quot;error_please_check_network&quot;</span>&gt;</span>请检查网络<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">&quot;error_timeout&quot;</span>&gt;</span>请求超时，网络不好或者服务器不稳定<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">&quot;error_not_found_server&quot;</span>&gt;</span>未发现指定服务器，请切换网络后重试<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">&quot;error_url_error&quot;</span>&gt;</span>URL错误<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">&quot;error_not_found_cache&quot;</span>&gt;</span>没有找到缓存<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">&quot;error_unknow&quot;</span>&gt;</span>未知错误<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">&quot;error_response_code&quot;</span>&gt;</span>服务器响应码%1$d<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">&quot;error_response_code_dex&quot;</span>&gt;</span>服务器响应码%1$d，如果你们服务器在这种情况下也返回数据你可以处理<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>现已将此封装发布到 JitPack ，可以直接使用如下方式引入。</strong></p>
+<p><a target="_blank" rel="noopener" href="https://jitpack.io/#lishide/NoHttpConnecter"><img src="https://jitpack.io/v/lishide/NoHttpConnecter.svg" alt=""></a></p>
+<h4 id="JitPack-引入方法"><a href="#JitPack-引入方法" class="headerlink" title="JitPack 引入方法"></a>JitPack 引入方法</h4><h5 id="1-在-Project-下的-build-gradle-添加"><a href="#1-在-Project-下的-build-gradle-添加" class="headerlink" title="1. 在 Project 下的 build.gradle 添加"></a>1. 在 Project 下的 build.gradle 添加</h5><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">allprojects &#123;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        ...</span><br><span class="line">        maven &#123; url <span class="string">&#x27;https://jitpack.io&#x27;</span> &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="2-在-Module-下的-build-gradle-添加"><a href="#2-在-Module-下的-build-gradle-添加" class="headerlink" title="2. 在 Module 下的 build.gradle 添加"></a>2. 在 Module 下的 build.gradle 添加</h5><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    compile <span class="string">&#x27;com.github.lishide:NoHttpConnecter:v+latest version&#x27;</span></span><br><span class="line">    <span class="comment">//latest version 见上方 JitPack 图标所示，如：</span></span><br><span class="line">    compile <span class="string">&#x27;com.github.lishide:NoHttpConnecter:v1.0.2&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="五大缓存模式"><a href="#五大缓存模式" class="headerlink" title="五大缓存模式"></a>五大缓存模式</h3><ul>
+<li><p>1、Default 模式，实现 http304 重定向缓存</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">request.setCacheMode(CacheMode.DEFAULT);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>2、请求网络失败返回缓存</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">request.setCacheMode(CacheMode.REQUEST_NETWORK_FAILED_READ_CACHE);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>3、没有缓存才去请求网络</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">request.setCacheMode(CacheMode.NONE_CACHE_REQUEST_NETWORK);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>4、仅仅请求网络</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">request.setCacheMode(CacheMode.ONLY_REQUEST_NETWORK);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>5、仅仅读取缓存</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">request.setCacheMode(CacheMode.ONLY_READ_CACHE);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="文件下载"><a href="#文件下载" class="headerlink" title="文件下载"></a>文件下载</h3><ul>
+<li>1、单个文件下载</li>
+<li>2、多个文件下载</li>
+</ul>
+<p>文件下载也是队列，队列和开头所说的请求的队列是一样的。</p>
+<ul>
+<li><p>发起下载请求</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mDownloadRequest = NoHttp.createDownloadRequest(url, path, filename, <span class="keyword">true</span>, <span class="keyword">true</span>);</span><br><span class="line">downloadQueue.add(<span class="number">0</span>, mDownloadRequest, downloadListener);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>暂停或者停止下载</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mDownloadRequest.cancel();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>监听下载过程</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">private</span> DownloadListener downloadListener = <span class="keyword">new</span> DownloadListener() &#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 下载开始</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStart</span><span class="params">(<span class="keyword">int</span> what, <span class="keyword">boolean</span> isResume, <span class="keyword">long</span> beforeLength, Headers headers, <span class="keyword">long</span> allCount)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 下载发生错误</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDownloadError</span><span class="params">(<span class="keyword">int</span> what, Exception exception)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 更新下载进度和下载网速</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onProgress</span><span class="params">(<span class="keyword">int</span> what, <span class="keyword">int</span> progress, <span class="keyword">long</span> fileCount, <span class="keyword">long</span> speed)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 下载完成</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFinish</span><span class="params">(<span class="keyword">int</span> what, String filePath)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 下载被取消或者暂停</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCancel</span><span class="params">(<span class="keyword">int</span> what)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>关于文件下载，具体的请参考 Demo。</p>
+<h3 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h3><ul>
+<li><p>1、单个文件上传</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Request&lt;String&gt; request = NoHttp.createStringRequest(url, RequestMethod.POST);</span><br><span class="line">request.add(<span class="string">&quot;file&quot;</span>, <span class="keyword">new</span> FileBinary(file));</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>2、多个文件上传（这里可以添加各种形式的文件，File、Bitmap、InputStream、ByteArray。）</p>
+<ul>
+<li><p><strong>多个Key多个文件形式</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Request&lt;String&gt; request = ...</span><br><span class="line">request.add(<span class="string">&quot;file1&quot;</span>, <span class="keyword">new</span> FileBinary(File));</span><br><span class="line">request.add(<span class="string">&quot;file2&quot;</span>, <span class="keyword">new</span> FileBinary(File));</span><br><span class="line">request.add(<span class="string">&quot;file3&quot;</span>, <span class="keyword">new</span> InputStreamBinary(InputStream));</span><br><span class="line">request.add(<span class="string">&quot;file4&quot;</span>, <span class="keyword">new</span> ByteArrayBinary(<span class="keyword">byte</span>[]));</span><br><span class="line">request.add(<span class="string">&quot;file5&quot;</span>, <span class="keyword">new</span> BitmapBinary(Bitmap));</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>一个Key多个文件形式</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Request&lt;String&gt; request = ...</span><br><span class="line">fileList.add(<span class="string">&quot;image&quot;</span>, <span class="keyword">new</span> FileBinary(File));</span><br><span class="line">fileList.add(<span class="string">&quot;image&quot;</span>, <span class="keyword">new</span> InputStreamBinary(InputStream));</span><br><span class="line">fileList.add(<span class="string">&quot;image&quot;</span>, <span class="keyword">new</span> ByteArrayBinary(<span class="keyword">byte</span>[]));</span><br><span class="line">fileList.add(<span class="string">&quot;image&quot;</span>, <span class="keyword">new</span> BitmapBinary(Bitmap));</span><br></pre></td></tr></table></figure>
+<p>或者：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Request&lt;String&gt; request = ...</span><br><span class="line">List&lt;Binary&gt; fileList = ...</span><br><span class="line">fileList.add(<span class="keyword">new</span> FileBinary(File));</span><br><span class="line">fileList.add(<span class="keyword">new</span> InputStreamBinary(InputStream));</span><br><span class="line">fileList.add(<span class="keyword">new</span> ByteArrayBinary(<span class="keyword">byte</span>[]));</span><br><span class="line">fileList.add(<span class="keyword">new</span> BitmapStreamBinary(Bitmap));</span><br><span class="line">request.add(<span class="string">&quot;file_list&quot;</span>, fileList);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<p>……</p>
+<hr>
+<p>本人仅是简单地对 NoHttp 网络请求框架进行轻量级的封装，后期还会进行持续维护，更多关于 NoHttp 的使用可直接查看原作。</p>
+<p><strong>NoHttp —— 一个有情怀的网络框架 ，让你的网络请求更简单。</strong></p>
+<p>像上面说的一样，NoHttp 真的很强大、很好用，嗯，没错。</p>
+<p><strong>Demo 源码请看 GitHub： <a target="_blank" rel="noopener" href="https://github.com/lishide/NoHttpConnecter">NoHttpConnecter</a>。</strong></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Android/" rel="tag"><i class="fa fa-tag"></i> Android</a>
+              <a href="/tags/NoHttp/" rel="tag"><i class="fa fa-tag"></i> NoHttp</a>
+              <a href="/tags/Http/" rel="tag"><i class="fa fa-tag"></i> Http</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/03/13/android-volley-use/" rel="prev" title="Volley 的使用及其工具类的封装">
+      <i class="fa fa-chevron-left"></i> Volley 的使用及其工具类的封装
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/03/16/Android-keystore-info/" rel="next" title="Android 获取 SHA1 等 keystore 的信息">
+      Android 获取 SHA1 等 keystore 的信息 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">使用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-Gradle%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96%EF%BC%88%E6%8E%A8%E8%8D%90%EF%BC%89"><span class="nav-number">1.1.</span> <span class="nav-text">1. Gradle添加依赖（推荐）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E9%9C%80%E8%A6%81%E7%9A%84%E6%9D%83%E9%99%90"><span class="nav-number">1.2.</span> <span class="nav-text">2. 需要的权限</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">1.3.</span> <span class="nav-text">3. 初始化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E6%8E%A5%E4%B8%8B%E6%9D%A5%EF%BC%8C%E4%BD%A0%E5%B0%B1%E5%8F%AF%E4%BB%A5%E6%84%89%E5%BF%AB%E7%9A%84%E8%BF%9B%E8%A1%8C%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E4%BA%86%EF%BC%9A"><span class="nav-number">1.4.</span> <span class="nav-text">4.接下来，你就可以愉快的进行网络请求了：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-NoHttp-%E8%AF%B7%E6%B1%82"><span class="nav-number">1.4.1.</span> <span class="nav-text">1. NoHttp 请求</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E6%8E%A5%E5%8F%97%E5%9B%9E%E8%B0%83%E7%BB%93%E6%9E%9C"><span class="nav-number">1.4.2.</span> <span class="nav-text">2. 接受回调结果</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-%E9%98%9F%E5%88%97%E7%9A%84%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E5%B0%81%E8%A3%85-%E2%80%93-%E6%8F%90%E4%BE%9B%E5%A4%96%E9%83%A8%E8%B0%83%E7%94%A8%E8%BF%9B%E8%A1%8C%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82"><span class="nav-number">1.4.3.</span> <span class="nav-text">3. 队列的单例模式封装 – 提供外部调用进行网络请求</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-%E5%9C%A8-BaseActivity%E3%80%81BaseFragment-%E4%B8%AD%E5%8F%91%E8%B5%B7%E8%AF%B7%E6%B1%82%EF%BC%8C%E5%B9%B6%E8%AE%BE%E7%BD%AE%E6%A0%87%E8%AE%B0"><span class="nav-number">1.4.4.</span> <span class="nav-text">4. 在 BaseActivity、BaseFragment 中发起请求，并设置标记</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-%E5%85%B6%E5%AE%83%E7%95%8C%E9%9D%A2%E7%BB%A7%E6%89%BF-BaseActivity-%E6%88%96-BaseFragment%EF%BC%8C%E8%AF%B7%E6%B1%82%E7%BD%91%E7%BB%9C%E7%9A%84%E6%96%B9%E5%BC%8F%E8%B7%9F%E4%B8%8A%E9%9D%A2%E7%9A%84%E7%B1%BB%E4%BC%BC%EF%BC%8C%E5%A4%9A%E4%BA%86%E5%87%A0%E4%B8%AA%E5%8F%82%E6%95%B0%E8%80%8C%E5%B7%B2%E3%80%82"><span class="nav-number">1.4.5.</span> <span class="nav-text">5. 其它界面继承 BaseActivity 或 BaseFragment，请求网络的方式跟上面的类似，多了几个参数而已。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%99%84-0-%E5%B0%81%E8%A3%85%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%88%B0%E7%9A%84%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8E%A7%E4%BB%B6%E5%8F%8A%E5%BC%95%E7%94%A8%E6%96%87%E5%AD%97"><span class="nav-number">1.4.6.</span> <span class="nav-text">附 0. 封装中使用到的自定义控件及引用文字</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JitPack-%E5%BC%95%E5%85%A5%E6%96%B9%E6%B3%95"><span class="nav-number">1.5.</span> <span class="nav-text">JitPack 引入方法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%E5%9C%A8-Project-%E4%B8%8B%E7%9A%84-build-gradle-%E6%B7%BB%E5%8A%A0"><span class="nav-number">1.5.1.</span> <span class="nav-text">1. 在 Project 下的 build.gradle 添加</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E5%9C%A8-Module-%E4%B8%8B%E7%9A%84-build-gradle-%E6%B7%BB%E5%8A%A0"><span class="nav-number">1.5.2.</span> <span class="nav-text">2. 在 Module 下的 build.gradle 添加</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%94%E5%A4%A7%E7%BC%93%E5%AD%98%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">五大缓存模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD"><span class="nav-number">3.</span> <span class="nav-text">文件下载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0"><span class="nav-number">4.</span> <span class="nav-text">文件上传</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">李世德</p>
+  <div class="site-description" itemprop="description">爱生活，爱学习，一个不羁的编码界小学生。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/lishide" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lishide" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/3235831430" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;3235831430" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李世德</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">58k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">53 分钟</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

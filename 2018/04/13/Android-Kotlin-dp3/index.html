@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lishide.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="本讲的 Kotlin 知识部分主要讲解接口、数据类及常见函数的使用，第二部分讲解抽象工厂模式的简单实现。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【团队分享】Kotlin 及设计模式实践（三）">
+<meta property="og:url" content="https://lishide.github.io/2018/04/13/Android-Kotlin-dp3/index.html">
+<meta property="og:site_name" content="李世德的博客">
+<meta property="og:description" content="本讲的 Kotlin 知识部分主要讲解接口、数据类及常见函数的使用，第二部分讲解抽象工厂模式的简单实现。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://p6wpxhpqt.bkt.clouddn.com/img_dp_AbatractFactory.jpg">
+<meta property="article:published_time" content="2018-04-13T15:40:35.000Z">
+<meta property="article:modified_time" content="2021-11-19T09:32:35.409Z">
+<meta property="article:author" content="李世德">
+<meta property="article:tag" content="Android">
+<meta property="article:tag" content="Kotlin">
+<meta property="article:tag" content="Design Patterns">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://p6wpxhpqt.bkt.clouddn.com/img_dp_AbatractFactory.jpg">
+
+<link rel="canonical" href="https://lishide.github.io/2018/04/13/Android-Kotlin-dp3/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>【团队分享】Kotlin 及设计模式实践（三） | 李世德的博客</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?62dee491f23b92487e7821869f23f7f0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">李世德的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">我有故事，你有酒吗？</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/lishide" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://lishide.github.io/2018/04/13/Android-Kotlin-dp3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李世德">
+      <meta itemprop="description" content="爱生活，爱学习，一个不羁的编码界小学生。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李世德的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【团队分享】Kotlin 及设计模式实践（三）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-04-13 15:40:35" itemprop="dateCreated datePublished" datetime="2018-04-13T15:40:35Z">2018-04-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-11-19 09:32:35" itemprop="dateModified" datetime="2021-11-19T09:32:35Z">2021-11-19</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>本讲的 Kotlin 知识部分主要讲解接口、数据类及常见函数的使用，第二部分讲解抽象工厂模式的简单实现。</p>
+<span id="more"></span>
+<h1 id="1-Kotlin"><a href="#1-Kotlin" class="headerlink" title="1. Kotlin"></a>1. Kotlin</h1><h2 id="1-1-接口"><a href="#1-1-接口" class="headerlink" title="1.1 接口"></a>1.1 接口</h2><p>Kotlin 的接口与 Java 8 类似，既包含抽象方法的声明，也包含实现。与抽象类不同的是，接口无法保存状态。</p>
+<h3 id="1-1-1-接口定义"><a href="#1-1-1-接口定义" class="headerlink" title="1.1.1 接口定义"></a>1.1.1 接口定义</h3><p>使用关键字 <code>interface</code> 来定义接口<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">MyInterface</span> </span>&#123;</span><br><span class="line">    <span class="function">fun <span class="title">bar</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    fun <span class="title">foo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="comment">// 可选的方法体</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="1-1-2-实现接口"><a href="#1-1-2-实现接口" class="headerlink" title="1.1.2 实现接口"></a>1.1.2 实现接口</h3><p>一个类或者对象可以实现一个或多个接口。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class Child : MyInterface &#123;</span><br><span class="line">    <span class="function">override fun <span class="title">bar</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 方法体</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="1-1-3-接口中的属性"><a href="#1-1-3-接口中的属性" class="headerlink" title="1.1.3 接口中的属性"></a>1.1.3 接口中的属性</h3><p>可以在接口中定义属性。在接口中声明的属性要么是抽象的，要么提供访问器的实现。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">MyInterface</span> </span>&#123;</span><br><span class="line">    val prop: Int <span class="comment">// 抽象的</span></span><br><span class="line"></span><br><span class="line">    val propertyWithImplementation: String</span><br><span class="line">        get() = <span class="string">&quot;foo&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="function">fun <span class="title">foo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        print(prop)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Child : MyInterface &#123;</span><br><span class="line">    override val prop: Int = <span class="number">28</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="1-1-4-解决覆盖冲突"><a href="#1-1-4-解决覆盖冲突" class="headerlink" title="1.1.4 解决覆盖冲突"></a>1.1.4 解决覆盖冲突</h3><p>实现多个接口时，可能会遇到同一方法继承多个实现的问题。例如<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">A</span> </span>&#123;</span><br><span class="line">    <span class="function">fun <span class="title">foo</span><span class="params">()</span> </span>&#123; print(<span class="string">&quot;A&quot;</span>) &#125;</span><br><span class="line">    <span class="function">fun <span class="title">bar</span><span class="params">()</span></span></span><br><span class="line"><span class="function">&#125;</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">interface B </span>&#123;</span><br><span class="line">    <span class="function">fun <span class="title">foo</span><span class="params">()</span> </span>&#123; print(<span class="string">&quot;B&quot;</span>) &#125;</span><br><span class="line">    <span class="function">fun <span class="title">bar</span><span class="params">()</span> </span>&#123; print(<span class="string">&quot;bar&quot;</span>) &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class C : A &#123;</span><br><span class="line">    <span class="function">override fun <span class="title">bar</span><span class="params">()</span> </span>&#123; print(<span class="string">&quot;bar&quot;</span>) &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class D : A, B &#123;</span><br><span class="line">    <span class="function">override fun <span class="title">foo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>&lt;A&gt;.foo()</span><br><span class="line">        <span class="keyword">super</span>&lt;B&gt;.foo()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">override fun <span class="title">bar</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>&lt;B&gt;.bar()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>上例中，接口 A 和 B 都定义了方法 <code>foo()</code> 和 <code>bar()</code>。 两者都实现了 <code>foo()</code>, 但是只有 B 实现了 <code>bar()</code> (<code>bar()</code> 在 A 中没有标记为抽象， 因为<strong>没有方法体时默认为抽象</strong>）。因为 C 是一个实现了 A 的具体类，所以必须要重写 <code>bar()</code> 并实现这个抽象方法。<br>然而，如果我们从 A 和 B 派生 D，我们需要实现我们从多个接口继承的所有方法，并指明 D 应该如何实现它们。这一规则既适用于继承单个实现（<code>bar()</code>）的方法也适用于继承多个实现（<code>foo()</code>）的方法。</p>
+<h2 id="1-2-数据类"><a href="#1-2-数据类" class="headerlink" title="1.2 数据类"></a>1.2 数据类</h2><h3 id="1-2-1-定义"><a href="#1-2-1-定义" class="headerlink" title="1.2.1 定义"></a>1.2.1 定义</h3><p>只保存数据的类，用 data 标注:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">data class <span class="title">User</span><span class="params">(val name: String, val age: Int)</span></span></span><br></pre></td></tr></table></figure><br>编译器会自动根据主构造函数中声明的所有属性添加如下方法：</p>
+<ul>
+<li><code>equals()</code>/<code>hashCode</code> 函数</li>
+<li><code>toString</code> 格式是 “User(name=john, age=42)”</li>
+<li><a target="_blank" rel="noopener" href="http://kotlinlang.org/docs/reference/multi-declarations.html">compontN()functions</a> 对应按声明顺序出现的所有属性</li>
+<li><code>copy()</code> 函数</li>
+</ul>
+<blockquote>
+<p>如果在类中明确声明或从基类继承了这些方法，编译器不会自动生成。</p>
+</blockquote>
+<p>为确保这些生成代码的一致性，并实现有意义的行为，数据类要满足下面的要求：</p>
+<ul>
+<li>注意如果构造函数参数中没有 <code>val</code> 或者 <code>var</code> ，就不会在这些函数中出现；</li>
+<li>主构造函数应该至少有一个参数；</li>
+<li>主构造函数的所有参数必须标注为 <code>val</code> 或者 <code>var</code> ；</li>
+<li>数据类不能是 abstract，open，sealed，或者 inner ；</li>
+<li>从1.1开始数据类可以继承其它类</li>
+<li>在 JVM 中如果构造函数是无参的，则所有的属性必须有默认的值;<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">data class <span class="title">User</span><span class="params">(val name: String = <span class="string">&quot;&quot;</span>, val age: Int = <span class="number">0</span>)</span></span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="1-2-2-复制"><a href="#1-2-2-复制" class="headerlink" title="1.2.2 复制"></a>1.2.2 复制</h3><p>对一些属性做修改但想要其他部分不变。<br>实现（编译器自动添加的 copy 函数）：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">fun <span class="title">copy</span><span class="params">(name: String = <span class="keyword">this</span>.name, age: Int = <span class="keyword">this</span>.age)</span> </span>= User(name, age)</span><br></pre></td></tr></table></figure><br>使用：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">val kotlin = User(name = <span class="string">&quot;kotlin&quot;</span>, age = <span class="number">1</span>)</span><br><span class="line">val olderKotlin = kotlin.copy(age = <span class="number">2</span>)</span><br></pre></td></tr></table></figure></p>
+<h2 id="1-3-函数"><a href="#1-3-函数" class="headerlink" title="1.3 函数"></a>1.3 函数</h2><h3 id="1-3-1-函数声明"><a href="#1-3-1-函数声明" class="headerlink" title="1.3.1 函数声明"></a>1.3.1 函数声明</h3><p>使用 <code>fun</code> 关键字声明函数：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">fun <span class="title">sum</span><span class="params">(x: Int)</span>: Int </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">2</span> * x</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="1-3-2-函数用法"><a href="#1-3-2-函数用法" class="headerlink" title="1.3.2 函数用法"></a>1.3.2 函数用法</h3><p>调用函数使用传统的方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">val result = sum(<span class="number">2</span>)</span><br></pre></td></tr></table></figure></p>
+<h4 id="1-3-2-1-参数"><a href="#1-3-2-1-参数" class="headerlink" title="1.3.2.1 参数"></a>1.3.2.1 参数</h4><p>使用 <code>name: type</code> 表示法定义，参数用逗号隔开，每个参数必须有显式类型：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">fun <span class="title">powerOf</span><span class="params">(x: Int, y: Int)</span> </span>&#123;</span><br><span class="line"><span class="comment">//……</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="1-3-2-2-默认参数"><a href="#1-3-2-2-默认参数" class="headerlink" title="1.3.2.2 默认参数"></a>1.3.2.2 默认参数</h4><p>函数参数可以有默认值，当省略相应的参数时使用默认值。与其他语言相比，这可以减少重载数量：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">fun <span class="title">read</span><span class="params">(b: Array&lt;Byte&gt;, off: Int = <span class="number">0</span>, len: Int = b.size)</span> </span>&#123;</span><br><span class="line"><span class="comment">//……</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>默认值通过类型后面的 = 及给出的值来定义。<br>覆盖方法总是使用与基类型方法相同的默认参数值。 当覆盖一个带有默认参数值的方法时，必须从签名中省略默认参数值：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">open <span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123;</span><br><span class="line">    <span class="function">open fun <span class="title">foo</span><span class="params">(i: Int = <span class="number">10</span>)</span> </span>&#123; …… &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class B : A() &#123;</span><br><span class="line">    <span class="function">override fun <span class="title">foo</span><span class="params">(i: Int)</span> </span>&#123; …… &#125;  <span class="comment">// 不能有默认值</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>如果一个默认参数在一个无默认值的参数之前，那么该默认值只能通过使用<strong>命名参数</strong>调用该函数来使用：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">fun <span class="title">foo</span><span class="params">(bar: Int = <span class="number">0</span>, baz: Int)</span> </span>&#123; <span class="comment">/* …… */</span> &#125;</span><br><span class="line"></span><br><span class="line">foo(baz = <span class="number">1</span>) <span class="comment">// 使用默认值 bar = 0</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="1-3-2-3-命名参数"><a href="#1-3-2-3-命名参数" class="headerlink" title="1.3.2.3 命名参数"></a>1.3.2.3 命名参数</h4><p>可以在调用函数时使用命名的函数参数。当一个函数有大量的参数或默认参数时会非常方便。<br>给定以下函数：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">fun <span class="title">reformat</span><span class="params">(str: String,</span></span></span><br><span class="line"><span class="function"><span class="params">             isA: Boolean = <span class="keyword">true</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">             isB: Boolean = <span class="keyword">true</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">             isC: Boolean = <span class="keyword">false</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">             word: Char = <span class="string">&#x27; &#x27;</span>)</span> </span>&#123;</span><br><span class="line">……</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>我们可以使用默认参数来调用它：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reformat(str)</span><br></pre></td></tr></table></figure><br>然而，当使用非默认参数调用它时，该调用看起来就像：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reformat(str, <span class="keyword">true</span>, <span class="keyword">true</span>, <span class="keyword">false</span>, <span class="string">&#x27;_&#x27;</span>)</span><br></pre></td></tr></table></figure><br>使用命名参数我们可以使代码更具有可读性：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">reformat(str,</span><br><span class="line">    isA = <span class="keyword">true</span>,</span><br><span class="line">    isB = <span class="keyword">true</span>,</span><br><span class="line">    isC = <span class="keyword">false</span>,</span><br><span class="line">    word = <span class="string">&#x27;_&#x27;</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure><br>并且如果我们不需要所有的参数：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reformat(str, word = <span class="string">&#x27;_&#x27;</span>)</span><br></pre></td></tr></table></figure></p>
+<h4 id="1-3-2-4-返回-Unit-的函数"><a href="#1-3-2-4-返回-Unit-的函数" class="headerlink" title="1.3.2.4 返回 Unit 的函数"></a>1.3.2.4 返回 Unit 的函数</h4><p>如果一个函数不返回任何有用的值，它的返回类型是 <code>Unit</code>。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">fun <span class="title">printHello</span><span class="params">(name: String?)</span>: Unit </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (name != <span class="keyword">null</span>)</span><br><span class="line">        println(<span class="string">&quot;Hello $&#123;name&#125;&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        println(<span class="string">&quot;Hi there!&quot;</span>)</span><br><span class="line">    <span class="comment">// `return Unit` 或者 `return` 是可选的</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>Unit 返回类型声明也是可选的。上面的代码等同于：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">fun <span class="title">printHello</span><span class="params">(name: String?)</span> </span>&#123;</span><br><span class="line">    ……</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="1-3-2-5-单表达式函数"><a href="#1-3-2-5-单表达式函数" class="headerlink" title="1.3.2.5 单表达式函数"></a>1.3.2.5 单表达式函数</h4><p>当函数返回单个表达式时，可以省略花括号并且在 = 符号之后指定代码体即可：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">fun <span class="title">sum</span><span class="params">(x: Int)</span>: Int </span>= x * <span class="number">2</span></span><br></pre></td></tr></table></figure><br>当返回值类型可由编译器推断时，显式声明返回类型是可选的：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">fun <span class="title">sum</span><span class="params">(x: Int)</span> </span>= x * <span class="number">2</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="1-3-3-函数作用域"><a href="#1-3-3-函数作用域" class="headerlink" title="1.3.3 函数作用域"></a>1.3.3 函数作用域</h3><p>在 Kotlin 中函数可以在文件顶层声明，这意味着你不需要像一些语言如 Java、C# 或 Scala 那样创建一个类来保存一个函数。此外除了顶层函数，Kotlin 中函数也可以声明在局部作用域、作为成员函数以及扩展函数。</p>
+<h4 id="1-3-3-1-局部函数"><a href="#1-3-3-1-局部函数" class="headerlink" title="1.3.3.1 局部函数"></a>1.3.3.1 局部函数</h4><p>Kotlin 支持局部函数，即一个函数在另一个函数内部。</p>
+<h4 id="1-3-3-2-成员函数"><a href="#1-3-3-2-成员函数" class="headerlink" title="1.3.3.2 成员函数"></a>1.3.3.2 成员函数</h4><p>成员函数是在类或对象内部定义的函数：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Sample</span>() </span>&#123;</span><br><span class="line">    <span class="function">fun <span class="title">foo</span><span class="params">()</span> </span>&#123; print(<span class="string">&quot;Foo&quot;</span>) &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>成员函数以点表示法调用：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Sample().foo() <span class="comment">// 创建类 Sample 实例并调用 foo</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="2-抽象工厂模式"><a href="#2-抽象工厂模式" class="headerlink" title="2. 抽象工厂模式"></a>2. 抽象工厂模式</h1><h2 id="2-1-定义"><a href="#2-1-定义" class="headerlink" title="2.1 定义"></a>2.1 定义</h2><p>抽象工厂模式(Abstract Factory Pattern)：提供一个创建一系列相关或相互依赖对象的接口，而无须指定它们具体的类。抽象工厂模式又称为 Kit 模式，属于对象创建型模式。</p>
+<h2 id="2-2-结构"><a href="#2-2-结构" class="headerlink" title="2.2 结构"></a>2.2 结构</h2><p>AbstractFactory：抽象工厂，定义创建实例的抽象方法；<br>ConcreteFactory：具体工厂，实现具体逻辑；<br>AbstractProduct：抽象产品，定义产品的抽象方法；<br>Product：具体产品，实现具体逻辑；</p>
+<p><img src="http://p6wpxhpqt.bkt.clouddn.com/img_dp_AbatractFactory.jpg" alt="抽象工厂模式-类图"></p>
+<h2 id="2-3-抽象工厂模式的简单实现"><a href="#2-3-抽象工厂模式的简单实现" class="headerlink" title="2.3 抽象工厂模式的简单实现"></a>2.3 抽象工厂模式的简单实现</h2><h3 id="2-3-1-AbstractProduct"><a href="#2-3-1-AbstractProduct" class="headerlink" title="2.3.1 AbstractProduct"></a>2.3.1 AbstractProduct</h3><p>定义两个抽象产品角色，分别有其抽象方法 print。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractProductA</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">abstract</span> fun <span class="title">printA</span><span class="params">()</span></span></span><br><span class="line"><span class="function">&#125;</span></span><br><span class="line"><span class="function"><span class="keyword">abstract</span> class AbstractProductB </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">abstract</span> fun <span class="title">printB</span><span class="params">()</span></span></span><br><span class="line"><span class="function">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="2-3-2-ConcreteProduct"><a href="#2-3-2-ConcreteProduct" class="headerlink" title="2.3.2 ConcreteProduct"></a>2.3.2 ConcreteProduct</h3><p>定义了四个具体产品角色，分别实现了父类对应的 printA 和 printB 方法。</p>
+<p>A1 和 B1 属于同一个产品族的不同产品等级的两种产品，A2 和B2 类似。其中：</p>
+<p>产品等级——同一类产品的产品等级相同，如海尔冰箱、西门子冰箱等；</p>
+<p>产品族——同一家工厂生产的不同产品等级的产品，如海尔冰箱、海尔洗衣机等。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">class ConcreteProductA1 : AbstractProductA() &#123;</span><br><span class="line">    <span class="function">override fun <span class="title">printA</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        println(<span class="string">&quot;printA of ConcreteProductA1&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class ConcreteProductA2 : AbstractProductA() &#123;</span><br><span class="line">    <span class="function">override fun <span class="title">printA</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        println(<span class="string">&quot;printA of ConcreteProductA2&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class ConcreteProductB1 : AbstractProductB() &#123;</span><br><span class="line">    <span class="function">override fun <span class="title">printB</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        println(<span class="string">&quot;printB of ConcreteProductB1&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class ConcreteProductB2 : AbstractProductB() &#123;</span><br><span class="line">    <span class="function">override fun <span class="title">printB</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        println(<span class="string">&quot;printB of ConcreteProductB2&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="2-3-3-AbstractFactory"><a href="#2-3-3-AbstractFactory" class="headerlink" title="2.3.3 AbstractFactory"></a>2.3.3 AbstractFactory</h3><p>定义抽象工厂角色，及抽象方法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractFactory</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">abstract</span> fun <span class="title">createProductA</span><span class="params">()</span>: AbstractProductA</span></span><br><span class="line"><span class="function">    <span class="keyword">abstract</span> fun <span class="title">createProductB</span><span class="params">()</span>: AbstractProductB</span></span><br><span class="line"><span class="function">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="2-3-4-ConcreteFactory"><a href="#2-3-4-ConcreteFactory" class="headerlink" title="2.3.4 ConcreteFactory"></a>2.3.4 ConcreteFactory</h3><p>定义了两个具体工厂角色，分别实现<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">class ConcreteFactory1 : AbstractFactory() &#123;</span><br><span class="line">    <span class="function">override fun <span class="title">createProductA</span><span class="params">()</span>: AbstractProductA </span>&#123;</span><br><span class="line">        println(<span class="string">&quot;create ProductA1&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> ConcreteProductA1()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">override fun <span class="title">createProductB</span><span class="params">()</span>: AbstractProductB </span>&#123;</span><br><span class="line">        println(<span class="string">&quot;create ProductB1&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> ConcreteProductB1()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class ConcreteFactory2 : AbstractFactory() &#123;</span><br><span class="line">    <span class="function">override fun <span class="title">createProductA</span><span class="params">()</span>: AbstractProductA </span>&#123;</span><br><span class="line">        println(<span class="string">&quot;create ProductA2&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> ConcreteProductA2()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">override fun <span class="title">createProductB</span><span class="params">()</span>: AbstractProductB </span>&#123;</span><br><span class="line">        println(<span class="string">&quot;create ProductB2&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> ConcreteProductB2()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="2-3-5-AbstractFactoryPattern"><a href="#2-3-5-AbstractFactoryPattern" class="headerlink" title="2.3.5 AbstractFactoryPattern"></a>2.3.5 AbstractFactoryPattern</h3><p>不同产品族的具体产品实例，用不同的具体工厂来创建。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> factory: AbstractFactory = ConcreteFactory1()</span><br><span class="line"><span class="keyword">var</span> productA = factory.createProductA()</span><br><span class="line"><span class="keyword">var</span> productB = factory.createProductB()</span><br><span class="line">productA.printA()</span><br><span class="line">productB.printB()</span><br><span class="line"></span><br><span class="line">factory = ConcreteFactory2()</span><br><span class="line">productA = factory.createProductA()</span><br><span class="line">productB = factory.createProductB()</span><br><span class="line">productA.printA()</span><br><span class="line">productB.printB()</span><br></pre></td></tr></table></figure></p>
+<h3 id="2-3-6-输出结果"><a href="#2-3-6-输出结果" class="headerlink" title="2.3.6 输出结果"></a>2.3.6 输出结果</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">----------抽象工厂模式 start----------</span><br><span class="line">create ProductA1</span><br><span class="line">create ProductB1</span><br><span class="line">printA of ConcreteProductA1</span><br><span class="line">printB of ConcreteProductB1</span><br><span class="line">create ProductA2</span><br><span class="line">create ProductB2</span><br><span class="line">printA of ConcreteProductA2</span><br><span class="line">printB of ConcreteProductB2</span><br><span class="line">----------抽象工厂模式   end----------</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Android/" rel="tag"><i class="fa fa-tag"></i> Android</a>
+              <a href="/tags/Kotlin/" rel="tag"><i class="fa fa-tag"></i> Kotlin</a>
+              <a href="/tags/Design-Patterns/" rel="tag"><i class="fa fa-tag"></i> Design Patterns</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/04/08/ubuntu-install-config-soft-2017/" rel="prev" title="一只小白的 Linux 之旅|Ubuntu 安装配置及软件安装（持续更新）">
+      <i class="fa fa-chevron-left"></i> 一只小白的 Linux 之旅|Ubuntu 安装配置及软件安装（持续更新）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/05/02/Android-Kotlin-dp4/" rel="next" title="【团队分享】Kotlin 及设计模式实践（四）">
+      【团队分享】Kotlin 及设计模式实践（四） <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Kotlin"><span class="nav-number">1.</span> <span class="nav-text">1. Kotlin</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E6%8E%A5%E5%8F%A3"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 接口</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-1-%E6%8E%A5%E5%8F%A3%E5%AE%9A%E4%B9%89"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1.1 接口定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-2-%E5%AE%9E%E7%8E%B0%E6%8E%A5%E5%8F%A3"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.1.2 实现接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-3-%E6%8E%A5%E5%8F%A3%E4%B8%AD%E7%9A%84%E5%B1%9E%E6%80%A7"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.1.3 接口中的属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-4-%E8%A7%A3%E5%86%B3%E8%A6%86%E7%9B%96%E5%86%B2%E7%AA%81"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.1.4 解决覆盖冲突</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E6%95%B0%E6%8D%AE%E7%B1%BB"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 数据类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-1-%E5%AE%9A%E4%B9%89"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.2.1 定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-%E5%A4%8D%E5%88%B6"><span class="nav-number">1.2.2.</span> <span class="nav-text">1.2.2 复制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-%E5%87%BD%E6%95%B0"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-1-%E5%87%BD%E6%95%B0%E5%A3%B0%E6%98%8E"><span class="nav-number">1.3.1.</span> <span class="nav-text">1.3.1 函数声明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-2-%E5%87%BD%E6%95%B0%E7%94%A8%E6%B3%95"><span class="nav-number">1.3.2.</span> <span class="nav-text">1.3.2 函数用法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-2-1-%E5%8F%82%E6%95%B0"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">1.3.2.1 参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-2-2-%E9%BB%98%E8%AE%A4%E5%8F%82%E6%95%B0"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">1.3.2.2 默认参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-2-3-%E5%91%BD%E5%90%8D%E5%8F%82%E6%95%B0"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">1.3.2.3 命名参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-2-4-%E8%BF%94%E5%9B%9E-Unit-%E7%9A%84%E5%87%BD%E6%95%B0"><span class="nav-number">1.3.2.4.</span> <span class="nav-text">1.3.2.4 返回 Unit 的函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-2-5-%E5%8D%95%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%87%BD%E6%95%B0"><span class="nav-number">1.3.2.5.</span> <span class="nav-text">1.3.2.5 单表达式函数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-3-%E5%87%BD%E6%95%B0%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="nav-number">1.3.3.</span> <span class="nav-text">1.3.3 函数作用域</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-3-1-%E5%B1%80%E9%83%A8%E5%87%BD%E6%95%B0"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">1.3.3.1 局部函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-3-2-%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">1.3.3.2 成员函数</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">2. 抽象工厂模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E5%AE%9A%E4%B9%89"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E7%BB%93%E6%9E%84"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 抽象工厂模式的简单实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-1-AbstractProduct"><span class="nav-number">2.3.1.</span> <span class="nav-text">2.3.1 AbstractProduct</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-2-ConcreteProduct"><span class="nav-number">2.3.2.</span> <span class="nav-text">2.3.2 ConcreteProduct</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-3-AbstractFactory"><span class="nav-number">2.3.3.</span> <span class="nav-text">2.3.3 AbstractFactory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-4-ConcreteFactory"><span class="nav-number">2.3.4.</span> <span class="nav-text">2.3.4 ConcreteFactory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-5-AbstractFactoryPattern"><span class="nav-number">2.3.5.</span> <span class="nav-text">2.3.5 AbstractFactoryPattern</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-6-%E8%BE%93%E5%87%BA%E7%BB%93%E6%9E%9C"><span class="nav-number">2.3.6.</span> <span class="nav-text">2.3.6 输出结果</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">李世德</p>
+  <div class="site-description" itemprop="description">爱生活，爱学习，一个不羁的编码界小学生。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/lishide" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lishide" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/3235831430" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;3235831430" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李世德</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">58k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">53 分钟</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

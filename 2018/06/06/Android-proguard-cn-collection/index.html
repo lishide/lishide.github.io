@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lishide.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="前言某一个夜深人静的加班夜，也许你在做代码混淆……ProGuard 是一个比较枯燥且没有成就感的技术，但 Android 项目没有了 ProGuard 还真就不行。在 Android 中使用 ProGuard 可以起到压缩、优化、混淆、预检的作用，保证我们开发出的 APK 更健壮。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 混淆规则整理">
+<meta property="og:url" content="https://lishide.github.io/2018/06/06/Android-proguard-cn-collection/index.html">
+<meta property="og:site_name" content="李世德的博客">
+<meta property="og:description" content="前言某一个夜深人静的加班夜，也许你在做代码混淆……ProGuard 是一个比较枯燥且没有成就感的技术，但 Android 项目没有了 ProGuard 还真就不行。在 Android 中使用 ProGuard 可以起到压缩、优化、混淆、预检的作用，保证我们开发出的 APK 更健壮。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-06-06T11:46:00.000Z">
+<meta property="article:modified_time" content="2021-11-19T09:32:35.483Z">
+<meta property="article:author" content="李世德">
+<meta property="article:tag" content="Android">
+<meta property="article:tag" content="ProGuard">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://lishide.github.io/2018/06/06/Android-proguard-cn-collection/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Android 混淆规则整理 | 李世德的博客</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?62dee491f23b92487e7821869f23f7f0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">李世德的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">我有故事，你有酒吗？</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/lishide" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://lishide.github.io/2018/06/06/Android-proguard-cn-collection/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李世德">
+      <meta itemprop="description" content="爱生活，爱学习，一个不羁的编码界小学生。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李世德的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Android 混淆规则整理
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-06-06 11:46:00" itemprop="dateCreated datePublished" datetime="2018-06-06T11:46:00Z">2018-06-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-11-19 09:32:35" itemprop="dateModified" datetime="2021-11-19T09:32:35Z">2021-11-19</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>某一个夜深人静的加班夜，也许你在做代码混淆……ProGuard 是一个比较枯燥且没有成就感的技术，但 Android 项目没有了 ProGuard 还真就不行。在 Android 中使用 ProGuard 可以起到压缩、优化、混淆、预检的作用，保证我们开发出的 APK 更健壮。</p>
+<span id="more"></span>
+<p>近期的一次发版中，同事反应一个发生在某米手机（没有黑~）上的奔溃 bug，手头的测试真机数量有限且均无此问题。后来使用云测试进行调试，上传了 release 和 debug 版的 apk，发现那款机型的确出现问题。经过分析，问题定位在了代码混淆问题上，因为想到自己之前的一次发版中也曾有过这个问题。</p>
+<p>又一次遇到这样的问题，觉得有必要好好掌握一下正确地写代码混淆规则的姿势了，而不只是在使用第三方和轮子时，单纯地 copy 开源库的 ProGuard。</p>
+<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><h2 id="编写-ProGuard-文件"><a href="#编写-ProGuard-文件" class="headerlink" title="编写 ProGuard 文件"></a>编写 ProGuard 文件</h2><p>受《App 研发录》启发，收集和整理了 Android 开发中国内项目常用库的混淆规则，按照包老师的思路，是一个三步走的过程。</p>
+<ul>
+<li>基本混淆</li>
+<li>针对 App 的量身定制</li>
+<li>针对第三方 jar 包的解决方案</li>
+</ul>
+<p>整理了一个类似模板的项目吧，希望对大家有用，轻松搞定混淆。并已开源到 GitHub——<a target="_blank" rel="noopener" href="https://github.com/lishide/Android-proguard-cn-collection">Android-proguard-cn-collection</a>，收集整理中，如果你有补充，期待你的 PR。</p>
+<h3 id="基本混淆"><a href="#基本混淆" class="headerlink" title="基本混淆"></a>基本混淆</h3><p>最基本的配置信息，任何 App 都要使用，基本不用动。（代码及注释来自《App 研发录》）</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br></pre></td><td class="code"><pre><span class="line"># # 1. 基本混淆======================================================================================</span><br><span class="line"># ## 1.1 基本指令-------------------------------------------------------------</span><br><span class="line"># 代码混淆压缩比，在 0~7 之间，默认为 5，一般不需要改</span><br><span class="line">-optimizationpasses <span class="number">5</span></span><br><span class="line"></span><br><span class="line"># 混淆时不使用大小写混合，混淆后的类名为小写</span><br><span class="line">-dontusemixedcaseclassnames</span><br><span class="line"></span><br><span class="line"># 指定不去忽略非公共的库的类</span><br><span class="line">-dontskipnonpubliclibraryclasses</span><br><span class="line"></span><br><span class="line"># 指定不去忽略非公共的库的类的成员</span><br><span class="line">-dontskipnonpubliclibraryclassmembers</span><br><span class="line"></span><br><span class="line"># 不做预校验，preverify 是 proguard 的 4 个步骤之一</span><br><span class="line"># Android 不需要 preverify，去掉这一步可加快混淆速度</span><br><span class="line">-dontpreverify</span><br><span class="line"></span><br><span class="line"># 有了 verbose 这句话，混淆后就会生成映射文件</span><br><span class="line"># 包含有类名 -&gt; 混淆后类名的映射关系</span><br><span class="line"># 然后使用 printmapping 指定映射文件的名称</span><br><span class="line">-verbose</span><br><span class="line">-printmapping proguardMapping.txt</span><br><span class="line"></span><br><span class="line"># 指定混淆时采用的算法，后面的参数是一个过滤器</span><br><span class="line"># 这个过滤器是谷歌推荐的算法，一般不改变</span><br><span class="line">-optimizations !code<span class="regexp">/simplification/</span>arithmetic,!field<span class="comment">/*,!class/merging/*</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保护代码中的 Annotation 不被混淆，这在 JSON 实体映射时非常重要，比如 fastJson</span></span><br><span class="line"><span class="comment">-keepattributes *Annotation*</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 避免混淆泛型，这在 JSON 实体映射时非常重要，比如 fastJson</span></span><br><span class="line"><span class="comment">-keepattributes Signature</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 抛出异常时保留代码行号，在异常分析中可以方便定位</span></span><br><span class="line"><span class="comment">-keepattributes SourceFile,LineNumberTable</span></span><br><span class="line"><span class="comment">#---------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># ## 1.2 需要保留的东西-------------------------------------------------------</span></span><br><span class="line"><span class="comment"># 保留所有的本地 native 方法不被混淆</span></span><br><span class="line"><span class="comment">-keepclasseswithmembernames class * &#123;</span></span><br><span class="line"><span class="comment">    native &lt;methods&gt;;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留了继承自 Activity、Application 这些类的子类</span></span><br><span class="line"><span class="comment"># 因为这些子类都有可能被外部调用</span></span><br><span class="line"><span class="comment"># 比如说，第一行就保证了所有 Activity 的子类不要被混淆</span></span><br><span class="line"><span class="comment">-keep public class * extends android.app.Activity</span></span><br><span class="line"><span class="comment">-keep public class * extends android.app.Application</span></span><br><span class="line"><span class="comment">-keep public class * extends android.app.Service</span></span><br><span class="line"><span class="comment">-keep public class * extends android.content.BroadcastReceiver</span></span><br><span class="line"><span class="comment">-keep public class * extends android.content.ContentProvider</span></span><br><span class="line"><span class="comment">-keep public class * extends android.app.backup.BackupAgentHelper</span></span><br><span class="line"><span class="comment">-keep public class * extends android.preference.Preference</span></span><br><span class="line"><span class="comment">-keep public class * extends android.view.View</span></span><br><span class="line"><span class="comment">-keep public class com.android.vending.licensing.ILicensingService</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留在 Activity 中的方法参数是 view 的方法，</span></span><br><span class="line"><span class="comment"># 从而我们在 layout 里面编写 onClick 就不会被影响</span></span><br><span class="line"><span class="comment">-keepclassmembers class * extends android.app.Activity &#123;</span></span><br><span class="line"><span class="comment">    public void *(android.view.View);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 枚举类不能被混淆</span></span><br><span class="line"><span class="comment">-keepclassmembers enum * &#123;</span></span><br><span class="line"><span class="comment">    public static **[] values();</span></span><br><span class="line"><span class="comment">    public static ** valueOf(java.lang.String);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留自定义控件（继承自 View）不被混淆</span></span><br><span class="line"><span class="comment">-keep public class * extends android.view.View &#123;</span></span><br><span class="line"><span class="comment">    *** get*();</span></span><br><span class="line"><span class="comment">    void set*(***);</span></span><br><span class="line"><span class="comment">    public &lt;init&gt;(android.content.Context);</span></span><br><span class="line"><span class="comment">    public &lt;init&gt;(android.content.Context, android.util.AttributeSet);</span></span><br><span class="line"><span class="comment">    public &lt;init&gt;(android.content.Context, android.util.AttributeSet, int);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留 Parcelable 序列化的类不被混淆</span></span><br><span class="line"><span class="comment">-keep class * implements android.os.Parcelable &#123;</span></span><br><span class="line"><span class="comment">    public static final android.os.Parcelable$Creator *;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留 Serializable 序列化的类不被混淆</span></span><br><span class="line"><span class="comment">-keepclassmembers class * implements java.io.Serializable &#123;</span></span><br><span class="line"><span class="comment">    static final long serialVersionUID;</span></span><br><span class="line"><span class="comment">    private static final java.io.ObjectStreamField[] serialPersistentFields;</span></span><br><span class="line"><span class="comment">    private void writeObject(java.io.ObjectOutputStream);</span></span><br><span class="line"><span class="comment">    private void readObject(java.io.ObjectInputStream);</span></span><br><span class="line"><span class="comment">    java.lang.Object writeReplace();</span></span><br><span class="line"><span class="comment">    java.lang.Object readResolve();</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 对于 R（资源）下的所有类及其方法，都不能被混淆</span></span><br><span class="line"><span class="comment">-keep class **.R$* &#123;</span></span><br><span class="line"><span class="comment">    *;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 对于带有回调函数 onXXEvent 的，不能被混淆</span></span><br><span class="line"><span class="comment">-keepclassmembers class * &#123;</span></span><br><span class="line"><span class="comment">    void *(**On*Event);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">#---------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">#===================================================================================================</span></span><br></pre></td></tr></table></figure>
+<h3 id="针对-App-的量身定制"><a href="#针对-App-的量身定制" class="headerlink" title="针对 App 的量身定制"></a>针对 App 的量身定制</h3><p>这部分做部分修改，保留你的项目中的实体类、自定义 View、内嵌类、WebView、反射等不被混淆，如果没有使用到的，忽略即可。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"># # 2. 针对 App 的量身定制============================================================================</span><br><span class="line"># ## 2.1 保留实体类和成员不被混淆-----------------------------------------------</span><br><span class="line"># 例如（替换成你的包名结构）：</span><br><span class="line">-keep <span class="class"><span class="keyword">class</span> <span class="title">com</span>.<span class="title">yourpackage</span>.<span class="title">app</span>.<span class="title">model</span>.<span class="title">entity</span>.** &#123;</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> set*(***);</span><br><span class="line">    <span class="keyword">public</span> *** get*();</span><br><span class="line">    <span class="keyword">public</span> *** is*();</span><br><span class="line">&#125;</span><br><span class="line">#---------------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line"># ## 2.2 内嵌类--------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">#---------------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line"># ## 2.3 webview------------------------------------------------------------</span><br><span class="line">-keepclassmembers <span class="class"><span class="keyword">class</span> <span class="title">fqcn</span>.<span class="title">of</span>.<span class="title">javascript</span>.<span class="title">interface</span>.<span class="title">for</span>.<span class="title">Webview</span> &#123;</span></span><br><span class="line">   <span class="keyword">public</span> *;</span><br><span class="line">&#125;</span><br><span class="line">-keepclassmembers <span class="class"><span class="keyword">class</span> * <span class="keyword">extends</span> <span class="title">android</span>.<span class="title">webkit</span>.<span class="title">WebViewClient</span> &#123;</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> *(android.webkit.WebView, java.lang.String, android.graphics.Bitmap);</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">boolean</span> *(android.webkit.WebView, java.lang.String);</span><br><span class="line">&#125;</span><br><span class="line">-keepclassmembers <span class="class"><span class="keyword">class</span> * <span class="keyword">extends</span> <span class="title">android</span>.<span class="title">webkit</span>.<span class="title">WebViewClient</span> &#123;</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> *(android.webkit.WebView, jav.lang.String);</span><br><span class="line">&#125;</span><br><span class="line">#---------------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line"># ## 2.4 对 JavaScript 的处理------------------------------------------------</span><br><span class="line"># 保留 JS 方法不被混淆</span><br><span class="line">#-keepclassmembers class com.example.xxx.MainActivity$JSInterface1 &#123;</span><br><span class="line">#    &lt;methods&gt;;</span><br><span class="line">#&#125;</span><br><span class="line">#---------------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line"># ## 2.5 处理反射------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">#---------------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line"># ## 2.6 对于自定义 View 的解决方案--------------------------------------------</span><br><span class="line">-keep <span class="class"><span class="keyword">class</span> <span class="title">com</span>.<span class="title">yourpackage</span>.<span class="title">a</span>.** &#123;</span> *; &#125;</span><br><span class="line">#---------------------------------------------------------------------------</span><br><span class="line">#===================================================================================================</span><br></pre></td></tr></table></figure>
+<h3 id="针对第三方-jar-包的解决方案"><a href="#针对第三方-jar-包的解决方案" class="headerlink" title="针对第三方 jar 包的解决方案"></a>针对第三方 jar 包的解决方案</h3><p>项目中使用到很多第三方提供的 SDK，如下列出了针对 <code>android-support-v4.jar</code> 和第三方 jar 包的解决方案。根据使用到的第三方库，查找对应的 ProGuard，加入到混淆规则中。</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># # 3. 针对第三方 jar 包的解决方案=====================================================================</span><br><span class="line"># ## 3.1 针对 android-support-v4.jar 的解决方案-------------------------------</span><br><span class="line"># 如果是直接包含的 jar 包的话，这样写</span><br><span class="line"># 如果 gradle 报错的话，可以考虑注释掉 -libraryjars</span><br><span class="line">#-libraryjars libs/android-support-v4.jar</span><br><span class="line">-dontwarn android.support.v4.**</span><br><span class="line">-keep <span class="class"><span class="keyword">class</span> <span class="title">android</span>.<span class="title">support</span>.<span class="title">v4</span>.** &#123;</span> *; &#125;</span><br><span class="line">-keep <span class="class"><span class="keyword">interface</span> <span class="title">android</span>.<span class="title">support</span>.<span class="title">v4</span>.<span class="title">app</span>.** &#123;</span> *; &#125;</span><br><span class="line">-keep <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> * <span class="keyword">extends</span> <span class="title">android</span>.<span class="title">support</span>.<span class="title">v4</span>.**</span></span><br><span class="line"><span class="class">-<span class="title">keep</span> <span class="title">public</span> <span class="title">class</span> * <span class="keyword">extends</span> <span class="title">android</span>.<span class="title">app</span>.<span class="title">Fragment</span></span></span><br><span class="line"><span class="class">#---------------------------------------------------------------------------</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class"># ## 3.2 其他的第三方 <span class="title">jar</span> 包的解决方案-----------------------------------------</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">#---------------------------------------------------------------------------</span></span><br><span class="line"><span class="class">#===================================================================================================</span></span><br></pre></td></tr></table></figure>
+<h2 id="在项目中指定混淆文件"><a href="#在项目中指定混淆文件" class="headerlink" title="在项目中指定混淆文件"></a>在项目中指定混淆文件</h2><p>将 Module 下的 build.gradle 中 minifyEnabled 设置为 <code>true</code>。</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    buildTypes &#123;</span><br><span class="line">        release &#123;</span><br><span class="line">            minifyEnabled <span class="literal">true</span></span><br><span class="line">            proguardFiles getDefaultProguardFile(<span class="string">&#x27;proguard-android.txt&#x27;</span>), <span class="string">&#x27;proguard-rules.pro&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上三部分混淆规则，可以写在一个 ProGuard 文件中，即创建 Android 工程后默认生成的 <code>proguard-rules.pro</code>，proguardFiles 指定使用<code>&#39;proguard-rules.pro&#39;</code>（默认就是这样）。</p>
+<p>或者，可以写多个 ProGuard 文件，分别指定，这种方式更直观。<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">proguardFile <span class="string">&#x27;proguard-a.pro&#x27;</span></span><br><span class="line">proguardFile <span class="string">&#x27;proguard-b.pro&#x27;</span></span><br><span class="line">proguardFile <span class="string">&#x27;proguard-c.pro&#x27;</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ul>
+<li>如果需要代码混淆，请尽早做</li>
+<li>测试工作要基于混淆包进行，才能尽早发现问题</li>
+<li>发版前，要额外测试推送、分享、支付等功能</li>
+</ul>
+<h1 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h1><p>包建强老师的《App 研发录》</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Android/" rel="tag"><i class="fa fa-tag"></i> Android</a>
+              <a href="/tags/ProGuard/" rel="tag"><i class="fa fa-tag"></i> ProGuard</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/05/30/Android-fix-rv-item-view-overlap/" rel="prev" title="Android：解决 RecyclerView 的 item 复用引起的布局错乱问题">
+      <i class="fa fa-chevron-left"></i> Android：解决 RecyclerView 的 item 复用引起的布局错乱问题
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/08/10/Android-solutions-list-item-dyna-transform-edit/" rel="next" title="列表动态增减并移动，以及 item 中使用 EditText 的问题扫坑">
+      列表动态增减并移动，以及 item 中使用 EditText 的问题扫坑 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E5%86%99-ProGuard-%E6%96%87%E4%BB%B6"><span class="nav-number">2.1.</span> <span class="nav-text">编写 ProGuard 文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%B7%B7%E6%B7%86"><span class="nav-number">2.1.1.</span> <span class="nav-text">基本混淆</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%92%88%E5%AF%B9-App-%E7%9A%84%E9%87%8F%E8%BA%AB%E5%AE%9A%E5%88%B6"><span class="nav-number">2.1.2.</span> <span class="nav-text">针对 App 的量身定制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%92%88%E5%AF%B9%E7%AC%AC%E4%B8%89%E6%96%B9-jar-%E5%8C%85%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">2.1.3.</span> <span class="nav-text">针对第三方 jar 包的解决方案</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E9%A1%B9%E7%9B%AE%E4%B8%AD%E6%8C%87%E5%AE%9A%E6%B7%B7%E6%B7%86%E6%96%87%E4%BB%B6"><span class="nav-number">2.2.</span> <span class="nav-text">在项目中指定混淆文件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%84%9F%E8%B0%A2"><span class="nav-number">4.</span> <span class="nav-text">感谢</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">李世德</p>
+  <div class="site-description" itemprop="description">爱生活，爱学习，一个不羁的编码界小学生。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/lishide" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lishide" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/3235831430" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;3235831430" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李世德</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">58k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">53 分钟</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
