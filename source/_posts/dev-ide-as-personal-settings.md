@@ -60,6 +60,8 @@ Android Logcat 默认主题（或导入的其他 Color Scheme）的配色只有�
 18. **Gradle View**：查看 gradle 依赖树
 19. **JSON To Kotlin Class**：将 Json String 快速转换为 Kotlin 数据类代码
 20. **ARouter Helper**：ARouter 导航到目标类
+21. **通义灵码**：是一款基于通义大模型的智能编码辅助工具，提供行级/函数级实时续写、自然语言生成代码、单元测试生成、代码注释生成、代码解释、研发智能问答、异常报错排查等能力，并针对阿里云 SDK/API 的使用场景调优，为开发者带来高效、流畅的编码体验。
+22. **screen match**：屏幕适配插件
 
 ## 万能注释模板
 https://blog.csdn.net/simon_crystin/article/details/67638513
