@@ -6,6 +6,8 @@ tags: [Android, Kotlin, Gradle]
 
 在Kotlin 1.4.20-M2中，JetBrains废弃了Kotlin Android Extensions编译插件。
 
+<!--more-->
+
 在项目中受此影响的功能可能有：
 1. 通过 kotlinx.android.synthetic 获取控件 Id
 2. @Parcelize
