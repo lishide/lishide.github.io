@@ -187,7 +187,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://lishide.github.io/2023/07/22/hello-world/">
+    <link itemprop="mainEntityOfPage" href="https://lishide.github.io/2024/10/12/hello-world/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -201,7 +201,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023/07/22/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
+            <a href="/2024/10/12/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
         </h2>
 
         <div class="post-meta">
@@ -211,7 +211,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2023-07-22 02:16:28" itemprop="dateCreated datePublished" datetime="2023-07-22T02:16:28Z">2023-07-22</time>
+              <time title="创建时间：2024-10-12 06:16:08" itemprop="dateCreated datePublished" datetime="2024-10-12T06:16:08Z">2024-10-12</time>
             </span>
 
           <br>
@@ -242,7 +242,7 @@
           <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2023/07/22/hello-world/#more" rel="contents">
+              <a class="btn" href="/2024/10/12/hello-world/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -297,7 +297,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-07-22 02:16:28" itemprop="dateModified" datetime="2023-07-22T02:16:28Z">2023-07-22</time>
+                <time title="修改时间：2024-10-12 06:16:08" itemprop="dateModified" datetime="2024-10-12T06:16:08Z">2024-10-12</time>
               </span>
 
           <br>
@@ -383,7 +383,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-07-22 02:16:28" itemprop="dateModified" datetime="2023-07-22T02:16:28Z">2023-07-22</time>
+                <time title="修改时间：2024-10-12 06:16:08" itemprop="dateModified" datetime="2024-10-12T06:16:08Z">2024-10-12</time>
               </span>
 
           <br>
@@ -470,7 +470,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-07-22 02:16:28" itemprop="dateModified" datetime="2023-07-22T02:16:28Z">2023-07-22</time>
+                <time title="修改时间：2025-11-25 03:44:03" itemprop="dateModified" datetime="2025-11-25T03:44:03Z">2025-11-25</time>
               </span>
 
           <br>
@@ -499,20 +499,14 @@
 
       
           <p>在Kotlin 1.4.20-M2中，JetBrains废弃了Kotlin Android Extensions编译插件。</p>
-<p>在项目中受此影响的功能可能有：</p>
-<ol>
-<li>通过 kotlinx.android.synthetic 获取控件 Id</li>
-<li>@Parcelize</li>
-</ol>
-<p>问题 1 推荐的替代方案是使用 ViewBinding，之前我的项目中已经使用这种方式了。</p>
-<p>问题 2 解决方案：</p>
-<p>添加 kotlin-parcelize 插件</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">plugins &#123;</span><br><span class="line">    ..</span><br><span class="line">    id <span class="string">&#x27;kotlin-parcelize&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>然后更改旧的 import 语句，将：<code>import kotlinx.android.parcel.Parcelize</code> 改为：<code>import kotlinx.parcelize.Parcelize</code></p>
-<p>例子：</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> android.os.Parcelable</span><br><span class="line"><span class="keyword">import</span> kotlinx.parcelize.Parcelize</span><br><span class="line"></span><br><span class="line"><span class="meta">@Parcelize</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span></span>(<span class="keyword">val</span> name: String, <span class="keyword">val</span> age: <span class="built_in">Int</span>): Parcelable</span><br></pre></td></tr></table></figure>
-<p>更多详细说明可见：<a target="_blank" rel="noopener" href="https://weilu.blog.csdn.net/article/details/109557820">https://weilu.blog.csdn.net/article/details/109557820</a></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/02/03/Android-Migrating-deprecated-kotlin-android-extensions-plugins/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -562,7 +556,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-07-22 02:16:28" itemprop="dateModified" datetime="2023-07-22T02:16:28Z">2023-07-22</time>
+                <time title="修改时间：2024-10-12 06:16:08" itemprop="dateModified" datetime="2024-10-12T06:16:08Z">2024-10-12</time>
               </span>
 
           <br>
@@ -658,7 +652,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-07-22 02:16:28" itemprop="dateModified" datetime="2023-07-22T02:16:28Z">2023-07-22</time>
+                <time title="修改时间：2024-10-12 06:16:08" itemprop="dateModified" datetime="2024-10-12T06:16:08Z">2024-10-12</time>
               </span>
 
           <br>
@@ -744,7 +738,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-07-22 02:16:28" itemprop="dateModified" datetime="2023-07-22T02:16:28Z">2023-07-22</time>
+                <time title="修改时间：2024-10-12 06:16:08" itemprop="dateModified" datetime="2024-10-12T06:16:08Z">2024-10-12</time>
               </span>
 
           <br>
@@ -831,7 +825,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-07-22 02:16:28" itemprop="dateModified" datetime="2023-07-22T02:16:28Z">2023-07-22</time>
+                <time title="修改时间：2024-10-12 06:16:08" itemprop="dateModified" datetime="2024-10-12T06:16:08Z">2024-10-12</time>
               </span>
 
           <br>
@@ -917,7 +911,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-07-22 02:16:28" itemprop="dateModified" datetime="2023-07-22T02:16:28Z">2023-07-22</time>
+                <time title="修改时间：2024-10-12 06:16:08" itemprop="dateModified" datetime="2024-10-12T06:16:08Z">2024-10-12</time>
               </span>
 
           <br>
@@ -1003,7 +997,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-07-22 02:16:28" itemprop="dateModified" datetime="2023-07-22T02:16:28Z">2023-07-22</time>
+                <time title="修改时间：2024-10-12 06:16:08" itemprop="dateModified" datetime="2024-10-12T06:16:08Z">2024-10-12</time>
               </span>
 
           <br>
@@ -1172,7 +1166,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2023</span>
+  <span itemprop="copyrightYear">2025</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
